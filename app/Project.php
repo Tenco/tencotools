@@ -12,6 +12,7 @@ class Project extends Model
 							'name',
 							'desc',
 							'img',
+							'project_owner',
 							'value',
 							'cost',
 							'close_date',

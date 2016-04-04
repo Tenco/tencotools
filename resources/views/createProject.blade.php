@@ -8,7 +8,7 @@
 		{{ csrf_field() }}
 		  <div class="form-group">
 		    <label for="name">Project Name</label>
-		    <input type="name" class="form-control" id="name" placeholder="Enter name" value="{{ old('name') }}">
+		    <input type="name" class="form-control" id="name" placeholder="Enter name" name="name" value="{{ old('name') }}">
 		  </div>
 		  <div class="form-group">
 		    <label for="desc">Project Description</label>
@@ -18,17 +18,34 @@
 		    <label for="project_owner">Project Owner</label>
 		    	<select class="form-control" name="project_owner">
 				  @foreach ($users as $user)
-				  	<option>{{ $user->name }}</option>
+				  	<option value="{{ $user->id }}">{{ $user->name }}</option>
 				  @endforeach
 				</select>
 		  </div>
-		  
-		  <div class="checkbox">
+		   <div class="form-group">
+		    <label for="value">Project Value</label>
+		    <div class="input-group">
+  			<span class="input-group-addon">kr</span>
+		    	<input type="name" name="value" class="form-control" id="value" placeholder="Enter value" value="{{ old('value') }}">
+		    </div>
+		  </div>
+		  <div class="form-group">
+		    <label for="cost">Project Cost</label>
+		    <div class="input-group">
+  			<span class="input-group-addon">kr</span>
+		    	<input type="name" name="cost" class="form-control" id="cost" placeholder="Enter Cost" value="{{ old('cost') }}">
+		    </div>
+		  </div>
+		  <div class="form-group">
+		    <label for="name">Project Deadline</label>
+		    <input type="date" name="deadline" class="form-control" id="deadline" placeholder="Enter Deadline" value="{{ old('deadline') }}">
+		  </div>
+		  <!--div class="checkbox">
 		    <label>
 		      <input type="checkbox"> Check me out
 		    </label>
-		  </div>
-
+		  </div-->
+		@include('partials.error')
 		  <button type="submit" class="btn btn-default">Submit</button>
 	</form>
 </div>

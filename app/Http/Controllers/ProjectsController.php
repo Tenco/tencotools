@@ -9,6 +9,7 @@ use tencotools\Http\Requests;
 use tencotools\Project;
 
 use tencotools\User;
+use Auth;
 
 
 class ProjectsController extends Controller
@@ -35,9 +36,26 @@ class ProjectsController extends Controller
 	}
 
 
-	public function store(Request $request)
+	public function store(Request $request, Project $project)
 	{
-		dd($request);
+		$this->validate($request, [
+            'name' => 'required',
+            'desc' => 'required',
+            'project_owner' => 'required'
+            ]);
+
+    	$project->create([
+    		'name' => request()->name, /* kan även använda typehintade $request objeketet $request->taskName */
+    		'desc' => request()->desc,
+    		'created_by' => Auth::id(),
+    		'project_owner' => request()->project_owner,
+    		'value' => request()->value,
+    		'cost' => request()->cost,
+    		'deadline' => request()->deadline
+    	]);
+
+    	return redirect('/');
+
 	}
 
 
