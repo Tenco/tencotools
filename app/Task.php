@@ -25,4 +25,11 @@ class Task extends Model
 	{
 		return $this->belongsTo('tencotools\Project');
 	}
+
+
+	// define relationship
+	public function user() 
+	{
+		return $this->belongsTo('tencotools\User', 'responsible');
+	}
 }

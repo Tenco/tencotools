@@ -48,5 +48,13 @@ class TasksController extends Controller
 
 	}
 
+    public function updateStage(Request $request)
+    {
+        #dd($request()->taskid);
+        Task::where('id', $request->taskid)
+                    ->update(['stage' => $request->target]);
+        return;
+    }
+
 
 }

@@ -14,7 +14,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password', 'avatar',
     ];
 
     /**
@@ -32,5 +32,11 @@ class User extends Authenticatable
     public function projects() 
     {
         return $this->hasMany('tencotools\Project');
+    }
+
+    // define relationship
+    public function Tasks() 
+    {
+        return $this->hasMany('tencotools\Task');
     }
 }

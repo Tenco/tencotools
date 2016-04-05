@@ -8,6 +8,7 @@
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <meta name="description" content="">
     <meta name="author" content="Tenco">
+    <meta name="csrf-token" content="{{ csrf_token() }}"/>
     <link rel="icon" href="../../favicon.ico">
 
     <title>Tenco Tools</title>
@@ -69,7 +70,7 @@
                   <li><a href="#">Action</a></li>
                   <li><a href="#">Another action</a></li>
                   <li class="divider"></li>
-                  <li><a href="logout">Log out</a></li>
+                  <li><a href="/logout">Log out</a></li>
               </ul>
             </UL>
         

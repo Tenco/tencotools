@@ -91,7 +91,7 @@
 	    		<div id="backlog" class="dropzone">
 		  			@foreach ($project->tasks as $task)
 		  				@if ($task->stage == 'backlog')
-		  					<span class="note yellow" id="{{ $task->id }}"><!--span class="glyphicon glyphicon-fire"></span--> {{ $task->name }}</span>
+		  					<span class="note yellow" id="{{ $task->id }}"><img class="img-circle img-responsive media-object pull-right" style="width:20px;" src="{{ $task->user->avatar }}"> {{ str_limit($task->name, 30) }}</span>
 		  				@endif
 		  			@endforeach
 	  			</div>
@@ -108,7 +108,7 @@
 	    		<div id="ongoing" class="dropzone">
 		  			@foreach ($project->tasks as $task)
 		  				@if ($task->stage == 'ongoing')
-		  					<span class="note yellow" id="{{ $task->id }}"><!--span class="glyphicon glyphicon-fire"></span--> {{ $task->name }}</span>
+		  					<span class="note yellow" id="{{ $task->id }}"><img class="img-circle img-responsive media-object pull-right" style="width:20px;" src="{{ $task->user->avatar }}">  {{ str_limit($task->name, 30) }}</span>
 		  				@endif
 		  			@endforeach
 	  			</div>
@@ -125,7 +125,7 @@
 	    		<div id="done" class="dropzone">
 		  			@foreach ($project->tasks as $task)
 		  				@if ($task->stage == 'done')
-		  					<span class="note yellow" id="{{ $task->id }}"><!--span class="glyphicon glyphicon-fire"></span--> {{ $task->name }}</span>
+		  					<span class="note yellow" id="{{ $task->id }}"><img class="img-circle img-responsive media-object pull-right" style="width:20px;" src="{{ $task->user->avatar }}">  {{ str_limit($task->name, 30) }}</span>
 		  				@endif
 		  			@endforeach
 	  			</div>
@@ -145,12 +145,37 @@ function $(id) {
 
 dragula([$('backlog'), $('ongoing'), $('done')], {
   revertOnSpill: true
-}).on('drop', function(el,target, source, sibling) {
+}).on('drop', function(el, target, source, sibling) {
   
+  	var target = target.id;
 	var taskid = el.id;
-  	//alert(taskid);
+  	
+
+  	// update state for this task
+  	updateTask(target, taskid);
+
 	return;
 });
+
+function updateTask(target, taskid) {
+    
+    var token = $('meta[name=csrf-token]').attr("content");
+
+
+    $.ajax({
+
+    	type: 'POST',
+    	url: '/ajax/tasks/' + taskid,
+    	data: {'target': target, 'taskid': taskid, '_token': token},
+    	
+    	/*success: function() 
+    	{
+    		alert("done!");
+    	}*/
+
+    });
+    return true;
+}
 
 
 </script>

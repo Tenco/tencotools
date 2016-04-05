@@ -10,6 +10,7 @@ use Socialite;
 use Auth;
 use tencotools\User;
 
+
 class AuthController extends Controller
 {
     
@@ -77,11 +78,20 @@ class AuthController extends Controller
 	public function updateUserRecord(User $user, $userData)
 	{
 
-		#dd($userData->avatar);
+		if ( ! $userData->avatar)
+		{
+			$avatar = '/img/avatar.png';
+		}
+		else
+		{
+			$avatar = $userData->avatar;
+		}
+
+
 		$user->update([
 		
-			'name' => $userData->name,
-			'avatar' => $userData->avatar,
+				'name'	=> $userData->name,
+				'avatar'=> $avatar
 
 			]);
 		
