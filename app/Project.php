@@ -13,6 +13,7 @@ class Project extends Model
 							'desc',
 							'img',
 							'project_owner',
+							'created_by',
 							'value',
 							'cost',
 							'close_date',

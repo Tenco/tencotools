@@ -155,6 +155,7 @@ return [
         tencotools\Providers\AuthServiceProvider::class,
         tencotools\Providers\EventServiceProvider::class,
         tencotools\Providers\RouteServiceProvider::class,
+        tencotools\Providers\DropboxServiceProvider::class,
         Laravel\Socialite\SocialiteServiceProvider::class,
 
 

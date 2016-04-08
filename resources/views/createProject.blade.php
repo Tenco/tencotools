@@ -6,9 +6,10 @@
 	<h1>Create new project</h1>
 	<form role="form" action="/project/store" method="POST">
 		{{ csrf_field() }}
+		@include('partials.error')
 		  <div class="form-group">
 		    <label for="name">Project Name</label>
-		    <input type="name" class="form-control" id="name" placeholder="Enter name" name="name" value="{{ old('name') }}">
+		    <input type="name" class="form-control" id="name" placeholder="Enter name" name="name" value="{{ old('name') }}" required>
 		  </div>
 		  <div class="form-group">
 		    <label for="desc">Project Description</label>
@@ -45,10 +46,9 @@
 		      <input type="checkbox"> Check me out
 		    </label>
 		  </div-->
-		@include('partials.error')
-		  <button type="submit" class="btn btn-default">Submit</button>
+			<div class="pull-right"><a type="button" class="btn btn-default" href="/">Cancel</a>
+		  <button type="submit" class="btn btn-primary">Create</button></div>
 	</form>
 </div>
-
 
 @stop

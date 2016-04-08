@@ -24,7 +24,7 @@ class TasksController extends Controller
 
         $this->validate($request, [
             'taskName' => 'required',
-            'taskDesc' => 'required'
+            'taskResponsible' => 'required'
             ]);
 
     	$project->tasks()->create([

@@ -3,11 +3,37 @@
 @section('content')
 
 
+<!-- PROJECT IMAGE UPLOAD MODAL -->
+<div class="row">
+	<div id="newImageModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="newImageLabel" aria-hidden="true" style="display: none;">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+					<h4 class="modal-title" id="newImageLabel">Upload Project Image</h4>
+				</div>
+				<div class="modal-body">
+					<form role="form" action="/project/{{ $project->id }}/store/image" method="POST" id="my-awesome-dropzone" class="dropzone" >
+						{{ csrf_field() }}
+						<div class="form-group">
+							<div id="dropzone-previews" class="dz-default dz-message">
+  								<span>Drag project image file here</span>
+							</div>
+						</div>
+					</form>
+					<div class="row" id="reloadProject" style="display:none;">
+						<p><a href="/project/{{ $project->id }}"  type="button" class="btn btn-primary pull-right" style="margin-right:20px;margin-top:20px;">Ok</a></p>
+					</div>
+				</div>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div>
+</div>
 <!-- NEW TASK MODAL -->
 <div class="row">
 	<div id="newTaskModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="newTaskLabel" aria-hidden="true" style="display: none;">
 		<div class="modal-dialog">
-			<div class="modal-content">
+			<div class="modal-content"  style="background: #eae672;">
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
 					<h4 class="modal-title" id="newTaskLabel">New task</h4>
@@ -20,8 +46,16 @@
 							<input type="text" class="form-control" id="taskName" name="taskName" placeholder="Enter task name" required value="{{ old('taskName') }}">
 						</div>
 						<div class="form-group">
+							<label for="taskResponsible">Responsible</label>
+							<select class="form-control" id="taskResponsible" name="taskResponsible">
+								@foreach ($allusers as $us)
+				  					<option value="{{ $us->id }}">{{ $us->name }}</option>
+				  				@endforeach
+							</select>
+						</div>
+						<div class="form-group">
 							<label for="taskDesc">Description</label>
-							<textarea class="form-control" rows="3" id="taskDesc" name="taskDesc" required>{{ old('taskDesc') }}</textarea>
+							<textarea class="form-control" rows="3" id="taskDesc" name="taskDesc" >{{ old('taskDesc') }}</textarea>
 						</div>
 						<button type="submit" class="btn btn-default">Submit</button>
 					</form>
@@ -61,19 +95,19 @@
 
 <div class="row">
 	<div class="col-md-12 media" style="margin-bottom: 20px;">
-  		<a class="pull-left" href="#">
-    		<img class="img-circle img-responsive media-object" src="/img/wolf.jpg">
+  		<a class="pull-left" href="#" data-toggle="modal" data-target="#newImageModal">
+    		<img class="img-circle img-responsive media-object" src="/img/uprojectuploads/{{ $project->img }}" style="max-width:150px;">
   		</a>
   		<div class="media-body">
-    		<h4 class="media-heading">{{ $project->name }}</h4>
+    		<h1 class="media-heading">{{ $project->name }}</h1>
     		<em>{{ $project->desc }}</em>
     		<hr />
     		<p class="pull-right">
     			<span class="glyphicon glyphicon-user"></span> {{ $project->user->name }} &nbsp;&nbsp;
 	    		<span class="glyphicon glyphicon-calendar"></span> deadline 2016-07-01 &nbsp;&nbsp;
-	    		<span class="glyphicon glyphicon-stats"></span> 45% compleated &nbsp;&nbsp;
+	    		<a href=#><span class="glyphicon glyphicon-time"></span> Start timer </a>&nbsp;&nbsp;
 	    		<a href="project/{{ $project->id }}/edit" data-toggle="modal" data-target="#editProjectModal" data-remote="false"><span class="glyphicon glyphicon-edit"></span> edit</a>  &nbsp;&nbsp;
-	    		<span class="glyphicon glyphicon-trash"></span> delete
+	    		<a href="#"><span class="glyphicon glyphicon-folder-open"></span> &nbsp;archive</a>
     		</p>
   		</div>
 	</div>
@@ -88,13 +122,17 @@
 	    		<h3 class="panel-title">Backlog<button data-toggle="modal" data-target="#newTaskModal" type="button" class="btn btn-default btn-xs pull-right"><span class="glyphicon glyphicon-plus" style="opacity: .5;"></span></button></h3>
 	  		</div>
 	  		<div class="panel-body">
-	    		<div id="backlog" class="dropzone">
-		  			@foreach ($project->tasks as $task)
-		  				@if ($task->stage == 'backlog')
-		  					<span class="note yellow" id="{{ $task->id }}"><img class="img-circle img-responsive media-object pull-right" style="width:20px;" src="{{ $task->user->avatar }}"> {{ str_limit($task->name, 30) }}</span>
-		  				@endif
-		  			@endforeach
+	  			@if (count($project->tasks) === 0)
+		  				<p class="text-center" style="height:110px;margin-top:30px;"><em>Click the "plus" above and add some tasks..</em></p>
+		  			@else
+	    		<div id="backlog" class="dragndropzone">
+		  				@foreach ($project->tasks as $task)
+			  				@if ($task->stage == 'backlog')
+			  					<span class="note yellow" id="{{ $task->id }}"><img class="img-circle img-responsive media-object pull-right" style="width:20px;" src="{{ $task->user->avatar }}"> {{ str_limit($task->name, 30) }}</span>
+			  				@endif
+		  				@endforeach
 	  			</div>
+	  			@endif
 	  		</div>
 		</div>	<!-- / panel -->
 	</div> <!-- / col-md-4 -->
@@ -105,7 +143,7 @@
 	    		<h3 class="panel-title">Ongoing</h3>
 	  		</div>
 	  		<div class="panel-body">
-	    		<div id="ongoing" class="dropzone">
+	    		<div id="ongoing" class="dragndropzone">
 		  			@foreach ($project->tasks as $task)
 		  				@if ($task->stage == 'ongoing')
 		  					<span class="note yellow" id="{{ $task->id }}"><img class="img-circle img-responsive media-object pull-right" style="width:20px;" src="{{ $task->user->avatar }}">  {{ str_limit($task->name, 30) }}</span>
@@ -122,7 +160,7 @@
 	    		<h3 class="panel-title">Done</h3>
 	  		</div>
 	  		<div class="panel-body">
-	    		<div id="done" class="dropzone">
+	    		<div id="done" class="dragndropzone">
 		  			@foreach ($project->tasks as $task)
 		  				@if ($task->stage == 'done')
 		  					<span class="note yellow" id="{{ $task->id }}"><img class="img-circle img-responsive media-object pull-right" style="width:20px;" src="{{ $task->user->avatar }}">  {{ str_limit($task->name, 30) }}</span>
@@ -136,6 +174,7 @@
 </div> <!-- / row -->
 
 <script src='http://rawgit.com/bevacqua/dragula/master/dist/dragula.js'></script>
+<script src="/js/dropzone.js"></script>
 <script>
 
 /* Drag & drop script */
@@ -161,24 +200,63 @@ function updateTask(target, taskid) {
     
     var token = $('meta[name=csrf-token]').attr("content");
 
-
     $.ajax({
 
     	type: 'POST',
     	url: '/ajax/tasks/' + taskid,
     	data: {'target': target, 'taskid': taskid, '_token': token},
-    	
-    	/*success: function() 
+    	timeout: 2000, // sets timeout to 2 seconds and error will be thrown
+    	/*
+    	success: function() 
     	{
     		alert("done!");
-    	}*/
+    	},
+    	*/
+    	error: function(jqXHR, textStatus, errorThrown) 
+    	{
+    		if(textStatus === 'timeout')
+    		{     
+        		alert('Moving the Task failed from timeout. Please try again.'); 
+		    }
+		    else
+		    {
+		    	alert('Sorry :( Error occurred...status code:' + jqXHR.status + ', Error: ' + errorThrown);	
+		    }
+			
+		}
 
     });
     return true;
 }
 
 
-</script>
+/* DROPZONE IMAGE UPLOAD */
 
+Dropzone.options.myAwesomeDropzone = { // The camelized version of the ID of the form element
+
+  // The configuration we've talked about above
+  uploadMultiple: false,
+  parallelUploads: 100,
+  maxFiles: 1,
+  maxFileSize: 2,
+  acceptedFiles: '.jpg, .png, .jpeg',
+  
+  // The setting up of the dropzone
+  init: function() {
+    var myDropzone = this;
+
+
+    this.on("success", function(files, response) {
+      // Gets triggered when the file successfylly been uploaded
+      // now show the ok button!
+      $('#reloadProject').show();
+      
+    });
+    
+  }
+
+
+}
+</script>
 
 @stop
