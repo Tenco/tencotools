@@ -22,12 +22,12 @@ elixir(function(mix) {
         "bootstrap.min.css",
         "bootstrap-glyphicons.css",
         "dragula.css",
-        "custom.css"
+        "custom.css",
+        //"sweetalert.css",
     ])
     .scripts([
         "jquery.min.js",
         "bootstrap.min.js",
-        //"dragula.js",
         "custom.js"
     ]);
 });

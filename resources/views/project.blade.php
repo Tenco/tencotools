@@ -2,6 +2,8 @@
 
 @section('content')
 
+@include('partials.msg')
+
 
 <!-- PROJECT IMAGE UPLOAD MODAL -->
 <div class="row">
@@ -30,13 +32,13 @@
     </div>
 </div>
 <!-- NEW TASK MODAL -->
-<div class="row">
+
 	<div id="newTaskModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="newTaskLabel" aria-hidden="true" style="display: none;">
 		<div class="modal-dialog">
 			<div class="modal-content"  style="background: #eae672;">
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-					<h4 class="modal-title" id="newTaskLabel">New task</h4>
+					<h4 class="modal-title" id="newTaskLabel">Create New task</h4>
 				</div>
 				<div class="modal-body">
 					<form method="POST" action="/project/{{ $project->id }}/tasks" role="form">
@@ -57,13 +59,13 @@
 							<label for="taskDesc">Description</label>
 							<textarea class="form-control" rows="3" id="taskDesc" name="taskDesc" >{{ old('taskDesc') }}</textarea>
 						</div>
-						<button type="submit" class="btn btn-default">Submit</button>
+						<button type="submit" class="btn btn-default">Create Task</button>
 					</form>
 				</div>
         </div><!-- /.modal-content -->
       </div><!-- /.modal-dialog -->
     </div>
-</div>
+
 <!-- EDIT PROJECT MODAL -->
 <div class="row">
 	<div id="editProjectModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="editProjectModal" aria-hidden="true" style="display: none;">
@@ -93,6 +95,8 @@
     </div>
 </div>
 
+
+
 <div class="row">
 	<div class="col-md-12 media" style="margin-bottom: 20px;">
   		<a class="pull-left" href="#" data-toggle="modal" data-target="#newImageModal">
@@ -113,7 +117,25 @@
 	</div>
 </div>
 
+<!--div class="row">
+	<div class="col-md-12 media" style="margin-bottom: 20px;">
+		<div class="btn-group" role="group" aria-label="...">
+  			<div class="btn-group" role="group">
+			    <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-scale" aria-hidden="true"></span> Research</button>
+			  </div>
+			  <div class="btn-group" role="group">
+			    <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-scissors
+			" aria-hidden="true"></span> Design</button>
+			  </div>
+			  <div class="btn-group" role="group">
+			    <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-paperclip" aria-hidden="true"></span>Deliver</button>
+			  </div>
+		</div>
+	</div>
+</div-->
+
 @include('partials.error')
+
 
 <div class="row">
 	<div class="col-md-4"> 
@@ -128,7 +150,46 @@
 	    		<div id="backlog" class="dragndropzone">
 		  				@foreach ($project->tasks as $task)
 			  				@if ($task->stage == 'backlog')
-			  					<span class="note yellow" id="{{ $task->id }}"><img class="img-circle img-responsive media-object pull-right" style="width:20px;" src="{{ $task->user->avatar }}"> {{ str_limit($task->name, 30) }}</span>
+			  					<span class="note yellow" id="{{ $task->id }}"><img class="img-circle img-responsive media-object pull-right" style="width:20px;" src="{{ $task->user->avatar }}"><a href="#" data-toggle="modal" data-target="#TaskModal{{$task->id}}">{{ str_limit($task->name, 30) }}</a></span>
+			  					<div id="TaskModal{{$task->id}}" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="TaskLabel" aria-hidden="true" style="display: none;">
+									<div class="modal-dialog">
+										<div class="modal-content"  style="background: #eae672;">
+											<div class="modal-header" style="border-bottom: 0px;">
+												<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+											</div>
+											<div class="modal-body">
+												<form method="POST" action="/task/{{ $task->id }}/update" role="form">
+													{{ csrf_field() }}
+													<div class="form-group">
+														<label for="taskName">Name</label>
+														<input type="text" class="form-control" id="taskName" name="taskName" placeholder="Enter task name" required value="{{ $task->name }}">
+													</div>
+													<div class="form-group">
+														<label for="taskResponsible">Responsible</label>
+														<select class="form-control" id="taskResponsible" name="taskResponsible">
+															@foreach ($allusers as $us)
+																@if ($us->id == $task->responsible)
+																	<option value="{{ $us->id }}" SELECTED>{{ $us->name }}</option>
+																@else
+																	<option value="{{ $us->id }}">{{ $us->name }}</option>
+																@endif
+											  					
+											  				@endforeach
+														</select>
+													</div>
+													<div class="form-group">
+														<label for="taskDesc">Description</label>
+														<textarea class="form-control" rows="3" id="taskDesc" name="taskDesc" > {{ $task->desc }}</textarea>
+													</div>
+													<div class="form-group">
+														<button type="submit" class="btn btn-default">Save</button>
+														<p class="pull-right"><a href="/task/{{ $task->id }}/delete"><span class="glyphicon glyphicon-trash" aria-hidden="true" style="top:10px;"></span></a></p>
+													</div>
+												</form>
+											</div>
+							        </div><!-- /.modal-content -->
+							      </div><!-- /.modal-dialog -->
+							    </div>
 			  				@endif
 		  				@endforeach
 	  			</div>
@@ -173,8 +234,9 @@
 	
 </div> <!-- / row -->
 
-<script src='http://rawgit.com/bevacqua/dragula/master/dist/dragula.js'></script>
+<script src='/js/dragula.js'></script>
 <script src="/js/dropzone.js"></script>
+<!--script src="/js/sweetalert.min.js"></script-->
 <script>
 
 /* Drag & drop script */
@@ -257,6 +319,20 @@ Dropzone.options.myAwesomeDropzone = { // The camelized version of the ID of the
 
 
 }
+	/* Sweet alert
+	swal({   
+		title: "Error!",   
+		text: "Here's my error message!",   
+		type: "error",   
+		confirmButtonText: "Cool" 
+	});
+	*/
+
+	/* Initial tooltip 
+	$(function () {
+	  $('[data-toggle="tooltip"]').tooltip()
+	});
+	*/
 </script>
 
 @stop

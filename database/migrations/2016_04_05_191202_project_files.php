@@ -12,11 +12,13 @@ class ProjectFiles extends Migration
      */
     public function up()
     {
-        $table->increments('id');
-        $table->string('name');
-        $table->string('path');
-        $table->integer('project_id')->unsigned()->index();
-        $table->timestamps();
+        Schema::create('project_files', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('name');
+            $table->string('path');
+            $table->integer('project_id')->unsigned()->index();
+            $table->timestamps();
+        });
     }
 
     /**

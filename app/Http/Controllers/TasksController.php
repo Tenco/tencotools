@@ -6,19 +6,30 @@ use Illuminate\Http\Request;
 
 use tencotools\Project;
 use tencotools\Task;
+use Session;
+use Auth;
 
 
 class TasksController extends Controller
 {
     
 
+    /*
+    *
+    * 
+    *
+    */
     public function __construct() 
     {
         $this->middleware('auth');
     }
 
 
-
+    /*
+    *
+    * 
+    *
+    */
     public function store(Request $request, Project $project) //project returnerar rätt projekt via wildcard i URL
     {
 
@@ -30,8 +41,8 @@ class TasksController extends Controller
     	$project->tasks()->create([
     		'name' => request()->taskName, /* kan även använda typehintade $request objeketet $request->taskName */
     		'desc' => request()->taskDesc,
-    		'created_by' => 1,
-    		'responsible' => 1,
+    		'created_by' => Auth::id(),
+    		'responsible' => request()->taskResponsible,
     		'prio' => 1,
     		'stage' => 'backlog'
     	]);
@@ -40,7 +51,11 @@ class TasksController extends Controller
 
     }
 
-
+    /*
+    *
+    * 
+    *
+    */
 	public function edit(Task $task)
 	{
 
@@ -48,6 +63,27 @@ class TasksController extends Controller
 
 	}
 
+    /*
+    *
+    * 
+    *
+    */
+    public function remove($task_id)
+    {
+
+
+        Task::destroy($task_id);
+
+        Session::flash('flash_message', 'Task deleted.');
+        return back();
+
+    }
+
+    /*
+    *
+    * 
+    *
+    */
     public function updateStage(Request $request)
     {
         #dd($request()->taskid);
@@ -56,5 +92,22 @@ class TasksController extends Controller
         return;
     }
 
+    /*
+    *
+    * 
+    *
+    */
+    public function update(Request $request, Task $task)
+    {
+        #return $request->all();
+        $task->update([
+            'name' => $request->taskName,
+            'responsible' => $request->taskResponsible,
+            'desc' => $request->taskDesc
+            ]);
 
+         Session::flash('flash_message', 'Task updated.');
+        return back();
+
+    }
 }

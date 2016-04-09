@@ -31,7 +31,7 @@ class ProjectsController extends Controller
 	public function home()
 	{
 		$projects = Project::all();
-		
+	
 
 		return view('home', compact('projects'));
 	}
@@ -130,8 +130,12 @@ class ProjectsController extends Controller
 		*/
 
 		// eagerload the project owner data
-		$project->load('user');
-		$allusers = User::all();
+		$project->load('user'); // load user-data for this project
+		$allusers = User::all(); // load all data in user table
+
+
+		#$project = Project::with('tasks')->get();
+
 
 		return view('project', compact('project', 'allusers'));
 	}
