@@ -18,7 +18,7 @@ class Task extends Model
      *
      * @var array
      */
-    protected $dates = ['deleted_at'];
+    protected $dates = ['deleted_at', 'deadline'];
 
 	// protect against massassignment
 	protected $fillable = [
@@ -29,7 +29,9 @@ class Task extends Model
 							'responsible',
 							'prio',
 							'stage',
-							'deadline'
+							'deadline',
+							'project_id',
+							'blockedby'
 						];
 
     // define relationship

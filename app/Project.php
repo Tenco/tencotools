@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 class Project extends Model
 {
     
+    protected $dates = ['deadline'];
+
 	// protect against massassignment
 	protected $fillable = [
 							'name',

@@ -186,6 +186,15 @@
   transform: rotate(2deg);
 }
 
+.lightyellow {
+  background: #F3F1B1;
+  -webkit-transform: rotate(2deg);
+  -moz-transform: rotate(2deg);
+  -o-transform: rotate(2deg);
+  -ms-transform: rotate(2deg);
+  transform: rotate(2deg);
+}
+
 /* DROPZONE */
 
 /*
@@ -579,3 +588,10 @@
         border-right: 6px solid transparent;
         border-bottom: 6px solid #be2626; }
 
+
+.autocomplete-suggestions { border: 1px solid #999; background: #FFF; overflow: auto; }
+.autocomplete-suggestion { padding: 2px 5px; white-space: nowrap; overflow: hidden; }
+.autocomplete-selected { background: #F0F0F0; }
+.autocomplete-suggestions strong { font-weight: normal; color: #3399FF; }
+.autocomplete-group { padding: 2px 5px; }
+.autocomplete-group strong { display: block; border-bottom: 1px solid #000; }

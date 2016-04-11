@@ -12,7 +12,8 @@ use tencotools\Project;
 use tencotools\User;
 use Auth;
 use Storage;
-
+use Session;
+use Carbon\Carbon;
 
 
 class ProjectsController extends Controller
@@ -28,10 +29,11 @@ class ProjectsController extends Controller
 	* get all projects
 	* return view
 	*/
-	public function home()
+	public function home(Carbon $carbon)
 	{
+
 		$projects = Project::all();
-	
+
 
 		return view('home', compact('projects'));
 	}
@@ -60,6 +62,8 @@ class ProjectsController extends Controller
             'project_owner' => 'required'
             ]);
 
+		$deadline = (request()->deadline ? request()->deadline : NULL);
+
     	$p = $project->create([
     		'name' => request()->name, /* kan även använda typehintade $request objeketet $request->taskName */
     		'desc' => request()->desc,
@@ -67,7 +71,7 @@ class ProjectsController extends Controller
     		'project_owner' => request()->project_owner,
     		'value' => request()->value,
     		'cost' => request()->cost,
-    		'deadline' => request()->deadline
+    		'deadline' => $deadline
     	]);
 
     	return redirect('/project/'. $p->id);
@@ -91,7 +95,7 @@ class ProjectsController extends Controller
 
 		$uploadedfile = $request->file('file');
 		$new_file_name = time() . $uploadedfile->getClientOriginalName();
-		$uploadedfile->move('img/uprojectuploads/', $new_file_name);
+		$uploadedfile->move('img/projectuploads/', $new_file_name);
 		//Storage::disk('dropbox')->put('/project#'.$project->id.'/'.$new_file_name, file_get_contents($uploadedfile));
 
 
@@ -134,10 +138,24 @@ class ProjectsController extends Controller
 		$allusers = User::all(); // load all data in user table
 
 
-		#$project = Project::with('tasks')->get();
-
-
 		return view('project', compact('project', 'allusers'));
+	}
+
+
+	/*
+	*
+	* 
+	*
+	*/
+	public function edit(Request $request, Project $project)
+	{
+		// eagerload the project owner data
+		$project->load('user'); // load user-data for this project
+		$allusers = User::all(); // load all data in user table
+
+
+		return view('editProject', compact('project', 'allusers'));
+
 	}
 
 	/*
@@ -145,16 +163,77 @@ class ProjectsController extends Controller
 	* 
 	*
 	*/
-	public function update(Request $request, Project $project)
+	public function update(Request $request, $id)
 	{
-		#return $request->all();
-		$project->update([
-			'name' => $request->taskName,
-			'desc' => $request->taskDesc
+
+		#dd($request);
+
+		// validation:
+		$this->validate($request, [
+				'name' => 'required',
+				'desc' => 'required',
+				'project_owner' => 'required|numeric'
 			]);
-		return back();
+		
+		$deadline = (request()->deadline ? request()->deadline : NULL);
+		
+		Project::where('id', $id)
+          ->update([
+          		'name' => request()->name,
+				'desc' => request()->desc,
+    			'project_owner' => request()->project_owner,
+    			'value' => request()->value,
+    			'cost' => request()->cost,
+    			'deadline' => $deadline
+          		]);
+
+		Session::flash('flash_message', 'Project updated.');
+
+		$url = '/project/'.$id;
+
+		return redirect($url);
 
 	}
 
+	/*
+	*
+	* 
+	*
+	*/
+	public function revive($id)
+	{
+
+		#dd($id);
+
+		Project::where('id', $id)
+          ->update(['close_date' => NULL]);
+		
+		Session::flash('flash_message', 'Project revived.');
+
+		$url = '/project/'.$id;
+
+		return redirect($url);
+
+	}
+
+	/*
+	*
+	* 
+	*
+	*/
+	public function archive($id)
+	{
+
+		$now = date("Y-m-d H:i:s");
+
+		Project::where('id', $id)
+          ->update(['close_date' => $now]);
+		
+		Session::flash('flash_message', 'Project has been archived.');
+
+
+		return redirect('/');
+
+	}
 
 }

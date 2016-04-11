@@ -42,7 +42,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#">Tenco Tools</a>
+          <a class="navbar-brand" href="#"><a href="#" class="pull-left" ><img style="max-width:70px;margin-right:30px;margin-top:5px;" src="/img/tencologo_400_227.png"></a></a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
@@ -96,5 +96,50 @@
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="/js/all.js"></script>
+    <script src="/js/jquery.autocomplete.js"></script>
+    
+    
+    <!-- 
+    This code below will look at the URL and if it contains a 
+    #hash it will try to pop corresponding modal window.
+    -->
+    <script>
+        $(document).ready(function(){
+          var hash = $(location).attr('hash');
+          if (hash)
+          {
+            $(hash).modal('show');
+          }
+           
+
+
+          /* AUTOMCOMPLETE BLOCK SEARCH */
+          var countries = [
+            <?php
+              // loop out all the tasks for this project:
+              foreach($project->tasks as $task)
+              {
+                echo "{ value: '". $task->name ."', data: '". $task->id ."' },";
+              }
+                
+
+            ?>
+          ];
+
+          $('.autocomplete').autocomplete({
+              lookup: countries,
+              onSelect: function (suggestion) {
+                
+                // there are many forms
+                // var formname = $(this).parents("form").attr("name");
+
+                //alert('You selected: ' + suggestion.value + ', ' + suggestion.data);
+                $('.blockedby').val(suggestion.data);
+                
+              }
+          });
+
+        });
+    </script>
   </body>
 </html>

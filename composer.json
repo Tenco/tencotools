@@ -24,7 +24,10 @@
         ],
         "psr-4": {
             "tencotools\\": "app/"
-        }
+        },
+        "files": [
+           "app/helpers/helpers.php"
+        ]
     },
     "autoload-dev": {
         "classmap": [
