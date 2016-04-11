@@ -140,6 +140,25 @@
           });
 
         });
+
+$(".glyphicon-ban-circle").hover(function() 
+  {
+      // get the data attribute
+      blockid = $(this).data("blocker");
+      $("#" + blockid)
+    .animate({'left':(-5)+'px'},150)
+    .animate({'left':(+10)+'px'},150)
+    .animate({'left':(-5)+'px'},150);
+       //$("#" + blockid).css('background-color', '#D31717');
+  });
+  /*
+  , 
+    function(){
+      $("#" + blockid).css('background-color', '#eae672');
+  });*/
+
+        // enable tooltips on all pages
+        $(function () { $("[data-toggle='tooltip']").tooltip(); });
     </script>
   </body>
 </html>

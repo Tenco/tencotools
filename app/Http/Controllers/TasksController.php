@@ -218,7 +218,18 @@ class TasksController extends Controller
 
     }
 
-    private function saveTask (Array $task)
+    public function removeblock($project, $task)
+    {
+        Task::where('id', $task)
+          ->update([
+                'blockedby' => NULL,
+                ]);
+        
+        $url = '/project/'. $project .'#TaskModal'.$task;
+        return redirect($url);
+    }    
+
+    private function saveTask(Array $task)
     {
         return;
     }

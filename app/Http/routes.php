@@ -37,11 +37,12 @@ Route::group(['Middleware' => ['web', 'auth']], function () /* middleware group 
 	Route::get('project/{id}/revive', 'ProjectsController@revive');
 	Route::get('project/{project}/archive', 'ProjectsController@archive');
 	
-	
+	Route::get('removeblock/{project}/{task}', 'TasksController@removeblock');
 	
 	Route::get('task/{task}/edit', 'TasksController@edit');
 	Route::patch('task/{task}/update', 'TasksController@update');
 	Route::get('task/{task}/delete', 'TasksController@remove');
 	Route::POST('ajax/tasks/{task}', 'TasksController@updateStage');
+
 
 });

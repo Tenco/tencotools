@@ -39,20 +39,44 @@
 			<div class="modal-content">
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-					<h4 class="modal-title" id="newImageLabel">Upload Project Files</h4>
+					<h4 class="modal-title" id="newImageLabel">Project Files</h4>
 				</div>
 				<div class="modal-body">
-					<form role="form" action="/project/{{ $project->id }}/store/file" method="POST" id="projectFilesDropzone" class="dropzone" >
+
+<div>
+
+  <!-- Nav tabs -->
+  <ul class="nav nav-tabs" role="tablist">
+    <li role="presentation" class="active"><a href="#fls" aria-controls="home" role="tab" data-toggle="tab">Project files</a></li>
+    <li role="presentation"><a href="#upl" aria-controls="profile" role="tab" data-toggle="tab">Upload files</a></li>
+  </ul>
+
+  <!-- Tab panes -->
+<div class="tab-content">
+    <div role="tabpanel" class="tab-pane active" id="fls">
+     <br /><br />da files.. <br /><br /><br /><br /><br /><br /><br />
+    </div>
+    
+    <div role="tabpanel" class="tab-pane" id="upl">
+
+
+					<form role="form" action="/project/{{ $project->id }}/store/file" method="POST" id="projectFilesDropzone" class="dropzone" style="margin-top:10px;">
 						{{ csrf_field() }}
 						<div class="form-group">
 							<div id="dropzone-previews" class="dz-default dz-message">
-  								<span>Drag fils here</span>
+  								<span>Drag files here, or click to upload</span>
 							</div>
 						</div>
 					</form>
 					<div class="row" id="reloadProject" style="display:none;">
 						<p><a href="/project/{{ $project->id }}"  type="button" class="btn btn-primary pull-right" style="margin-right:20px;margin-top:20px;">Ok</a></p>
 					</div>
+    
+    </div>
+  </div>
+
+</div>
+
 				</div>
         </div><!-- /.modal-content -->
       </div><!-- /.modal-dialog -->
@@ -155,7 +179,7 @@
 	<div class="col-md-4"> 
 		<div class="panel panel-primary">
 			<div class="panel-heading">
-	    		<h3 class="panel-title">Backlog<button data-toggle="modal" data-target="#newTaskModal" type="button" class="btn btn-default btn-xs pull-right"><span class="glyphicon glyphicon-plus" style="opacity: .5;"></span></button></h3>
+	    		<h3 class="panel-title">Backlog<button data-toggle="modal" data-target="#newTaskModal" type="button" class="btn btn-default btn-xs pull-right"><span data-toggle="tooltip" data-placement="top" title="Click to add task" class="glyphicon glyphicon-plus" style="opacity: .5;"></span></button></h3>
 	  		</div>
 	  		<div class="panel-body">
 	  			@if (count($project->tasks) === 0)
@@ -215,7 +239,8 @@
 <script>
 
 /* Drag & drop script */
-function $(id) {
+function $(id) 
+{
   return document.getElementById(id);
 }
 
@@ -236,7 +261,8 @@ dragula([$('backlog'), $('ongoing'), $('done')], {
 	return;
 });
 
-function updateTask(target, taskid) {
+function updateTask(target, taskid) 
+{
     
     var token = $('meta[name=csrf-token]').attr("content");
 
@@ -268,7 +294,6 @@ function updateTask(target, taskid) {
     });
     return true;
 }
-
 
 /* DROPZONE IMAGE UPLOAD */
 
@@ -326,8 +351,6 @@ Dropzone.options.projectFilesDropzone = { // The camelized version of the ID of 
 
 
 }
-
-
 
 	/* Sweet alert
 	swal({   

@@ -5,7 +5,12 @@
 	<span class="note lightyellow" id="{{ $task->id }}"><img class="img-circle img-responsive media-object pull-right" style="width:20px;" src="{{ $task->user->avatar }}"><a href="#" data-toggle="modal" data-target="#TaskModal{{$task->id}}">{{ str_limit($task->name, 30) }}</a></span>
 @endif
 --}}
-<span class="note yellow" id="{{ $task->id }}"><img class="img-circle img-responsive media-object pull-right" style="width:20px;" src="{{ $task->user->avatar }}"><a href="#" data-toggle="modal" data-target="#TaskModal{{$task->id}}">{{ str_limit($task->name, 30) }}</a></span>
+<span class="note yellow" id="{{ $task->id }}"><img class="img-circle img-responsive media-object pull-right" style="width:20px;" src="{{ $task->user->avatar }}">
+	@if ($task->blockedby)
+		<span class="glyphicon glyphicon-ban-circle" data-toggle="tooltip" data-placement="top" data-blocker="{{ $task->blockedby }}" title="Task blocked by #{{ $task->blockedby }}" style="color:#D31717;" aria-hidden="true"></span>
+
+	@endif
+	<a href="#" data-toggle="modal" data-target="#TaskModal{{$task->id}}">{{ str_limit($task->name, 30) }}</a></span>
 	<div id="TaskModal{{$task->id}}" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="TaskLabel" aria-hidden="true" style="display: none;">
 		<div class="modal-dialog">
 			<div class="modal-content"  style="background: #eae672;">
@@ -39,7 +44,7 @@
 						<div class="form-group">
 							<label for="taskBlock">Waiting for</label>
 							@if (isset($task->blockedby))
-								Task <a href="/project/{{$project->id}}#TaskModal{{$task->blockedby}}" target=_new>#{{ $task->blockedby }}</a>
+								Task <a href="/project/{{$project->id}}#TaskModal{{$task->blockedby}}" target=_new>#{{ $task->blockedby }}</a>&nbsp;&nbsp;&nbsp;<small><a href=/removeblock/{{ $project->id }}/{{ $task->id }}><span class="glyphicon glyphicon-trash"></span></a></small>
 							@else
 								<input type="text" class="form-control autocomplete" name="taskBlock" placeholder="Search for a task">
 								<input type="hidden" name="blockedby" class="blockedby" value="">
