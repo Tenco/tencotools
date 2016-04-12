@@ -29,15 +29,19 @@ Route::group(['Middleware' => ['web', 'auth']], function () /* middleware group 
 	Route::post('project/store', 'ProjectsController@store');
 	Route::get('project/{project}', 'ProjectsController@show');
 	Route::get('project/{project}/edit', 'ProjectsController@edit');
+	Route::get('project/image/{project}', 'ProjectsController@uploadImage');
 	Route::patch('project/{id}/update', 'ProjectsController@update');
 	Route::post('project/{project}/tasks', 'TasksController@store');
 	Route::post('project/{project}/store/image', 'ProjectsController@storeImage');
+	Route::post('project/{project}/store/file', 'ProjectsController@storeFile');
 	Route::get('project/{project}/kickstart', 'TasksController@kickstart');
 
 	Route::get('project/{id}/revive', 'ProjectsController@revive');
 	Route::get('project/{project}/archive', 'ProjectsController@archive');
 	
 	Route::get('removeblock/{project}/{task}', 'TasksController@removeblock');
+	Route::get('removedeadline/{project}/{task}', 'TasksController@removedeadline');
+	
 	
 	Route::get('task/{task}/edit', 'TasksController@edit');
 	Route::patch('task/{task}/update', 'TasksController@update');

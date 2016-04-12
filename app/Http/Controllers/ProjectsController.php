@@ -38,6 +38,22 @@ class ProjectsController extends Controller
 		return view('home', compact('projects'));
 	}
 
+
+	/*
+	*
+	* get all projects
+	* return view
+	*/
+	public function uploadImage($project)
+	{
+
+		$project = Project::where('id', $project)->first();
+		
+
+		return view('createProject2', compact('project'));
+
+	}
+
 	/*
 	*
 	* show create new proejct form
@@ -74,7 +90,7 @@ class ProjectsController extends Controller
     		'deadline' => $deadline
     	]);
 
-    	return redirect('/project/'. $p->id);
+    	return redirect('/project/image/'. $p->id);
 
 	}
 
@@ -108,6 +124,47 @@ class ProjectsController extends Controller
 
 	/*
 	*
+	* Store project project files on Cloud server
+	*
+	*/
+	public function storeFile(Request $request, Project $project)
+	{
+		// VALIDATION 
+		if( ! $request->hasFile('file'))
+			return response()->json(['error' => 'No File Sent']);
+
+		/*
+		$this->validate($request, [
+				'file' => 'required|mimes:jpeg,jpg,png',
+			]);
+		*/
+
+		$uploadedfile = $request->file('file');
+		foreach ($uploadedfile as $duh)
+		{
+			$new_file_name = time() . $duh->getClientOriginalName();
+			$path = '/project#'.$project->id.'/'.$new_file_name;
+			Storage::disk('dropbox')->put($path, file_get_contents($duh));
+		}
+		
+		
+		//dd($path);
+		
+
+		/*
+			Do I really need to store files in DB? I can just read 
+			and write in the correct folder on Dropbox!
+		
+		$project->files->update([
+			'file' => $new_file_name,
+			'project_id' => $project->id,
+			]);
+		*/
+
+		return response()->json(['success' => 'ok']);
+	}
+	/*
+	*
 	* display a single project and it's tasks
 	* 
 	*/
@@ -117,21 +174,6 @@ class ProjectsController extends Controller
 		// genom att type hinta ovan baserat på det wildcard som skickas in till funktionen.
 		#$project = Project::find($project_id);
 		
-		
-		/*
-		$folder_and_file = 'project'. $project->id .'/'.$project->img;
-		$url = Storage::disk('dropbox')->url($folder_and_file);
-		dd($url);
-
-		if (Storage::disk('dropbox')->has($folder_and_file))
-		{
-			$contents = Storage::disk('dropbox')->get($folder_and_file);
-		}
-
-		return $response->stream(function() use($contents) {
-  			echo $contents;
-		}, 200, $headers);
-		*/
 
 		// eagerload the project owner data
 		$project->load('user'); // load user-data for this project
@@ -176,7 +218,7 @@ class ProjectsController extends Controller
 			]);
 		
 		$deadline = (request()->deadline ? request()->deadline : NULL);
-		
+
 		Project::where('id', $id)
           ->update([
           		'name' => request()->name,

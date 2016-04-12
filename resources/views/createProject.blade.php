@@ -47,7 +47,7 @@
 		    </label>
 		  </div-->
 			<div class="pull-right"><a type="button" class="btn btn-default" href="/">Cancel</a>
-		  <button type="submit" class="btn btn-primary">Create</button></div>
+		  <button type="submit" class="btn btn-primary">Next <span class="glyphicon glyphicon-arrow-right"></span></button></div>
 	</form>
 </div>
 

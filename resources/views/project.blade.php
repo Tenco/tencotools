@@ -4,34 +4,6 @@
 
 @include('partials.msg')
 
-
-<!-- PROJECT IMAGE UPLOAD MODAL -->
-<div class="row">
-	<div id="newImageModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="newImageLabel" aria-hidden="true" style="display: none;">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-					<h4 class="modal-title" id="newImageLabel">Upload Project Image</h4>
-				</div>
-				<div class="modal-body">
-					<form role="form" action="/project/{{ $project->id }}/store/image" method="POST" id="my-awesome-dropzone" class="dropzone" >
-						{{ csrf_field() }}
-						<div class="form-group">
-							<div id="dropzone-previews" class="dz-default dz-message">
-  								<span>Drag project image file here</span>
-							</div>
-						</div>
-					</form>
-					<div class="row" id="reloadProject" style="display:none;">
-						<p><a href="/project/{{ $project->id }}"  type="button" class="btn btn-primary pull-right" style="margin-right:20px;margin-top:20px;">Ok</a></p>
-					</div>
-				</div>
-        </div><!-- /.modal-content -->
-      </div><!-- /.modal-dialog -->
-    </div>
-</div>
-
 <!-- PROJECT FILES UPLOAD MODAL -->
 <div class="row">
 	<div id="filesModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="filesLabel" aria-hidden="true" style="display: none;">
@@ -42,45 +14,39 @@
 					<h4 class="modal-title" id="newImageLabel">Project Files</h4>
 				</div>
 				<div class="modal-body">
+					<div>
 
-<div>
-
-  <!-- Nav tabs -->
-  <ul class="nav nav-tabs" role="tablist">
-    <li role="presentation" class="active"><a href="#fls" aria-controls="home" role="tab" data-toggle="tab">Project files</a></li>
-    <li role="presentation"><a href="#upl" aria-controls="profile" role="tab" data-toggle="tab">Upload files</a></li>
-  </ul>
-
-  <!-- Tab panes -->
-<div class="tab-content">
-    <div role="tabpanel" class="tab-pane active" id="fls">
-     <br /><br />da files.. <br /><br /><br /><br /><br /><br /><br />
-    </div>
+					  <!-- Nav tabs -->
+						<ul class="nav nav-tabs" role="tablist">
+					 		<li role="presentation" class="active"><a href="#fls" aria-controls="home" role="tab" data-toggle="tab">Project files</a></li>
+					 		<li role="presentation"><a href="#upl" aria-controls="profile" role="tab" data-toggle="tab">Upload files</a></li>
+						</ul>
+						<!-- Tab panes -->
+						<div class="tab-content">
+							<div role="tabpanel" class="tab-pane active" id="fls">
+								<br /><br />da files.. <br /><br /><br /><br /><br /><br /><br />
+							</div>    
+							<div role="tabpanel" class="tab-pane" id="upl">
+								<form role="form" action="/project/{{ $project->id }}/store/file" method="POST" id="projectFilesDropzone" class="dropzone" style="margin-top:10px;">
+									{{ csrf_field() }}
+									<div class="form-group">
+										<div id="dropzone-previews" class="dz-default dz-message">
+											<span>Drag files here, or click to upload</span>
+										</div>
+									</div>
+								</form>
+								<div class="row" id="reloadProject" style="display:none;">
+									<p><a href="/project/{{ $project->id }}"  type="button" class="btn btn-primary pull-right" style="margin-right:20px;margin-top:20px;">Ok</a></p>
+								</div>
     
-    <div role="tabpanel" class="tab-pane" id="upl">
-
-
-					<form role="form" action="/project/{{ $project->id }}/store/file" method="POST" id="projectFilesDropzone" class="dropzone" style="margin-top:10px;">
-						{{ csrf_field() }}
-						<div class="form-group">
-							<div id="dropzone-previews" class="dz-default dz-message">
-  								<span>Drag files here, or click to upload</span>
 							</div>
 						</div>
-					</form>
-					<div class="row" id="reloadProject" style="display:none;">
-						<p><a href="/project/{{ $project->id }}"  type="button" class="btn btn-primary pull-right" style="margin-right:20px;margin-top:20px;">Ok</a></p>
+
 					</div>
-    
-    </div>
-  </div>
-
-</div>
-
 				</div>
-        </div><!-- /.modal-content -->
-      </div><!-- /.modal-dialog -->
-    </div>
+			</div><!-- /.modal-content -->
+		</div><!-- /.modal-dialog -->
+	</div>
 </div>
 
 <!-- NEW TASK MODAL -->
@@ -129,11 +95,11 @@
 @endif
 <div class="row">
 	<div class="col-md-12 media" style="margin-bottom: 20px;margin-top:20px;">
-  		<a class="pull-left" href="#" data-toggle="modal" data-target="#newImageModal">
-    		<img class="img-circle img-responsive media-object" src="/img/projectuploads/{{ $project->img }}" style="max-width:150px;">
+  		<a class="pull-left" href="#">
+    		<img class="img-thumbnail img-responsive media-object" src="/img/projectuploads/{{ $project->img }}" style="max-height:150px;max-width:250px;">
   		</a>
   		<div class="media-body">
-    		<h1 class="media-heading">{{ $project->name }}</h1>
+    		<h1 class="media-heading">#{{ $project->id }} {{ $project->name }}</h1>
     		<p class="lead">{{ $project->desc }}</p>
     		<p>
 				<small>
@@ -148,9 +114,10 @@
     		</p>
     		<hr />
     		<p class="pull-right">
-    			<a data-toggle="modal" data-target="#filesModal" href=#><span class="glyphicon glyphicon-cloud-upload"></span> Files <span class="badge">42</span> </a>&nbsp;&nbsp;
+    			<a data-toggle="modal" data-target="#filesModal" href=#><span class="glyphicon glyphicon-cloud-upload"></span> Upload Files </a>&nbsp;&nbsp;
+    			<a data-toggle="modal" data-target="#filesModal" href=#><span class="glyphicon glyphicon-file"></span> View Files</a>&nbsp;&nbsp;
 	    		<!--a href=#><span class="glyphicon glyphicon-time"></span> Start timer </a>&nbsp;&nbsp;-->
-	    		<a href="/project/{{ $project->id }}/edit"><span class="glyphicon glyphicon-edit"></span> edit</a>
+	    		<a href="/project/{{ $project->id }}/edit"><span class="glyphicon glyphicon-cog"></span> edit</a>
     		</p>
   		</div>
 	</div>
@@ -234,7 +201,6 @@
 </div> <!-- / row -->
 
 <script src='/js/dragula.js'></script>
-<script src="/js/dropzone.js"></script>
 <!--script src="/js/sweetalert.min.js"></script-->
 <script>
 
@@ -295,36 +261,10 @@ function updateTask(target, taskid)
     return true;
 }
 
-/* DROPZONE IMAGE UPLOAD */
-
-Dropzone.options.myAwesomeDropzone = { // The camelized version of the ID of the form element
-
-  // The configuration we've talked about above
-  uploadMultiple: false,
-  parallelUploads: 100,
-  maxFiles: 1,
-  maxFileSize: 2,
-  acceptedFiles: '.jpg, .png, .jpeg',
-  
-  // The setting up of the dropzone
-  init: function() {
-    var myDropzone = this;
 
 
-    this.on("success", function(files, response) {
-      // Gets triggered when the file successfylly been uploaded
-      // now show the ok button!
-      $('#reloadProject').show();
-      
-    });
-    
-  }
 
-
-}
-
-
-/* DROPZONE IMAGE UPLOAD */
+/* DROPZONE FILE UPLOAD */
 
 Dropzone.options.projectFilesDropzone = { // The camelized version of the ID of the form element
 
@@ -332,23 +272,8 @@ Dropzone.options.projectFilesDropzone = { // The camelized version of the ID of 
   uploadMultiple: true,
   parallelUploads: 100,
   maxFiles: 10,
-  maxFileSize: 2,
+  maxFileSize: 20,
   //acceptedFiles: '.jpg, .png, .jpeg',
-  
-  // The setting up of the dropzone
-  init: function() {
-    var myDropzone = this;
-
-
-    this.on("success", function(files, response) {
-      // Gets triggered when the file successfylly been uploaded
-      // now show the ok button!
-      $('#reloadProject').show();
-      
-    });
-    
-  }
-
 
 }
 
@@ -361,11 +286,7 @@ Dropzone.options.projectFilesDropzone = { // The camelized version of the ID of 
 	});
 	*/
 
-	/* Initial tooltip 
-	$(function () {
-	  $('[data-toggle="tooltip"]').tooltip()
-	});
-	*/
+
 </script>
 
 @stop

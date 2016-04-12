@@ -42,13 +42,13 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#"><a href="#" class="pull-left" ><img style="max-width:70px;margin-right:30px;margin-top:5px;" src="/img/tencologo_400_227.png"></a></a>
+          <a href="/" class="pull-left" ><img style="max-width:70px;margin-right:30px;margin-top:5px;" src="/img/tencologo_400_227.png"></a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
             <li class="active"><a href="/">Projects</a></li>
-            <li ><a href="/">Templates</a></li>
-            <li ><a href="/">CRM</a></li>
+            <li class="disabled"><a href="#">Templates</a></li>
+            <li class="disabled"><a href="#">CRM</a></li>
             <!--li><a href="#about">About</a></li>
             <li><a href="#contact">Contact</a></li>
             <li class="dropdown">
@@ -69,9 +69,9 @@
             <li><a href="#" data-toggle="dropdown" class="dropdown-toggle"><span class="glyphicon glyphicon-user
 "></span> {{ Auth::user()->name }} <b class="caret"></b></a>
               <ul class="dropdown-menu">
-                  <li><a href="#">Action</a></li>
+                  <!--li><a href="#">Action</a></li>
                   <li><a href="#">Another action</a></li>
-                  <li class="divider"></li>
+                  <li class="divider"></li-->
                   <li><a href="/logout">Log out</a></li>
               </ul>
             </UL>
@@ -117,9 +117,12 @@
           var countries = [
             <?php
               // loop out all the tasks for this project:
-              foreach($project->tasks as $task)
+              if (isset($project))
               {
-                echo "{ value: '". $task->name ."', data: '". $task->id ."' },";
+                foreach($project->tasks as $task)
+                {
+                  echo "{ value: '". $task->name ."', data: '". $task->id ."' },";
+                }
               }
                 
 
@@ -141,24 +144,25 @@
 
         });
 
-$(".glyphicon-ban-circle").hover(function() 
+  $(".glyphicon-ban-circle").hover(function() 
   {
       // get the data attribute
       blockid = $(this).data("blocker");
       $("#" + blockid)
-    .animate({'left':(-5)+'px'},150)
-    .animate({'left':(+10)+'px'},150)
-    .animate({'left':(-5)+'px'},150);
-       //$("#" + blockid).css('background-color', '#D31717');
+      .animate({'left':(-5)+'px'},150)
+      .animate({'left':(+10)+'px'},150)
+      .animate({'left':(-5)+'px'},150);
   });
-  /*
-  , 
-    function(){
-      $("#" + blockid).css('background-color', '#eae672');
-  });*/
-
         // enable tooltips on all pages
         $(function () { $("[data-toggle='tooltip']").tooltip(); });
+
+     
+        // remove hash (e.g. #TaskModal180) from URL when closing modal
+        // otherwise the modal will open on refresh even if closed by user
+        $('.modal').on('hidden.bs.modal', function () {
+          parent.location.hash = '';
+        });
+
     </script>
   </body>
 </html>

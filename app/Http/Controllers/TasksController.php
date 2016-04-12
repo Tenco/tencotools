@@ -103,12 +103,21 @@ class TasksController extends Controller
     public function update(Request $request, Task $task)
     {
         #return $request->all();
+
+        $this->validate($request, [
+            'taskName' => 'required',
+            'taskResponsible' => 'required'
+            ]);
+        
+        $blockedby = (request()->blockedby ? request()->blockedby : NULL);
+        $deadline = (request()->taskDeadline ? request()->taskDeadline : NULL);
+
         $task->update([
             'name' => $request->taskName,
             'responsible' => $request->taskResponsible,
             'desc' => $request->taskDesc, 
-            'deadline' => $request->taskDeadline,
-            'blockedby' => request()->blockedby,
+            'deadline' => $deadline,
+            'blockedby' => $blockedby,
             ]);
 
         Session::flash('flash_message', 'Task updated.');
@@ -218,6 +227,11 @@ class TasksController extends Controller
 
     }
 
+    /*
+    *
+    * 
+    *
+    */
     public function removeblock($project, $task)
     {
         Task::where('id', $task)
@@ -227,8 +241,30 @@ class TasksController extends Controller
         
         $url = '/project/'. $project .'#TaskModal'.$task;
         return redirect($url);
+    }
+
+    /*
+    *
+    * 
+    *
+    */
+    public function removedeadline($project, $task)
+    {
+        Task::where('id', $task)
+          ->update([
+                'deadline' => 'NULL',
+                ]);
+        
+        $url = '/project/'. $project .'#TaskModal'.$task;
+        return redirect($url);
     }    
 
+
+    /* private **
+    *
+    * 
+    *
+    */
     private function saveTask(Array $task)
     {
         return;

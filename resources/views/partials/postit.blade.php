@@ -43,7 +43,7 @@
 						</div>
 						<div class="form-group">
 							<label for="taskBlock">Waiting for</label>
-							@if (isset($task->blockedby))
+							@if (isset($task->blockedby) || $task->blockedby === 0)
 								Task <a href="/project/{{$project->id}}#TaskModal{{$task->blockedby}}" target=_new>#{{ $task->blockedby }}</a>&nbsp;&nbsp;&nbsp;<small><a href=/removeblock/{{ $project->id }}/{{ $task->id }}><span class="glyphicon glyphicon-trash"></span></a></small>
 							@else
 								<input type="text" class="form-control autocomplete" name="taskBlock" placeholder="Search for a task">
@@ -52,8 +52,9 @@
 						</div>
 						<div class="form-group">
 							<label for="taskDeadline">Deadline</label>
-							@if (isset($task->deadline))
-								{{ $task->deadline->diffForHumans() }} <!--&nbsp;&nbsp;&nbsp;<small><a href=#>change</a></small-->
+							<?= $task->deadline; ?>
+							@if (isset($task->deadline) || $task->deadline === '0000-00-00')
+								{{ $task->deadline->diffForHumans() }} &nbsp;&nbsp;&nbsp;<small><a href=/removedeadline/{{ $project->id }}/{{ $task->id }}><span class="glyphicon glyphicon-trash"></span></a></small>
 								<input type="hidden" name="taskDeadline" value="{{ $task->deadline }}">
 							@else
 								<input type="date" class="form-control" id="taskDeadline" name="taskDeadline" placeholder="Enter task deadline" value="{{ $task->deadline }}">
@@ -61,7 +62,7 @@
 						</div>
 						<div class="form-group">
 							<button type="submit" class="btn btn-default">Save</button>
-							<p class="pull-right"><a href="/task/{{ $task->id }}/delete"><span class="glyphicon glyphicon-trash" aria-hidden="true" style="top:10px;"></span></a></p>
+							<p class="pull-right"><a href="/task/{{ $task->id }}/delete"><span class="glyphicon glyphicon-trash" aria-hidden="true" style="top:10px;" data-toggle="tooltip" data-placement="left" data-blocker="Delete this Task"></span></a></p>
 						</div>
 					</form>
 				</div>
