@@ -13,8 +13,8 @@ class EventServiceProvider extends ServiceProvider
      * @var array
      */
     protected $listen = [
-        'tencotools\Events\SomeEvent' => [
-            'tencotools\Listeners\EventListener',
+        'tencotools\Events\TaskDone' => [
+            'tencotools\Listeners\EmailListener@notifyBlockedUser',
         ],
     ];
 

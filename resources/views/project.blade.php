@@ -114,10 +114,10 @@
     		</p>
     		<hr />
     		<p class="pull-right">
-    			<a data-toggle="modal" data-target="#filesModal" href=#><span class="glyphicon glyphicon-cloud-upload"></span> Upload Files </a>&nbsp;&nbsp;
-    			<a data-toggle="modal" data-target="#filesModal" href=#><span class="glyphicon glyphicon-file"></span> View Files</a>&nbsp;&nbsp;
+    			<!--a data-toggle="modal" data-target="#filesModal" href=#><span class="glyphicon glyphicon-cloud-upload"></span> Upload Files </a>&nbsp;&nbsp;-->
+    			<a data-toggle="modal" data-target="#filesModal" href=#><span class="glyphicon glyphicon-file"></span> Project Files</a>&nbsp;&nbsp;
 	    		<!--a href=#><span class="glyphicon glyphicon-time"></span> Start timer </a>&nbsp;&nbsp;-->
-	    		<a href="/project/{{ $project->id }}/edit"><span class="glyphicon glyphicon-cog"></span> edit</a>
+	    		<a href="/project/{{ $project->id }}/edit"><span class="glyphicon glyphicon-cog"></span> Edit Project</a>
     		</p>
   		</div>
 	</div>
@@ -261,21 +261,6 @@ function updateTask(target, taskid)
     return true;
 }
 
-
-
-
-/* DROPZONE FILE UPLOAD */
-
-Dropzone.options.projectFilesDropzone = { // The camelized version of the ID of the form element
-
-  // The configuration we've talked about above
-  uploadMultiple: true,
-  parallelUploads: 100,
-  maxFiles: 10,
-  maxFileSize: 20,
-  //acceptedFiles: '.jpg, .png, .jpeg',
-
-}
 
 	/* Sweet alert
 	swal({   

@@ -12,7 +12,8 @@
 	<!-- Nav tabs -->
 		<ul class="nav nav-tabs" role="tablist">
 			<li role="presentation" class="active"><a href="#fls" aria-controls="home" role="tab" data-toggle="tab">Project details</a></li>
-			<li role="presentation"><a href="#upl" aria-controls="profile" role="tab" data-toggle="tab">Project image</a></li>
+			<li role="presentation"><a href="#upl" aria-controls="profile" role="tab" data-toggle="tab">Upload image</a></li>
+			<li role="presentation"><a href="#uplfiles" aria-controls="profile" role="tab" data-toggle="tab">Upload files</a></li>
 		</ul>
 		
 	<!-- Tab panes -->
@@ -91,6 +92,22 @@
 							</div>
 						</div>
 					</form>
+					<div class="pull-right" style="margin-top:20px;">
+		  				<a href="/project/{{ $project->id }}" type="button" class="btn btn-primary">Ok</a>
+		 			</div>
+    		</div>
+    		<div role="tabpanel" class="tab-pane" id="uplfiles">
+				<form role="form" action="/project/{{ $project->id }}/store/file" method="POST" id="projectFilesDropzone" class="dropzone" style="margin-top:10px;">
+									{{ csrf_field() }}
+									<div class="form-group">
+										<div id="dropzone-previews" class="dz-default dz-message">
+											<span>Drag files here, or click to upload</span>
+										</div>
+									</div>
+								</form>
+					<div class="pull-right" style="margin-top:20px;">
+		  				<a href="/project/{{ $project->id }}" type="button" class="btn btn-primary">Ok</a>
+		 			</div>
     		</div>
 		</div>
 
@@ -125,6 +142,19 @@ Dropzone.options.myAwesomeDropzone = { // The camelized version of the ID of the
     
   }
 
+
+}
+
+/* DROPZONE FILE UPLOAD */
+
+Dropzone.options.projectFilesDropzone = { // The camelized version of the ID of the form element
+
+  // The configuration we've talked about above
+  uploadMultiple: true,
+  parallelUploads: 100,
+  maxFiles: 10,
+  maxFileSize: 20,
+  //acceptedFiles: '.jpg, .png, .jpeg',
 
 }
 </script>

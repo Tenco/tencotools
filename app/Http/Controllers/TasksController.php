@@ -9,6 +9,10 @@ use tencotools\Task;
 use Session;
 use Auth;
 
+use Event;
+use tencotools\Events\TaskDone;
+
+
 
 class TasksController extends Controller
 {
@@ -90,6 +94,15 @@ class TasksController extends Controller
     public function updateStage(Request $request)
     {
         #dd($request()->taskid);
+
+        if ($request->target == 'done')
+        {
+            $task = Task::findOrFail($request->taskid);
+            // fire event!!
+            Event::fire(new TaskDone($task));
+        }
+
+
         Task::where('id', $request->taskid)
                     ->update(['stage' => $request->target]);
         return;
