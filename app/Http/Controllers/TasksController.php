@@ -78,8 +78,15 @@ class TasksController extends Controller
     public function remove($task_id)
     {
 
+        // notify blocked task owners about this
+        // task being deleted
+        Event::fire(new TaskDone($task_id));
 
         Task::destroy($task_id);
+
+        // when deleted also remove this task_id from blockedby column
+        Task::where('blockedby', $task_id)
+                    ->update(['blockedby' => NULL]);
 
         Session::flash('flash_message', 'Task deleted.');
         return back();
@@ -93,13 +100,19 @@ class TasksController extends Controller
     */
     public function updateStage(Request $request)
     {
-        #dd($request()->taskid);
-
+        
         if ($request->target == 'done')
         {
-            $task = Task::findOrFail($request->taskid);
+            
+            /*
+            Events:
+            Event and Event listner registred in app\Providers\EventServiceProvider.php
+            TaskDone.php recieves task_id and fires off notifyBlockedUser function in 
+            app\Listners\EmailListner.php. This function figures out who should get 
+            notifications about this task getting done and sends emails.
+            */
             // fire event!!
-            Event::fire(new TaskDone($task));
+            Event::fire(new TaskDone($request->taskid));
         }
 
 

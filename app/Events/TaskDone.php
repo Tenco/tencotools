@@ -12,15 +12,15 @@ class TaskDone extends Event
     use SerializesModels;
 
 
-    public $task;
+    public $task_id;
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct(Task $task)
+    public function __construct($task_id)
     {
-        $this->task = $task;
+        $this->task_id = $task_id;
     }
 
     /**
