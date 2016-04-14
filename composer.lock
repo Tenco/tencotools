@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "c9b0ddcb863c291b0470ca4088db24cb",
-    "content-hash": "1031cc60a7656517dafa6defd5916221",
+    "hash": "6f74f177d77a9e34f56ebc350834142f",
+    "content-hash": "c90d21b6ec40be4a01e15268e4302f6a",
     "packages": [
         {
             "name": "classpreloader/classpreloader",
@@ -199,6 +199,47 @@
                 "dropbox"
             ],
             "time": "2015-06-29 21:47:57"
+        },
+        {
+            "name": "genealabs/laravel-caffeine",
+            "version": "0.3.8",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/GeneaLabs/laravel-caffeine.git",
+                "reference": "555a5a99289782d2ade341e68d42078a1a54bec7"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/GeneaLabs/laravel-caffeine/zipball/555a5a99289782d2ade341e68d42078a1a54bec7",
+                "reference": "555a5a99289782d2ade341e68d42078a1a54bec7",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/routing": "~5.1",
+                "illuminate/support": "~5.1",
+                "php": ">=5.5.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "4.*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "GeneaLabs\\LaravelCaffeine\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Mike Bronner",
+                    "email": "hello@genealabs.com"
+                }
+            ],
+            "description": "Keeping Your Laravel Forms Awake",
+            "time": "2016-02-24 16:59:57"
         },
         {
             "name": "guzzle/guzzle",

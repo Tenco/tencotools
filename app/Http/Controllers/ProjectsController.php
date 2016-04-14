@@ -179,8 +179,10 @@ class ProjectsController extends Controller
 		$project->load('user'); // load user-data for this project
 		$allusers = User::all(); // load all data in user table
 
+		$files = Storage::disk('dropbox')->files('/project#'.$project->id.'/');
+		#dd($files);
 
-		return view('project', compact('project', 'allusers'));
+		return view('project', compact('project', 'allusers', 'files'));
 	}
 
 

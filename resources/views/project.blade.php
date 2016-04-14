@@ -4,7 +4,7 @@
 
 @include('partials.msg')
 
-<!-- PROJECT FILES UPLOAD MODAL -->
+<!-- PROJECT FILES MODAL -->
 <div class="row">
 	<div id="filesModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="filesLabel" aria-hidden="true" style="display: none;">
 		<div class="modal-dialog">
@@ -14,36 +14,12 @@
 					<h4 class="modal-title" id="newImageLabel">Project Files</h4>
 				</div>
 				<div class="modal-body">
-					<div>
 
-					  <!-- Nav tabs -->
-						<ul class="nav nav-tabs" role="tablist">
-					 		<li role="presentation" class="active"><a href="#fls" aria-controls="home" role="tab" data-toggle="tab">Project files</a></li>
-					 		<li role="presentation"><a href="#upl" aria-controls="profile" role="tab" data-toggle="tab">Upload files</a></li>
-						</ul>
-						<!-- Tab panes -->
-						<div class="tab-content">
-							<div role="tabpanel" class="tab-pane active" id="fls">
-								<br /><br />da files.. <br /><br /><br /><br /><br /><br /><br />
-							</div>    
-							<div role="tabpanel" class="tab-pane" id="upl">
-								<form role="form" action="/project/{{ $project->id }}/store/file" method="POST" id="projectFilesDropzone" class="dropzone" style="margin-top:10px;">
-									{{ csrf_field() }}
-									<div class="form-group">
-										<div id="dropzone-previews" class="dz-default dz-message">
-											<span>Drag files here, or click to upload</span>
-										</div>
-									</div>
-								</form>
-								<div class="row" id="reloadProject" style="display:none;">
-									<p><a href="/project/{{ $project->id }}"  type="button" class="btn btn-primary pull-right" style="margin-right:20px;margin-top:20px;">Ok</a></p>
-								</div>
-    
-							</div>
-						</div>
+					@foreach ($files as $file)
+						{{ $file }}<br />
+					@endforeach
 
-					</div>
-				</div>
+				</div><!-- /.modal-body -->		
 			</div><!-- /.modal-content -->
 		</div><!-- /.modal-dialog -->
 	</div>
@@ -235,7 +211,7 @@ function updateTask(target, taskid)
     $.ajax({
 
     	type: 'POST',
-    	url: '/ajax/tasks/' + taskid,
+    	url: '/tasks/' + taskid + '/stage',
     	data: {'target': target, 'taskid': taskid, '_token': token},
     	timeout: 2000, // sets timeout to 2 seconds and error will be thrown
     	/*

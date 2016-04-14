@@ -9,7 +9,8 @@
         "laravel/framework": "5.2.*",
         "laravel/socialite": "^2.0",
         "illuminate/http": "^5.2",
-        "league/flysystem-dropbox": "^1.0"
+        "league/flysystem-dropbox": "^1.0",
+        "genealabs/laravel-caffeine": "~0.3.0"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

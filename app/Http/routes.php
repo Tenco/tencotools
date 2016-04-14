@@ -46,7 +46,7 @@ Route::group(['Middleware' => ['web', 'auth']], function () /* middleware group 
 	Route::get('task/{task}/edit', 'TasksController@edit');
 	Route::patch('task/{task}/update', 'TasksController@update');
 	Route::get('task/{task}/delete', 'TasksController@remove');
-	Route::POST('ajax/tasks/{task}', 'TasksController@updateStage');
+	Route::POST('tasks/{task}/stage', 'TasksController@updateStage');
 
 
 });

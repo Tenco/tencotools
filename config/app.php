@@ -157,6 +157,7 @@ return [
         tencotools\Providers\RouteServiceProvider::class,
         tencotools\Providers\DropboxServiceProvider::class,
         Laravel\Socialite\SocialiteServiceProvider::class,
+        GeneaLabs\LaravelCaffeine\LaravelCaffeineServiceProvider::class,
 
 
     ],
