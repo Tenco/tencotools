@@ -9,16 +9,31 @@
 	<div id="filesModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="filesLabel" aria-hidden="true" style="display: none;">
 		<div class="modal-dialog">
 			<div class="modal-content">
-				<div class="modal-header">
+				<div class="modal-header" style="border-bottom: 1px solid #fff;">
 					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-					<h4 class="modal-title" id="newImageLabel">Project Files</h4>
+					<!--h4 class="modal-title" id="newImageLabel">Project Files</h4-->
 				</div>
 				<div class="modal-body">
-
-					@foreach ($files as $file)
-						{{ $file }}<br />
-					@endforeach
-
+					<table class="table table-condensed">
+						<tr>
+							<th>Filename</th>
+							<th>Uploaded by</th>
+							<th>Uploaded</th>
+						<tr>
+							<tbody>
+							@if ($project->ProjectFile->isEmpty())
+								<tr class="info"><td colspan=3>No files uploaded. Upload files in <a href="/project/{{ $project->id }}/edit">Edit Project</a></td></tr>
+							@else
+								@foreach ($project->ProjectFile as $file)
+									<tr>
+										<td><a href="/download/{{base64_encode($file->path . $file->name)}}"><span class="glyphicon glyphicon-file"></span> {{ basename($file->name) }}</a></td>
+										<td>{{ $file->user_id }}</td>
+										<td>{{ $file->created_at }}</td>
+									</tr>
+								@endforeach
+							@endif
+							</tbody>
+					</table>
 				</div><!-- /.modal-body -->		
 			</div><!-- /.modal-content -->
 		</div><!-- /.modal-dialog -->
@@ -72,7 +87,11 @@
 <div class="row">
 	<div class="col-md-12 media" style="margin-bottom: 20px;margin-top:20px;">
   		<a class="pull-left" href="#">
-    		<img class="img-thumbnail img-responsive media-object" src="/img/projectuploads/{{ $project->img }}" style="max-height:150px;max-width:250px;">
+  			@if (isset($project->img))
+    			<img class="img-thumbnail img-responsive media-object" src="/img/projectuploads/{{ $project->img }}" style="max-height:150px;max-width:250px;">
+    		@else
+    			<img class="img-thumbnail img-responsive media-object" src="/img/default_project_image.jpg" style="max-height:150px;max-width:250px;">
+    		@endif
   		</a>
   		<div class="media-body">
     		<h1 class="media-heading">#{{ $project->id }} {{ $project->name }}</h1>

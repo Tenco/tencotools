@@ -15,19 +15,11 @@ class Kernel extends HttpKernel
      */
     protected $middleware = [
         \Illuminate\Foundation\Http\Middleware\CheckForMaintenanceMode::class,
+        // having issues with this one when adding/listing tasks :(
+        //\GeneaLabs\LaravelCaffeine\Http\Middleware\LaravelCaffeineDripMiddleware::class,
     ];
 
 
-    /**
-    *
-    * Magnus
-    * Keep the session alive to avoid
-    * throwing an CSRF Exception (https://github.com/GeneaLabs/laravel-caffeine)
-    */
-    protected $middleware = [
-       // other entries above
-       \GeneaLabs\LaravelCaffeine\Http\Middleware\LaravelCaffeineDripMiddleware::class,
-   ];
     /**
      * The application's route middleware groups.
      *

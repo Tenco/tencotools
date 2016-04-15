@@ -10,7 +10,7 @@
 		<span class="glyphicon glyphicon-ban-circle" data-toggle="tooltip" data-placement="top" data-blocker="{{ $task->blockedby }}" title="Task blocked by #{{ $task->blockedby }}" style="color:#D31717;" aria-hidden="true"></span>
 
 	@endif
-	<a href="#" data-toggle="modal" data-target="#TaskModal{{$task->id}}">{{ str_limit($task->name, 30) }}</a></span>
+	<a href="#" data-toggle="modal" data-target="#TaskModal{{$task->id}}">{{ str_limit($task->name, 25) }}</a></span>
 	<div id="TaskModal{{$task->id}}" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="TaskLabel" aria-hidden="true" style="display: none;">
 		<div class="modal-dialog">
 			<div class="modal-content"  style="background: #eae672;">
@@ -50,15 +50,14 @@
 								<input type="hidden" name="blockedby" class="blockedby" value="">
 							@endif
 						</div>
+						@if (isset($task->deadline))
+							<div class="form-group">
+								<div class="alert alert-warning">Deadline: {{ $task->deadline->diffForHumans() }}</div>
+							</div>
+						@endif
 						<div class="form-group">
-							<label for="taskDeadline">Deadline</label>
-							<?= $task->deadline; ?>
-							@if (isset($task->deadline) || $task->deadline === '0000-00-00')
-								{{ $task->deadline->diffForHumans() }} &nbsp;&nbsp;&nbsp;<small><a href=/removedeadline/{{ $project->id }}/{{ $task->id }}><span class="glyphicon glyphicon-trash"></span></a></small>
-								<input type="hidden" name="taskDeadline" value="{{ $task->deadline }}">
-							@else
-								<input type="date" class="form-control" id="taskDeadline" name="taskDeadline" placeholder="Enter task deadline" value="{{ $task->deadline }}">
-							@endif
+							<label for="taskDeadline">Set New Deadline</label>
+							<input type="date" class="form-control" id="taskDeadline" name="taskDeadline" placeholder="Enter task deadline">
 						</div>
 						<div class="form-group">
 							<button type="submit" class="btn btn-default">Save</button>

@@ -33,7 +33,6 @@ Route::group(['Middleware' => ['web', 'auth']], function () /* middleware group 
 	Route::patch('project/{id}/update', 'ProjectsController@update');
 	Route::post('project/{project}/tasks', 'TasksController@store');
 	Route::post('project/{project}/store/image', 'ProjectsController@storeImage');
-	Route::post('project/{project}/store/file', 'ProjectsController@storeFile');
 	Route::get('project/{project}/kickstart', 'TasksController@kickstart');
 
 	Route::get('project/{id}/revive', 'ProjectsController@revive');
@@ -48,5 +47,7 @@ Route::group(['Middleware' => ['web', 'auth']], function () /* middleware group 
 	Route::get('task/{task}/delete', 'TasksController@remove');
 	Route::POST('tasks/{task}/stage', 'TasksController@updateStage');
 
+	Route::post('project/{project}/store/file', 'ProjectFilesController@storeFile');
+	Route::get('download/{file}', 'ProjectFilesController@download');
 
 });

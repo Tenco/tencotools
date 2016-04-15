@@ -10,6 +10,8 @@ use tencotools\Http\Requests;
 use tencotools\Project;
 
 use tencotools\User;
+use tencotools\ProjectFile;
+
 use Auth;
 use Storage;
 use Session;
@@ -96,7 +98,7 @@ class ProjectsController extends Controller
 
 	/*
 	*
-	* Store project image on Cloud server
+	* Store project image locally
 	*
 	*/
 	public function storeImage(Request $request, Project $project)
@@ -112,8 +114,6 @@ class ProjectsController extends Controller
 		$uploadedfile = $request->file('file');
 		$new_file_name = time() . $uploadedfile->getClientOriginalName();
 		$uploadedfile->move('img/projectuploads/', $new_file_name);
-		//Storage::disk('dropbox')->put('/project#'.$project->id.'/'.$new_file_name, file_get_contents($uploadedfile));
-
 
 		$project->update([
 			'img' => $new_file_name,
@@ -127,17 +127,13 @@ class ProjectsController extends Controller
 	* Store project project files on Cloud server
 	*
 	*/
+	/*
 	public function storeFile(Request $request, Project $project)
 	{
 		// VALIDATION 
 		if( ! $request->hasFile('file'))
 			return response()->json(['error' => 'No File Sent']);
 
-		/*
-		$this->validate($request, [
-				'file' => 'required|mimes:jpeg,jpg,png',
-			]);
-		*/
 
 		$uploadedfile = $request->file('file');
 		foreach ($uploadedfile as $duh)
@@ -146,23 +142,10 @@ class ProjectsController extends Controller
 			$path = '/project#'.$project->id.'/'.$new_file_name;
 			Storage::disk('dropbox')->put($path, file_get_contents($duh));
 		}
-		
-		
-		//dd($path);
-		
-
-		/*
-			Do I really need to store files in DB? I can just read 
-			and write in the correct folder on Dropbox!
-		
-		$project->files->update([
-			'file' => $new_file_name,
-			'project_id' => $project->id,
-			]);
-		*/
 
 		return response()->json(['success' => 'ok']);
 	}
+	*/
 	/*
 	*
 	* display a single project and it's tasks
@@ -176,13 +159,39 @@ class ProjectsController extends Controller
 		
 
 		// eagerload the project owner data
-		$project->load('user'); // load user-data for this project
+		$project->load('user.ProjectFile'); // EAGER LOAD ALSO FILES!! avoid N+1 problem!
+
 		$allusers = User::all(); // load all data in user table
 
-		$files = Storage::disk('dropbox')->files('/project#'.$project->id.'/');
-		#dd($files);
+		$path = '/project#'.$project->id.'/';
+		
 
-		return view('project', compact('project', 'allusers', 'files'));
+		return view('project', compact('project', 'allusers'));
+	}
+
+
+	public function download($file)
+	{
+		
+		$file = base64_decode($file);
+
+		if ( ! Storage::disk('dropbox')->exists($file))
+		{
+			dd('file: '.$file.' does not seem to exist?');
+		}
+
+		$mime = Storage::disk('dropbox')->mimeType($file);
+		$contents = Storage::disk('dropbox')->get($file);
+		
+        $headers = array(
+              'Content-Type: '.$mime,
+            );
+
+        #ob_end_clean();
+        
+        return response($contents)
+        	  ->header('Content-Type', $mime);
+        
 	}
 
 

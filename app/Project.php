@@ -34,4 +34,10 @@ class Project extends Model
 		return $this->belongsTo('tencotools\User', 'project_owner');
 	}
 
+	// define relationship
+    public function ProjectFile() 
+    {
+        return $this->hasMany('tencotools\ProjectFile');
+    }
+
 }

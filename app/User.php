@@ -39,4 +39,10 @@ class User extends Authenticatable
     {
         return $this->hasMany('tencotools\Task');
     }
+
+     // define relationship
+    public function ProjectFile() 
+    {
+        return $this->hasMany('tencotools\ProjectFile');
+    }
 }

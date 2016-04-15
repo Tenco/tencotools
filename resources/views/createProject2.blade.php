@@ -17,6 +17,7 @@
 		</form>
 
 		<div class="pull-right" style="margin-top:20px;">
+         <a href="/project/{{ $project->id }}" type="button" class="btn btn-default">Skip this</a>
 		  		<a href="/project/{{ $project->id }}" type="button" class="btn btn-primary">Done</a>
 		 </div>
     		
