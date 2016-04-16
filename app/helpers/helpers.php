@@ -1,12 +1,26 @@
 <?php namespace Helpers;
 
-	
-	function taranslateTaskidToName($task_id)
+
+	function TaskIdToName($task_id)
 	{
-		exit("magnus");
-		//$task = \tencotools\Task::where('id', $task_id);
-		#$task = DB::table('tasks')->where('id', $task_id)->get();
-		#dd($task);
-		#return $task->name;
+		$task = \tencotools\Task::findOrFail($task_id);
+		return $task['name'];
+
+	}
+
+	
+	/**
+	*
+	* translare user_id to name
+	* Return "string"
+	*
+	*/
+	function UserIdToName($user_id)
+	{
+
+
+		$user = \tencotools\User::findOrFail($user_id);
+		return $user['name'];
+		
 
 	}

@@ -36,7 +36,6 @@ class ProjectsController extends Controller
 
 		$projects = Project::all();
 
-
 		return view('home', compact('projects'));
 	}
 
@@ -80,7 +79,7 @@ class ProjectsController extends Controller
             'project_owner' => 'required'
             ]);
 
-		$deadline = (request()->deadline ? request()->deadline : NULL);
+		$deadline = (strlen(request()->deadline) ? request()->deadline : NULL);
 
     	$p = $project->create([
     		'name' => request()->name, /* kan även använda typehintade $request objeketet $request->taskName */
@@ -122,30 +121,7 @@ class ProjectsController extends Controller
 		return response()->json(['success' => 'ok']);
 	}
 
-	/*
-	*
-	* Store project project files on Cloud server
-	*
-	*/
-	/*
-	public function storeFile(Request $request, Project $project)
-	{
-		// VALIDATION 
-		if( ! $request->hasFile('file'))
-			return response()->json(['error' => 'No File Sent']);
-
-
-		$uploadedfile = $request->file('file');
-		foreach ($uploadedfile as $duh)
-		{
-			$new_file_name = time() . $duh->getClientOriginalName();
-			$path = '/project#'.$project->id.'/'.$new_file_name;
-			Storage::disk('dropbox')->put($path, file_get_contents($duh));
-		}
-
-		return response()->json(['success' => 'ok']);
-	}
-	*/
+	
 	/*
 	*
 	* display a single project and it's tasks
@@ -228,7 +204,7 @@ class ProjectsController extends Controller
 				'project_owner' => 'required|numeric'
 			]);
 		
-		$deadline = (request()->deadline ? request()->deadline : NULL);
+		$deadline = (strlen(request()->deadline) ? request()->deadline : NULL);
 
 		Project::where('id', $id)
           ->update([

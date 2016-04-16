@@ -100,4 +100,9 @@ class ProjectFilesController extends Controller
         $ProjectFile->save();
 		return;
 	}
+
+	public function getFileUserName()
+	{
+		return $this->user->name;
+	}
 }

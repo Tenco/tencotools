@@ -58,20 +58,17 @@
 					    	<input type="name" name="cost" class="form-control" id="cost" placeholder="Enter Cost" value="{{ $project->cost }}">
 					    </div>
 					  </div>
-					  <div class="form-group">
-					    <label for="name">Project Deadline</label>
 					    @if (isset($project->deadline))
-							{{ $project->deadline->diffForHumans() }} <!--&nbsp;&nbsp;&nbsp;<small><a href=#>change</a></small-->
-							<input type="hidden" name="deadline" value="{{ $project->deadline }}">
+							<div class="form-group" id="Deadline">
+								<label for="deadline">Deadline ({{ $project->deadline->diffForHumans() }})</label>
+								<input type="date" class="form-control" id="deadline" name="deadline" value="{{ date('Y-m-d',strtotime($project->deadline)) }}">
+							</div>
 						@else
-							<input type="date" name="deadline" class="form-control" id="deadline" placeholder="Enter Deadline" value="{{ $project->deadline }}">
+							<div class="form-group" id="Deadline">
+								<label for="Deadline">Deadline</label>
+								<input type="date" class="form-control" id="deadline" name="deadline">
+							</div>
 						@endif
-					  </div>
-					  <!--div class="checkbox">
-					    <label>
-					      <input type="checkbox"> Check me out
-					    </label>
-					  </div-->
 						@if (isset($project->close_date))
 							<a href="/project/{{ $project->id }}/revive" type="button" class="btn btn-success">Revive Project</a>
 						@else

@@ -7,8 +7,7 @@
 --}}
 <span class="note yellow" id="{{ $task->id }}"><img class="img-circle img-responsive media-object pull-right" style="width:20px;" src="{{ $task->user->avatar }}">
 	@if ($task->blockedby)
-		<span class="glyphicon glyphicon-ban-circle" data-toggle="tooltip" data-placement="top" data-blocker="{{ $task->blockedby }}" title="Task blocked by #{{ $task->blockedby }}" style="color:#D31717;" aria-hidden="true"></span>
-
+		<span class="glyphicon glyphicon-ban-circle" data-toggle="tooltip" data-placement="top" data-blocker="{{ $task->blockedby }}" title="Task blocked by task #{{ $task->blockedby }}" style="color:#D31717;" aria-hidden="true"></span>
 	@endif
 	<a href="#" data-toggle="modal" data-target="#TaskModal{{$task->id}}">{{ str_limit($task->name, 25) }}</a></span>
 	<div id="TaskModal{{$task->id}}" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="TaskLabel" aria-hidden="true" style="display: none;">
@@ -21,9 +20,19 @@
 					<form method="POST" name="taskForm{{ $task->id }}" action="/task/{{ $task->id }}/update" role="form">
 						<input name="_method" type="hidden" value="PATCH">
 						{{ csrf_field() }}
+						@if (isset($task->blockedby))
+							<div class="alert alert-danger">
+								<span class="glyphicon glyphicon-ban-circle"></span> Task blocked by task <a href="/project/{{$project->id}}#TaskModal{{$task->blockedby}}" target=_new>#{{ $task->blockedby }}</a>
+								<a href="/removeblock/{{ $project->id }}/{{ $task->id }}" class="pull-right"><small>remove</small></a>
+							</div>
+						@endif
 						<div class="form-group">
 							<label for="taskName">Name</label>
 							<input type="text" class="form-control" id="taskName" name="taskName" placeholder="Enter task name" required value="{{ $task->name }}">
+						</div>
+						<div class="form-group">
+							<label for="taskDesc">Description</label>
+							<textarea class="form-control" rows="3" id="taskDesc" name="taskDesc" >{{ $task->desc }}</textarea>
 						</div>
 						<div class="form-group">
 							<label for="taskResponsible">Responsible</label>
@@ -38,27 +47,25 @@
 							</select>
 						</div>
 						<div class="form-group">
-							<label for="taskDesc">Description</label>
-							<textarea class="form-control" rows="3" id="taskDesc" name="taskDesc" >{{ $task->desc }}</textarea>
-						</div>
-						<div class="form-group">
-							<label for="taskBlock">Waiting for</label>
 							@if (isset($task->blockedby) || $task->blockedby === 0)
-								Task <a href="/project/{{$project->id}}#TaskModal{{$task->blockedby}}" target=_new>#{{ $task->blockedby }}</a>&nbsp;&nbsp;&nbsp;<small><a href=/removeblock/{{ $project->id }}/{{ $task->id }}><span class="glyphicon glyphicon-trash"></span></a></small>
+								<input type="hidden" name="blockedby" class="blockedby" value="{{ $task->blockedby }}">
 							@else
+								<label for="taskDeadline">Blocked by</label>
 								<input type="text" class="form-control autocomplete" name="taskBlock" placeholder="Search for a task">
 								<input type="hidden" name="blockedby" class="blockedby" value="">
 							@endif
 						</div>
 						@if (isset($task->deadline))
-							<div class="form-group">
-								<div class="alert alert-warning">Deadline: {{ $task->deadline->diffForHumans() }}</div>
+							<div class="form-group" id="newDeadline">
+								<label for="taskDeadline">Deadline ({{ $task->deadline->diffForHumans() }})</label>
+								<input type="date" class="form-control" id="taskDeadline" name="taskDeadline" value="{{ date('Y-m-d',strtotime($task->deadline)) }}">
+							</div>
+						@else
+							<div class="form-group" id="deadline">
+								<label for="taskDeadline">Deadline</label>
+								<input type="date" class="form-control" id="taskDeadline" name="taskDeadline">
 							</div>
 						@endif
-						<div class="form-group">
-							<label for="taskDeadline">Set New Deadline</label>
-							<input type="date" class="form-control" id="taskDeadline" name="taskDeadline" placeholder="Enter task deadline">
-						</div>
 						<div class="form-group">
 							<button type="submit" class="btn btn-default">Save</button>
 							<p class="pull-right"><a href="/task/{{ $task->id }}/delete"><span class="glyphicon glyphicon-trash" aria-hidden="true" style="top:10px;" data-toggle="tooltip" data-placement="left" data-blocker="Delete this Task"></span></a></p>

@@ -27,7 +27,7 @@
 								@foreach ($project->ProjectFile as $file)
 									<tr>
 										<td><a href="/download/{{base64_encode($file->path . $file->name)}}"><span class="glyphicon glyphicon-file"></span> {{ basename($file->name) }}</a></td>
-										<td>{{ $file->user_id }}</td>
+										<td>{{ \Helpers\UserIdToName($file->user_id) }}</td>
 										<td>{{ $file->created_at }}</td>
 									</tr>
 								@endforeach
@@ -98,7 +98,7 @@
     		<p class="lead">{{ $project->desc }}</p>
     		<p>
 				<small>
-					Client: <a href=#>Lorem Ipsum</a><br />
+					Client: <em>To Be Implemented</em><br />
 					Project owner: {{ $project->user->name }} &nbsp;&nbsp;<br />
 		    		@if ($project->deadline)
 		    			Deadline: {{ $project->deadline->diffForHumans() }} &nbsp;&nbsp;

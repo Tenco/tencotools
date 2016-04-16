@@ -9,8 +9,8 @@ use tencotools\Task;
 use Session;
 use Auth;
 
-use Event;
-use tencotools\Events\TaskDone;
+//use Event;
+//use tencotools\Events\TaskDone;
 
 
 
@@ -42,7 +42,7 @@ class TasksController extends Controller
             'taskResponsible' => 'required'
             ]);
 
-        $deadline = (request()->taskDeadline ? request()->taskDeadline : NULL);
+        $deadline = (strlen(request()->taskDeadline) ? request()->taskDeadline : NULL);
 
     	$project->tasks()->create([
     		'name' => request()->taskName, /* kan även använda typehintade $request objeketet $request->taskName */
@@ -80,7 +80,8 @@ class TasksController extends Controller
 
         // notify blocked task owners about this
         // task being deleted
-        Event::fire(new TaskDone($task_id));
+        //Event::fire(new TaskDone($task_id));
+
 
         Task::destroy($task_id);
 
@@ -112,7 +113,7 @@ class TasksController extends Controller
             notifications about this task getting done and sends emails.
             */
             // fire event!!
-            Event::fire(new TaskDone($request->taskid));
+            //Event::fire(new TaskDone($request->taskid));
         }
 
 
@@ -136,7 +137,7 @@ class TasksController extends Controller
             ]);
         
         $blockedby = (request()->blockedby ? request()->blockedby : NULL);
-        $deadline = (request()->taskDeadline ? request()->taskDeadline : NULL);
+        $deadline = (strlen(request()->taskDeadline) ? request()->taskDeadline : NULL);
 
         $task->update([
             'name' => $request->taskName,
@@ -285,15 +286,5 @@ class TasksController extends Controller
         return redirect($url);
     }    
 
-
-    /* private **
-    *
-    * 
-    *
-    */
-    private function saveTask(Array $task)
-    {
-        return;
-    }
 
 }
