@@ -89,6 +89,10 @@ class TasksController extends Controller
         Task::where('blockedby', $task_id)
                     ->update(['blockedby' => NULL]);
 
+        // when deleted also set blockedby column to NULL
+        Task::where('id', $task_id)
+                    ->update(['blockedby' => NULL]);
+
         Session::flash('flash_message', 'Task deleted.');
         return back();
 

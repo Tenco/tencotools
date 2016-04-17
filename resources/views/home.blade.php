@@ -28,10 +28,20 @@
                             <div class="panel-heading">
                               <h3 class="panel-title">{{ str_limit($project->name, 30) }}</h3>
                             </div>
+
+                          @if (isset($project->img))
                             <div class="panel-body" style="background-image: url(/img/projectuploads/{{ $project->img }}); min-height: 150px;">
                                 <br /><br /><br /><br /><br /><br /><br />
                                 <a class="pull-right" style="color: #f5f5f5;" href="project/{{ $project->id }}"><span class="glyphicon glyphicon-zoom-in"></span> open</a>
                             </div>
+                          @else
+                            <div class="panel-body" style="background-image: url('/img/default_project_image.jpg'); min-height: 150px;">
+                                <br /><br /><br /><br /><br /><br /><br />
+                                <a class="pull-right" style="color: #f5f5f5;" href="project/{{ $project->id }}"><span class="glyphicon glyphicon-zoom-in"></span> open</a>
+                            </div>
+                          @endif
+
+                            
                           </div>
                     </div>
                 @endif

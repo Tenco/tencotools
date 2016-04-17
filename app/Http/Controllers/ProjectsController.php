@@ -151,13 +151,13 @@ class ProjectsController extends Controller
 		
 		$file = base64_decode($file);
 
-		if ( ! Storage::disk('dropbox')->exists($file))
+		if ( ! Storage::disk('cloud')->exists($file))
 		{
 			dd('file: '.$file.' does not seem to exist?');
 		}
 
-		$mime = Storage::disk('dropbox')->mimeType($file);
-		$contents = Storage::disk('dropbox')->get($file);
+		$mime = Storage::disk('cloud')->mimeType($file);
+		$contents = Storage::disk('cloud')->get($file);
 		
         $headers = array(
               'Content-Type: '.$mime,

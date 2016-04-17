@@ -22,7 +22,12 @@ Route::get('logout', 'AuthController@logout');
 Route::group(['Middleware' => ['web', 'auth']], function () /* middleware group defined in Kernel.php */
 {
 	//
+	Route::get('info', function (){
+
+		return phpinfo();
 		
+	});
+
 	Route::get('/', 'ProjectsController@home');
 	Route::get('project', 'ProjectsController@home');
 	Route::get('project/create', 'ProjectsController@create');
