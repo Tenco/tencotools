@@ -41,8 +41,17 @@ class ProjectFilesController extends Controller
 		foreach ($uploadedfile as $duh)
 		{
 			
-			#$new_file_name = time() . $duh->getClientOriginalName();
-			$path = '/project#'.$project->id.'/'.time().'/';
+			if (\App::environment('local')) 
+			{
+				// The environment is local
+				$path = '/development/project#'.$project->id.'/'.time().'/';
+			}
+			else
+			{
+				// PROPDUCTION
+				$path = '/project#'.$project->id.'/'.time().'/';	
+			}
+			
 
 			// save file to Dropbox-folder
 			$r = Storage::disk('dropbox')->put($path . $duh->getClientOriginalName(), file_get_contents($duh));
@@ -87,6 +96,22 @@ class ProjectFilesController extends Controller
         
 	}
 
+	
+	/*
+    * softdelete file but only from DB
+    * 
+    *
+    */
+    public function remove($file)
+    {
+
+        ProjectFile::destroy($file);
+
+
+        Session::flash('flash_message', 'File deleted.');
+        return back();
+
+    }
 
 	private function newProjectFilesEntry($name, $path, $project_id)
 	{

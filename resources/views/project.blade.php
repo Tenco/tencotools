@@ -19,6 +19,7 @@
 							<th>Filename</th>
 							<th>Uploaded by</th>
 							<th>Uploaded</th>
+							<th></th>
 						<tr>
 							<tbody>
 							@if ($project->ProjectFile->isEmpty())
@@ -29,6 +30,7 @@
 										<td><a href="/download/{{base64_encode($file->path . $file->name)}}"><span class="glyphicon glyphicon-file"></span> {{ basename($file->name) }}</a></td>
 										<td>{{ \Helpers\UserIdToName($file->user_id) }}</td>
 										<td>{{ $file->created_at }}</td>
+										<td><a href="/file/{{ $file->id }}/delete"><small><span class="glyphicon glyphicon-trash"></span></small></a></td>
 									</tr>
 								@endforeach
 							@endif

@@ -34,6 +34,7 @@ class ProjectsController extends Controller
 	public function home(Carbon $carbon)
 	{
 
+		#dd(\App::environment('local'));
 		$projects = Project::all();
 
 		return view('home', compact('projects'));

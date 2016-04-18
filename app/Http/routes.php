@@ -56,5 +56,6 @@ Route::group(['Middleware' => ['web', 'auth']], function () /* middleware group 
 
 	Route::post('project/{project}/store/file', 'ProjectFilesController@storeFile');
 	Route::get('download/{file}', 'ProjectFilesController@download');
+	Route::get('file/{file}/delete', 'ProjectFilesController@remove');
 
 });
