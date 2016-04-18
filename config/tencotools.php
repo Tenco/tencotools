@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'olle' => 'balle',
+    'SAVETO' => 'local',
 
 
 ];

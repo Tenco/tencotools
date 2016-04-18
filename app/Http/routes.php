@@ -12,8 +12,6 @@
 */
 
 Route::get('login', 'AuthController@login');
-Route::get('oauthcallback', 'AuthController@handleProviderCallback');
-Route::get('sociallogin', 'AuthController@redirectToProvider');
 Route::get('logout', 'AuthController@logout');
 
 
@@ -21,12 +19,16 @@ Route::get('logout', 'AuthController@logout');
 
 Route::group(['Middleware' => ['web', 'auth']], function () /* middleware group defined in Kernel.php */
 {
-	//
+	// just to check paths on DigitalOcean
 	Route::get('info', function (){
 
 		return phpinfo();
-		
+
 	});
+
+	// socialite needs to be inside web middleware
+	Route::get('oauthcallback', 'AuthController@handleProviderCallback');
+	Route::get('sociallogin', 'AuthController@redirectToProvider');
 
 	Route::get('/', 'ProjectsController@home');
 	Route::get('project', 'ProjectsController@home');
