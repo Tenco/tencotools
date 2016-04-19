@@ -66,6 +66,10 @@
 								<input type="date" class="form-control" id="taskDeadline" name="taskDeadline">
 							</div>
 						@endif
+						<div class="form-group" id="deadline">
+								<label for="taskDeadline">Perma link:</label>
+								<input type="text" class="form-control" value="{{ url('/project') . '/' .$project->id . '#TaskModal' . $task->id }}">
+							</div>
 						<div class="form-group">
 							<button type="submit" class="btn btn-default">Save</button>
 							<p class="pull-right"><a href="/task/{{ $task->id }}/delete"><span class="glyphicon glyphicon-trash" aria-hidden="true" style="top:10px;" data-toggle="tooltip" data-placement="left" data-blocker="Delete this Task"></span></a></p>

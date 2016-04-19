@@ -23,7 +23,7 @@
 						<tr>
 							<tbody>
 							@if ($project->ProjectFile->isEmpty())
-								<tr class="info"><td colspan=3>No files uploaded. Upload files in <a href="/project/{{ $project->id }}/edit">Edit Project</a></td></tr>
+								<tr class="info"><td colspan=4>&nbsp;No files uploaded. Upload files in <a href="/project/{{ $project->id }}/edit">Edit Project</a></td></tr>
 							@else
 								@foreach ($project->ProjectFile as $file)
 									<tr>

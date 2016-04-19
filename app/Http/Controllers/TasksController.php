@@ -25,6 +25,7 @@ class TasksController extends Controller
     */
     public function __construct() 
     {
+        // user needs to be logged in for all of these functions/routes
         $this->middleware('auth');
     }
 
