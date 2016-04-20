@@ -59,6 +59,7 @@ class TasksController extends Controller
 
         
         // notify responsible?
+        /*
         if (Auth::id() != request()->taskResponsible)
         {
             
@@ -79,8 +80,10 @@ class TasksController extends Controller
 
             });
         }
-        
+        */
     	return back();
+        #$url = '/project/'. $project_id;
+        #return redirect($url); 
 
     }
 

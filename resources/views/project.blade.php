@@ -62,7 +62,11 @@
 							<label for="taskResponsible">Responsible</label>
 							<select class="form-control" id="taskResponsible" name="taskResponsible">
 								@foreach ($allusers as $us)
-				  					<option value="{{ $us->id }}">{{ $us->name }}</option>
+									@if ($us->id == Auth::id())
+										<option value="{{ $us->id }}" SELECTED>{{ $us->name }}</option>
+									@else
+										<option value="{{ $us->id }}">{{ $us->name }}</option>
+									@endif
 				  				@endforeach
 							</select>
 						</div>
