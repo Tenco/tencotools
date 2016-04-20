@@ -14,7 +14,11 @@
 Route::get('login', 'AuthController@login');
 Route::get('logout', 'AuthController@logout');
 
+Route::get('mail', function(){
 
+	return view('emails.newTask'); 
+
+});
 
 
 Route::group(['Middleware' => ['web', 'auth']], function () /* middleware group defined in Kernel.php */

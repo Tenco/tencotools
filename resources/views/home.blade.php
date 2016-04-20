@@ -5,7 +5,9 @@
 @include('partials.msg')
 
 <div class="row">
-<p class="pull-right"><a href="project/create" type="button" class="btn btn-default">Add project</a></p>
+  <div class="col-md-12"> 
+    <p class="pull-right"><a href="project/create" type="button" class="btn btn-default">Add project</a></p>
+  </div>
 </div>
 
 <div>

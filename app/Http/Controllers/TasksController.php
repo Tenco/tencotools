@@ -8,6 +8,8 @@ use tencotools\Project;
 use tencotools\Task;
 use Session;
 use Auth;
+use Mail;
+use tencotools\User;
 
 //use Event;
 //use tencotools\Events\TaskDone;
@@ -45,7 +47,7 @@ class TasksController extends Controller
 
         $deadline = (strlen(request()->taskDeadline) ? request()->taskDeadline : NULL);
 
-    	$project->tasks()->create([
+    	$task = $project->tasks()->create([
     		'name' => request()->taskName, /* kan även använda typehintade $request objeketet $request->taskName */
     		'desc' => request()->taskDesc,
     		'created_by' => Auth::id(),
@@ -55,6 +57,29 @@ class TasksController extends Controller
             'deadline' => $deadline
     	]);
 
+        
+        // notify responsible?
+        if (Auth::id() != request()->taskResponsible)
+        {
+            
+            $user = User::where('id', request()->taskResponsible)->first();
+            $mottagare = $user->email;
+            $project_id = $project->id;
+            $task_id = $task->id;
+
+            $data = array('to'=>$mottagare, 'project_id'=>$project_id, 'task_id'=>$task_id);
+            
+            Mail::queue(['html' => 'emails.newTask'], $data, function ($message) use ($mottagare, $project_id, $task_id)
+            {
+                
+                $message->from(config('mail.from.address'), config('mail.from.name'));
+                $message->subject('New TencoTool task');
+                $message->to($mottagare);
+
+
+            });
+        }
+        
     	return back();
 
     }
