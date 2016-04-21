@@ -27,7 +27,7 @@
 							@else
 								@foreach ($project->ProjectFile as $file)
 									<tr>
-										<td><a href="/download/{{base64_encode($file->path . $file->name)}}"><span class="glyphicon glyphicon-file"></span> {{ basename($file->name) }}</a></td>
+										<td><a href="/download/{{base64_encode($file->path . $file->name)}}" title="{{ basename($file->name) }}"><span class="glyphicon glyphicon-file"></span> {{ str_limit(basename($file->name), 28) }}</a></td>
 										<td>{{ \Helpers\UserIdToName($file->user_id) }}</td>
 										<td>{{ $file->created_at }}</td>
 										<td><a href="/file/{{ $file->id }}/delete"><small><span class="glyphicon glyphicon-trash"></span></small></a></td>
@@ -76,7 +76,7 @@
 						</div>
 						<div class="form-group">
 							<label for="taskDeadline">Deadline</label>
-							<input type="date" class="form-control" id="taskDeadline" name="taskDeadline" placeholder="Enter task deadline" value="{{ old('taskDeadline') }}">
+							<input type="date" class="form-control" id="taskDeadline" name="taskDeadline" placeholder="yyyy-mm-dd" value="{{ old('taskDeadline') }}">
 						</div>
 						<button type="submit" class="btn btn-default">Create Task</button>
 					</form>
