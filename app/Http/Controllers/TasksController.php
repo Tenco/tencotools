@@ -82,8 +82,7 @@ class TasksController extends Controller
         }
         */
     	return back();
-        #$url = '/project/'. $project_id;
-        #return redirect($url); 
+
 
     }
 

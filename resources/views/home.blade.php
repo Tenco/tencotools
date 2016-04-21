@@ -32,7 +32,7 @@
                             </div>
 
                           @if (isset($project->img))
-                            <div class="panel-body" style="background-image: url(/img/projectuploads/{{ $project->img }}); min-height: 150px;">
+                            <div class="panel-body" style="background-image: url(/img/projectuploads/{{ $project->img }}); background-size: cover;">
                                 <br /><br /><br /><br /><br /><br /><br />
                                 <a class="pull-right" style="color: #f5f5f5;" href="project/{{ $project->id }}"><span class="glyphicon glyphicon-zoom-in"></span> open</a>
                             </div>
