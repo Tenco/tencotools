@@ -72,8 +72,7 @@ class TasksController extends Controller
             Mail::queue(['html' => 'emails.newTask'], $data, function ($message) use ($mottagare, $project_id, $task_id)
             {
                 
-                #$message->from(config('mail.from.address'), config('mail.from.name'));
-                $message->from('magnus@tenco.se'), 'TencoTools');
+                $message->from(config('mail.from.address'), config('mail.from.name'));
                 $message->subject('New TencoTool task');
                 $message->to($mottagare);
 
