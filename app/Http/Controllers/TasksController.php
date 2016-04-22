@@ -58,26 +58,20 @@ class TasksController extends Controller
     	]);
 
         
-        // notify responsible?
+
+        // notify responsible?        
         if (Auth::id() != request()->taskResponsible)
         {
-            
             $user = User::where('id', request()->taskResponsible)->first();
-            $mottagare = $user->email;
+            $to = $user->email;
             $project_id = $project->id;
             $task_id = $task->id;
+            $subject = 'You have been assigned a task';
+            $template = 'emails.newTask';
+            $data = array('to'=>$to, 'project_id'=>$project_id, 'task_id'=>$task_id);
 
-            $data = array('to'=>$mottagare, 'project_id'=>$project_id, 'task_id'=>$task_id);
-            
-            Mail::queue(['html' => 'emails.newTask'], $data, function ($message) use ($mottagare, $project_id, $task_id)
-            {
-                
-                $message->from(config('mail.from.address'), config('mail.from.name'));
-                $message->subject('New TencoTool task');
-                $message->to($mottagare);
+            $this->notify($to, $data, $project_id, $task_id, $subject, $template);
 
-
-            });
        }
         
     	return back();
@@ -107,7 +101,15 @@ class TasksController extends Controller
 
         // notify blocked task owners about this
         // task being deleted
-        //Event::fire(new TaskDone($task_id));
+        // --> this needs to be set up!!! $users = $project->tasks()->create(
+
+        #$blocked_tasks = Task::where('blockedby', $task_id)->get();
+        
+        #foreach ($blocked_tasks as $task) 
+        #{
+            //dd($task->responsible);
+            // notify distinct user_id 
+        #}
 
 
         Task::destroy($task_id);
@@ -318,4 +320,21 @@ class TasksController extends Controller
     }    
 
 
+    /*
+    *
+    * 
+    *
+    */
+    public function notify($to, $data, $project_id, $task_id, $subject, $template)
+    {
+        Mail::queue(['html' => $template], $data, function ($message) use ($to, $project_id, $task_id, $subject)
+        {
+                
+            $message->from(config('mail.from.address'), config('mail.from.name'));
+            $message->subject($subject);
+            $message->to($to);
+        });
+
+        return;
+    }
 }

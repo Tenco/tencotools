@@ -4,10 +4,9 @@
     <meta charset="utf-8">
     <style>
 .postit {
-    background-image: url(http://tencotools.dev/img/post-it.png);
+    background-image: url(http://tencotools.se/img/post-it.png);
     height: 255px;
     width: 273px;
-
     padding: 69px;
 }
 
