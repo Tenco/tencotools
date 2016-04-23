@@ -55,7 +55,7 @@ return [
     |
     */
 
-    'from' => ['address' => 'office@tenco.se', 'name' => 'TencoTools'],
+    'from' => ['address' => 'all@tencotools.se', 'name' => 'TencoTools'],
 
     /*
     |--------------------------------------------------------------------------

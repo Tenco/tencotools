@@ -15,7 +15,8 @@
 	@if (isset($task->deadline))
 		<span class="glyphicon glyphicon-calendar pull-right" data-toggle="tooltip" data-placement="top" title="{{ $task->deadline->diffForHumans() }}" style="margin-left:3px;"></span>
 	@endif
-	<a href="#" data-toggle="modal" data-target="#TaskModal{{$task->id}}"><small>{{ str_limit($task->name, 35) }}</small></a></span>
+	<a href="#" data-toggle="modal" data-target="#TaskModal{{$task->id}}"><small>{{ str_limit($task->name, 35) }}</small></a>
+</span>
 	<div id="TaskModal{{$task->id}}" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="TaskLabel" aria-hidden="true" style="display: none;">
 		<div class="modal-dialog">
 			<div class="modal-content"  style="background: #eae672;">

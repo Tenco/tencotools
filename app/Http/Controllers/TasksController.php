@@ -137,9 +137,28 @@ class TasksController extends Controller
                     ->update(['blockedby' => NULL]);
 
 
-        Session::flash('flash_message', 'Task deleted.');
+        Session::flash('flash_message', 'Task deleted. <a href="/task/'.$task_id.'/undo">Undo.</a>');
         return back();
 
+    }
+
+
+    /*
+    *
+    *  revive a deleted task
+    *
+    */
+    public function restore($task)
+    {
+
+        Task::withTrashed()
+            ->where('id', $task)
+            ->restore();
+
+        
+        Session::flash('flash_message', 'Task revived.');
+        
+        return back();
     }
 
     /*

@@ -14,10 +14,9 @@
 
   <!-- Nav tabs -->
   <ul class="nav nav-tabs" role="tablist">
-    <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Ongoing Projects</a></li>
-    <li role="presentation" ><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Archived projects</a></li>
-    <!--li role="presentation"><a href="#tasks" aria-controls="tasks" role="tab" data-toggle="tab">My Ongoing Tasks</a></li>
-    <li role="presentation" class="pull-right"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Archived projects</a></li-->
+    <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Projects</a></li>
+    <li role="presentation"><a href="#tasks" aria-controls="tasks" role="tab" data-toggle="tab">My Ongoing Tasks</a></li>
+    <li role="presentation" class="pull-right"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Archived projects</a></li>
     
   </ul>
 
@@ -54,6 +53,28 @@
         </div>
     </div>
     
+    <!-- Tab panes -->
+      <div role="tabpanel" class="tab-pane" id="tasks">
+          <div class="row" style="margin-top:20px;">
+              @foreach ($projects as $project)
+                  @if (is_null($project->close_date))
+                    @foreach ($project->tasks as $task)
+                      @if ($task['responsible'] == Auth::id() && $task['stage'] == 'ongoing')
+                          
+
+                      <span class="note yellow">
+                        <span class="glyphicon glyphicon-info-sign pull-right" data-toggle="tooltip" data-placement="top" title="Project: {{ $project->name }}" style="margin-left:3px;"></span>
+                        <a href="/project/{{ $project->id }}#TaskModal{{ $task['id']}}"><small>{{ str_limit($task['name'], 35) }}</small></a>
+                      </span>
+
+
+                      @endif
+                    @endforeach
+                  @endif
+              @endforeach
+          </div>
+      </div>
+
     <div role="tabpanel" class="tab-pane" id="profile">
         <div class="row" style="margin-top:20px;">
             @foreach ($projects as $project)

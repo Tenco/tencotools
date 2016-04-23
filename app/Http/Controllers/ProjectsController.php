@@ -34,8 +34,11 @@ class ProjectsController extends Controller
 	public function home(Carbon $carbon)
 	{
 
-		#dd(\App::environment('local'));
-		$projects = Project::all();
+		#$projects = Project::all();
+		// eager load tasks for all projects
+		$projects = Project::with('tasks')->get();
+
+		#dd($projects);
 
 		return view('home', compact('projects'));
 	}
