@@ -77,7 +77,7 @@
                   @endif
               @endforeach
 
-              @if (count($antal) > 0)
+              @if ($antal == 0)
                   <div class="col-md-12"> 
                     <h2>Y u no work?</h2>
                     <img src="/img/y-u-no.jpg" class="img-circle" style="max-width:150px;">
