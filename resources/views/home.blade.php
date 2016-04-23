@@ -56,22 +56,33 @@
     <!-- Tab panes -->
       <div role="tabpanel" class="tab-pane" id="tasks">
           <div class="row" style="margin-top:20px;">
+              <?php
+                $antal = 0;
+              ?>
               @foreach ($projects as $project)
                   @if (is_null($project->close_date))
                     @foreach ($project->tasks as $task)
                       @if ($task['responsible'] == Auth::id() && $task['stage'] == 'ongoing')
                           
-
                       <span class="note yellow">
                         <span class="glyphicon glyphicon-info-sign pull-right" data-toggle="tooltip" data-placement="top" title="Project: {{ $project->name }}" style="margin-left:3px;"></span>
                         <a href="/project/{{ $project->id }}#TaskModal{{ $task['id']}}"><small>{{ str_limit($task['name'], 35) }}</small></a>
                       </span>
-
+                      <?php
+                        $antal++;
+                      ?>
 
                       @endif
                     @endforeach
                   @endif
               @endforeach
+
+              @if (count($antal) > 0)
+                  <div class="col-md-12"> 
+                    <h2>Y u no work?</h2>
+                    <img src="/img/y-u-no.jpg" class="img-circle" style="max-width:150px;">
+                  </div>
+              @endif
           </div>
       </div>
 
