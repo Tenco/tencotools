@@ -115,6 +115,7 @@ class TasksController extends Controller
             {
                 // do not send to yourself!
                 if ($blocked->user->id != Auth::id())
+                {
                     $project_id = $blocked->project_id;
                     $data = array('to'=>$blocked->user->email, 'project_id'=>$project_id, 'task_id'=>$blocked->id);
                     $this->notify($blocked->user->email, $data, $project_id, $blocked->id, $subject, $template);
