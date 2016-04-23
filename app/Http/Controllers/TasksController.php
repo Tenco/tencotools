@@ -205,6 +205,21 @@ class TasksController extends Controller
         $blockedby = (request()->blockedby ? request()->blockedby : NULL);
         $deadline = (strlen(request()->taskDeadline) ? request()->taskDeadline : NULL);
 
+        // should this update generate a notification??
+        if ($task->responsible != $request->taskResponsible 
+            && Auth::id() != $request->taskResponsible)
+        {
+            $user = User::where('id', request()->taskResponsible)->first();
+            $to = $user->email;
+            $project_id = $task->project_id;
+            $task_id = $task->id;
+            $subject = 'You have been assigned a task';
+            $template = 'emails.newTask';
+            $data = array('to'=>$to, 'project_id'=>$project_id, 'task_id'=>$task_id);
+
+            $this->notify($to, $data, $project_id, $task_id, $subject, $template);
+        }
+
         $task->update([
             'name' => $request->taskName,
             'responsible' => $request->taskResponsible,
