@@ -101,17 +101,30 @@ class TasksController extends Controller
 
         // notify blocked task owners about this
         // task being deleted
-        // --> this needs to be set up!!! $users = $project->tasks()->create(
+        $blocked_tasks = Task::where('blockedby', $task_id)->get();
 
-        #$blocked_tasks = Task::where('blockedby', $task_id)->get();
+        if (count($blocked_tasks))
+        {
+            $blocked_tasks->load('user');
+
+            // notify blocked users:
+            $subject = 'Your task is no longer blocked';
+            $template = 'emails.unblockedTask';
+                    
+            foreach ($blocked_tasks as $blocked) 
+            {
+                // do not send to yourself!
+                if ($blocked->user->id != Auth::id())
+                    $project_id = $blocked->project_id;
+                    $data = array('to'=>$blocked->user->email, 'project_id'=>$project_id, 'task_id'=>$blocked->id);
+                    $this->notify($blocked->user->email, $data, $project_id, $blocked->id, $subject, $template);
+                }
+
+            }
+        }
+
         
-        #foreach ($blocked_tasks as $task) 
-        #{
-            //dd($task->responsible);
-            // notify distinct user_id 
-        #}
-
-
+        // delete the task in DB
         Task::destroy($task_id);
 
         // when deleted also remove this task_id from blockedby column
@@ -121,6 +134,7 @@ class TasksController extends Controller
         // when deleted also set blockedby column to NULL
         Task::where('id', $task_id)
                     ->update(['blockedby' => NULL]);
+
 
         Session::flash('flash_message', 'Task deleted.');
         return back();
@@ -135,23 +149,41 @@ class TasksController extends Controller
     public function updateStage(Request $request)
     {
         
+        // update the status for the task
+        Task::where('id', $request->taskid)
+                ->update(['stage' => $request->target]);
+
+        // now check if we should send notifications
         if ($request->target == 'done')
         {
             
-            /*
-            Events:
-            Event and Event listner registred in app\Providers\EventServiceProvider.php
-            TaskDone.php recieves task_id and fires off notifyBlockedUser function in 
-            app\Listners\EmailListner.php. This function figures out who should get 
-            notifications about this task getting done and sends emails.
-            */
-            // fire event!!
-            //Event::fire(new TaskDone($request->taskid));
+            $blocked_tasks = Task::where('blockedby', $request->taskid)->get();
+
+            // are ther any bliocked tasks
+            if (count($blocked_tasks))
+            {
+                // eager load the corresponding user records
+                $blocked_tasks->load('user');
+
+                // notify blocked users:
+                $subject = 'Your task is no longer blocked';
+                $template = 'emails.unblockedTask';
+                        
+                foreach ($blocked_tasks as $blocked) 
+                {
+                    // do not send to yourself!
+                    if ($blocked->user->id != Auth::id())
+                    {
+                        $project_id = $blocked->project_id;
+                        $data = array('to'=>$blocked->user->email, 'project_id'=>$project_id, 'task_id'=>$blocked->id);
+                        $this->notify($blocked->user->email, $data, $project_id, $blocked->id, $subject, $template);
+                    }
+
+                }
+            }
+
         }
 
-
-        Task::where('id', $request->taskid)
-                    ->update(['stage' => $request->target]);
         return;
     }
 
