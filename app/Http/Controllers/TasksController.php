@@ -327,7 +327,7 @@ class TasksController extends Controller
                 'created_by' => Auth::id(),
                 'responsible' => Auth::id(),
                 'prio' => 1,
-                'stage' => 'backlog',
+                'stage' => 'backlog_2',
                 'project_id' => $project
             ],
             7 => [
