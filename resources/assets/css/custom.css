@@ -160,7 +160,7 @@
 
 .dragndropzone 
 {
-  min-height: 350px;
+  min-height: 200px;
 }
 
 /* the post-it */
@@ -172,7 +172,7 @@
   width: 100px;
   height: 100px;
   margin: 0 auto;
-  padding: 12px;
+  padding: 7px;
   box-shadow: 0 10px 10px 2px rgba(0,0,0,0.3);
   margin-top:10px;
 }

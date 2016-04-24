@@ -34,10 +34,18 @@ class ProjectsController extends Controller
 	public function home(Carbon $carbon)
 	{
 
-		#$projects = Project::all();
+		
 		// eager load tasks for all projects
-		$projects = Project::with('tasks')->get();
-
+		#$projects = Project::with('tasks')->get();
+		#$projects = Project::whereNotNull('close_date')->with('tasks')->get();
+		
+		
+		$matchThese = ['responsible' => Auth::id(), 'stage' => 'ongoing'];
+		$projects = Project::with(['tasks' => function ($query) use ($matchThese) {
+    		$query->where($matchThese);
+			}])->get();
+		
+		#whereNotNull('projects.close_date')
 		#dd($projects);
 
 		return view('home', compact('projects'));
@@ -146,7 +154,8 @@ class ProjectsController extends Controller
 		$path = '/project#'.$project->id.'/';
 		
 
-		return view('project', compact('project', 'allusers'));
+		#return view('project', compact('project', 'allusers'));
+		return view('tableproject', compact('project', 'allusers'));
 	}
 
 

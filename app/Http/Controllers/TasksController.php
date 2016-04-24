@@ -53,7 +53,7 @@ class TasksController extends Controller
     		'created_by' => Auth::id(),
     		'responsible' => request()->taskResponsible,
     		'prio' => 1,
-    		'stage' => 'backlog',
+    		'stage' => request()->taskPhase,
             'deadline' => $deadline
     	]);
 

@@ -1,21 +1,12 @@
-{{-- 
-@if ($task->responsible === Auth::id())
-	<span class="note yellow" id="{{ $task->id }}">
-		<img class="img-circle img-responsive media-object pull-right" style="width:20px;" src="{{ $task->user->avatar }}"><a href="#" data-toggle="modal" data-target="#TaskModal{{$task->id}}">{{ str_limit($task->name, 30) }}</a>
-	</span>
-@else
-	<span class="note lightyellow" id="{{ $task->id }}"><img class="img-circle img-responsive media-object pull-right" style="width:20px;" src="{{ $task->user->avatar }}"><a href="#" data-toggle="modal" data-target="#TaskModal{{$task->id}}">{{ str_limit($task->name, 30) }}</a></span>
-@endif
---}}
-<span class="note yellow" id="{{ $task->id }}">
+<span class="note yellow" id="{{ $task->id }}" style="height:55px;">
+	<a href="#" data-toggle="modal" data-target="#TaskModal{{$task->id}}"><small>{{ str_limit($task->name, 13) }}</small></a><br />
 	<img class="img-circle img-responsive media-object pull-right" style="width:20px; margin-left:3px;" src="{{ $task->user->avatar }}">
 	@if ($task->blockedby)
 		<span class="glyphicon glyphicon-ban-circle pull-right" data-toggle="tooltip" data-placement="top" data-blocker="{{ $task->blockedby }}" title="Task blocked by task #{{ $task->blockedby }}" style="color:#D31717; margin-left:3px;" aria-hidden="true"></span>
 	@endif
 	@if (isset($task->deadline))
 		<span class="glyphicon glyphicon-calendar pull-right" data-toggle="tooltip" data-placement="top" title="{{ $task->deadline->diffForHumans() }}" style="margin-left:3px;"></span>
-	@endif
-	<a href="#" data-toggle="modal" data-target="#TaskModal{{$task->id}}"><small>{{ str_limit($task->name, 35) }}</small></a>
+	@endif	
 </span>
 	<div id="TaskModal{{$task->id}}" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="TaskLabel" aria-hidden="true" style="display: none;">
 		<div class="modal-dialog">

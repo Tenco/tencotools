@@ -452,7 +452,7 @@ hr{margin-top:20px;margin-bottom:20px;border:0;border-top:1px solid #eeeeee;}
 
 .dragndropzone 
 {
-  min-height: 250px;
+  min-height: 200px;
 }
 
 /* the post-it */
@@ -464,7 +464,7 @@ hr{margin-top:20px;margin-bottom:20px;border:0;border-top:1px solid #eeeeee;}
   width: 100px;
   height: 100px;
   margin: 0 auto;
-  padding: 12px;
+  padding: 7px;
   box-shadow: 0 10px 10px 2px rgba(0,0,0,0.3);
   margin-top:10px;
 }

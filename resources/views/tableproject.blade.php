@@ -75,6 +75,14 @@
 							<textarea class="form-control" rows="3" id="taskDesc" name="taskDesc" >{{ old('taskDesc') }}</textarea>
 						</div>
 						<div class="form-group">
+							<label for="taskPhase">Project Phase</label>
+							<select class="form-control" id="taskPhase" name="taskPhase">
+								<option value="backlog" SELECTED>Research</option>
+								<option value="backlog_2">Design</option>
+								<option value="backlog_3">Deliver</option>
+							</select>
+						</div>
+						<div class="form-group">
 							<label for="taskDeadline">Deadline</label>
 							<input type="date" class="form-control" id="taskDeadline" name="taskDeadline" placeholder="yyyy-mm-dd" value="{{ old('taskDeadline') }}">
 						</div>
@@ -148,63 +156,133 @@
 
 @include('partials.error')
 
-<div class="row">
-	<div class="col-md-4"> 
-		<div class="panel panel-primary">
-			<div class="panel-heading">
-	    		<h3 class="panel-title">Backlog<button data-toggle="modal" data-target="#newTaskModal" type="button" class="btn btn-default btn-xs pull-right"><span data-toggle="tooltip" data-placement="top" title="Click to add task" class="glyphicon glyphicon-plus" style="opacity: .5;"></span></button></h3>
-	  		</div>
-	  		<div class="panel-body">
-	  			@if (count($project->tasks) === 0)
-		  				<p class="text-center" style="height:110px;margin-top:30px;"><em>Click the "plus" above and add a task..<br />..or <a href="/project/{{ $project->id }}/kickstart">click here</a> to kick start the project!</em></p>
-		  			@else
-	    		<div id="backlog" class="dragndropzone">
-		  				@foreach ($project->tasks as $task)
-			  				@if ($task->stage == 'backlog')
-			  					@include('partials.postit')
-			  				@endif
-		  				@endforeach
-	  			</div>
-	  			@endif
-	  		</div>
-		</div>	<!-- / panel -->
-	</div> <!-- / col-md-4 -->
 
-	<div class="col-md-4"> 
-		<div class="panel panel-primary">
-			<div class="panel-heading">
-	    		<h3 class="panel-title">Ongoing</h3>
-	  		</div>
-	  		<div class="panel-body">
-	    		<div id="ongoing" class="dragndropzone">
+<div class="row">
+	<div class="col-md-12"> 
+<table class="table table-bordered">
+        <thead>
+          <tr class="active">
+            <th width=4%>&nbsp;</th>
+            <th width=32%>Backlog <button data-toggle="modal" data-target="#newTaskModal" type="button" class="btn btn-default btn-xs pull-right"><span data-toggle="tooltip" data-placement="top" title="Click to add task" class="glyphicon glyphicon-plus" style="opacity: .5;"></span></button></th>
+            <th width=32%>Ongoing</th>
+            <th width=32%>Done</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th>
+				<svg width="50" height="175">
+            		<text x="80" y="150" transform="rotate(-90, 28, 150)" style="text-anchor:middle;">Research</text>
+        		</svg>
+
+            </th>
+            <td>
+
+				@if (count($project->tasks) === 0)
+		  			<p class="text-center" style="height:110px;margin-top:30px;"><em>Click the "plus" above and add a task..<br />..or <a href="/project/{{ $project->id }}/kickstart">click here</a> to kick start the project!</em></p>
+		  		@else
+			  		<div id="backlog" class="dragndropzone">
+			  			@foreach ($project->tasks as $task)
+				  			@if ($task->stage == 'backlog')
+				  				@include('partials.tablepostit')
+							@endif
+		  				@endforeach
+		  			</div>
+	  			@endif
+            </td>
+            <td>
+				<div id="ongoing" class="dragndropzone">
 		  			@foreach ($project->tasks as $task)
 		  				@if ($task->stage == 'ongoing')
-		  					@include('partials.postit')
+		  					@include('partials.tablepostit')
 		  				@endif
 		  			@endforeach
 	  			</div>
-	  		</div>
-		</div>	<!-- / panel -->
-	</div> <!-- / col-md-4 -->
-
-  	<div class="col-md-4"> 
-		<div class="panel panel-primary">
-			<div class="panel-heading">
-	    		<h3 class="panel-title">Done</h3>
-	  		</div>
-	  		<div class="panel-body">
-	    		<div id="done" class="dragndropzone">
+            </td>
+            <td>
+				<div id="done" class="dragndropzone">
 		  			@foreach ($project->tasks as $task)
 		  				@if ($task->stage == 'done')
-		  					@include('partials.postit')
+		  					@include('partials.tablepostit')
 		  				@endif
 		  			@endforeach
 	  			</div>
-	  		</div>
-		</div>	<!-- / panel -->
-	</div> <!-- / col-md-4 -->
-	
-</div> <!-- / row -->
+            </td>
+          </tr>
+          <tr>
+            <th>
+				<svg width="50" height="175">
+            		<text x="80" y="150" transform="rotate(-90, 28, 150)" style="text-anchor:middle;">Design</text>
+        		</svg>
+
+            </th>
+            <td>
+            	<div id="backlog_2" class="dragndropzone">
+		  			@foreach ($project->tasks as $task)
+			  			@if ($task->stage == 'backlog_2')
+			  				@include('partials.tablepostit')
+						@endif
+			  		@endforeach
+		  		</div>
+            </td>
+            <td>
+				<div id="ongoing_2" class="dragndropzone">
+		  			@foreach ($project->tasks as $task)
+		  				@if ($task->stage == 'ongoing_2')
+		  					@include('partials.tablepostit')
+		  				@endif
+		  			@endforeach
+	  			</div>
+            </td>
+            <td>
+            	<div id="done_2" class="dragndropzone">
+		  			@foreach ($project->tasks as $task)
+		  				@if ($task->stage == 'done_2')
+		  					@include('partials.tablepostit')
+		  				@endif
+		  			@endforeach
+	  			</div>
+            </td>
+          </tr>
+          <tr>
+            <th>
+				<svg width="50" height="175">
+            		<text x="80" y="150" transform="rotate(-90, 28, 150)" style="text-anchor:middle;">Deliver</text>
+        		</svg>
+
+            </th>
+            <td>
+            	<div id="backlog_3" class="dragndropzone">
+		  			@foreach ($project->tasks as $task)
+			  			@if ($task->stage == 'backlog_3')
+			  				@include('partials.tablepostit')
+						@endif
+			  		@endforeach
+		  		</div>
+            </td>
+            <td>
+				<div id="ongoing_3" class="dragndropzone">
+		  			@foreach ($project->tasks as $task)
+		  				@if ($task->stage == 'ongoing_3')
+		  					@include('partials.tablepostit')
+		  				@endif
+		  			@endforeach
+	  			</div>
+            </td>
+            <td>
+            	<div id="done_3" class="dragndropzone">
+		  			@foreach ($project->tasks as $task)
+		  				@if ($task->stage == 'done_3')
+		  					@include('partials.tablepostit')
+		  				@endif
+		  			@endforeach
+	  			</div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+  </div>
+</div>
 
 <script src='/js/dragula.js'></script>
 <!--script src="/js/sweetalert.min.js"></script-->
@@ -216,7 +294,15 @@ function $(id)
   return document.getElementById(id);
 }
 
-dragula([$('backlog'), $('ongoing'), $('done')], {
+dragula([	$('backlog'),
+			$('backlog_2'), 
+			$('backlog_3'),
+			$('ongoing'), 
+			$('ongoing_2'), 
+			$('ongoing_3'), 
+			$('done'),
+			$('done_2'),
+			$('done_3')], {
   revertOnSpill: true
 }).on('drop', function(el, target, source, sibling) {
   
