@@ -265,13 +265,15 @@ class TasksController extends Controller
             Session::flash('flash_message', 'Error..');
             return back();
        }
+
+       $loggedin = Auth::id();
         // add a whole bunch of tasks to this project
         $boilerplate = [        
             0 => [
                 'name' => 'Mission statement',
                 'desc' => 'Agree on the vision for the project together with the customer',
-                'created_by' => Auth::id(),
-                'responsible' => Auth::id(),
+                'created_by' => $loggedin,
+                'responsible' => $loggedin,
                 'prio' => 1,
                 'stage' => 'ongoing',
                 'project_id' => $project
@@ -279,8 +281,8 @@ class TasksController extends Controller
             1 => [
                 'name' => 'Stakeholder map',
                 'desc' => 'Create stakeholder map containing at least data about owner, customer and user.',
-                'created_by' => Auth::id(),
-                'responsible' => Auth::id(),
+                'created_by' => $loggedin,
+                'responsible' => $loggedin,
                 'prio' => 1,
                 'stage' => 'backlog',
                 'project_id' => $project
@@ -288,8 +290,8 @@ class TasksController extends Controller
             2 => [
                 'name' => 'Context diagram',
                 'desc' => 'Sketch out the context and map relations between objects.',
-                'created_by' => Auth::id(),
-                'responsible' => Auth::id(),
+                'created_by' => $loggedin,
+                'responsible' => $loggedin,
                 'prio' => 1,
                 'stage' => 'backlog',
                 'project_id' => $project
@@ -297,8 +299,8 @@ class TasksController extends Controller
             3 => [
                 'name' => 'Value Propesition Canvas',
                 'desc' => 'Create a VPC based on what jobs key stakeholders are facing.',
-                'created_by' => Auth::id(),
-                'responsible' => Auth::id(),
+                'created_by' => $loggedin,
+                'responsible' => $loggedin,
                 'prio' => 1,
                 'stage' => 'backlog',
                 'project_id' => $project
@@ -306,8 +308,8 @@ class TasksController extends Controller
             4 => [
                 'name' => 'Create Personas',
                 'desc' => 'Create personas based on research and interviews.',
-                'created_by' => Auth::id(),
-                'responsible' => Auth::id(),
+                'created_by' => $loggedin,
+                'responsible' => $loggedin,
                 'prio' => 1,
                 'stage' => 'backlog',
                 'project_id' => $project
@@ -315,8 +317,8 @@ class TasksController extends Controller
             5 => [
                 'name' => 'Customer journey',
                 'desc' => 'Create a customer journey to get a holistic view from the customer perspective and identify pain-points',
-                'created_by' => Auth::id(),
-                'responsible' => Auth::id(),
+                'created_by' => $loggedin,
+                'responsible' => $loggedin,
                 'prio' => 1,
                 'stage' => 'backlog',
                 'project_id' => $project
@@ -324,8 +326,8 @@ class TasksController extends Controller
             6 => [
                 'name' => 'Sketch Scenarios',
                 'desc' => 'Illustrate the suggested solutions',
-                'created_by' => Auth::id(),
-                'responsible' => Auth::id(),
+                'created_by' => $loggedin,
+                'responsible' => $loggedin,
                 'prio' => 1,
                 'stage' => 'backlog_2',
                 'project_id' => $project
@@ -333,8 +335,8 @@ class TasksController extends Controller
             7 => [
                 'name' => 'Value Prototype',
                 'desc' => 'Create testcards and test methods to try out the hypothesis created from VPC',
-                'created_by' => Auth::id(),
-                'responsible' => Auth::id(),
+                'created_by' => $loggedin,
+                'responsible' => $loggedin,
                 'prio' => 1,
                 'stage' => 'backlog',
                 'project_id' => $project
