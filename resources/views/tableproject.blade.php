@@ -104,7 +104,7 @@
 	</div>
 @endif
 <div class="row">
-	<div class="col-md-12 media" style="margin-bottom: 20px;margin-top:20px;">
+	<div class="col-md-12 media" style="margin-bottom: 20px;margin-top:20px;">		
   		<a class="pull-left" href="#">
   			@if (isset($project->img))
     			<img class="img-thumbnail img-responsive media-object" src="/img/projectuploads/{{ $project->img }}" style="max-height:150px;max-width:250px;">

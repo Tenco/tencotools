@@ -98,7 +98,7 @@
     <script src="/js/all.js"></script>
     <script src="/js/jquery.autocomplete.js"></script>
     
-    
+    @yield('scrips')
     <!-- 
     This code below will look at the URL and if it contains a 
     #hash it will try to pop corresponding modal window.
@@ -161,6 +161,10 @@
         // otherwise the modal will open on refresh even if closed by user
         $('.modal').on('hidden.bs.modal', function () {
           parent.location.hash = '';
+        });
+
+        $('.modal').on('shown.bs.modal', function () {
+          $(this).find('input:text:visible:first').focus();
         });
 
     </script>
