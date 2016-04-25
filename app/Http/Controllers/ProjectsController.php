@@ -42,7 +42,10 @@ class ProjectsController extends Controller
 		
 		$matchThese = [	'ongoing',
 						'ongoing_2',
-						'ongoing_3'
+						'ongoing_3',
+						'backlog',
+						'backlog_2',
+						'backlog_3',
 						];
 		$projects = Project::with(['tasks' => function ($query) use ($matchThese) {
 	    		$query->whereIn('stage',$matchThese);

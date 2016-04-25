@@ -15,7 +15,7 @@
   <!-- Nav tabs -->
   <ul class="nav nav-tabs" role="tablist">
     <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Projects</a></li>
-    <li role="presentation"><a href="#tasks" aria-controls="tasks" role="tab" data-toggle="tab">My Ongoing Tasks</a></li>
+    <li role="presentation"><a href="#tasks" aria-controls="tasks" role="tab" data-toggle="tab">My Tasks</a></li>
     <li role="presentation" class="pull-right"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Archived projects</a></li>
     
   </ul>
@@ -59,15 +59,24 @@
             <div class="col-md-12"> 
                <?php
                   $antal = 0;
+                  $ongoing = [
+                      'ongoing',
+                      'ongoing_2',
+                      'ongoing_3',
+                  ];
                 ?>
                 @foreach ($projects as $project)
                     @if (is_null($project->close_date))
                       @foreach ($project->tasks as $task)
-                                               
-                        <span class="note yellow">
-                          <span class="glyphicon glyphicon-info-sign pull-right" data-toggle="tooltip" data-placement="top" title="Project: {{ $project->name }}" style="margin-left:3px;"></span>
-                          <a href="/project/{{ $project->id }}#TaskModal{{ $task['id']}}"><small>{{ str_limit($task['name'], 35) }}</small></a>
-                        </span>
+                        
+                        @if (in_array($task['stage'], $ongoing))
+                          <span class="note yellow">
+                        @else
+                          <span class="note yellow" style="background: #DFF0D8;">
+                        @endif
+                            <span class="glyphicon glyphicon-info-sign pull-right" data-toggle="tooltip" data-placement="top" title="Project: {{ $project->name }}" style="margin-left:3px;"></span>
+                            <a href="/project/{{ $project->id }}#TaskModal{{ $task['id']}}"><small>{{ str_limit($task['name'], 35) }}</small></a>
+                          </span>
                         <?php
                           $antal++;
                         ?>
