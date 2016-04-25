@@ -40,13 +40,13 @@ class ProjectsController extends Controller
 		#$projects = Project::whereNotNull('close_date')->with('tasks')->get();
 		
 		
-		$matchThese = [	'responsible' => Auth::id(), 
-						'stage' => 'ongoing',
+		$matchThese = [	'ongoing',
+						'ongoing_2',
+						'ongoing_3'
 						];
 		$projects = Project::with(['tasks' => function ($query) use ($matchThese) {
-    		$query->where($matchThese)
-    				->orWhere('stage', 'ongoing_2')
-    				->orWhere('stage', 'ongoing_3');
+	    		$query->whereIn('stage',$matchThese);
+	    		$query->Where('responsible', Auth::id());	
 			}])->get();
 		
 		#whereNotNull('projects.close_date')
