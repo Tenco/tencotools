@@ -10,7 +10,6 @@ use Session;
 use Auth;
 use Mail;
 use tencotools\User;
-use Vinkla\Pusher\PusherManager;
 
 
 //use Event;
@@ -407,6 +406,7 @@ class TasksController extends Controller
     */
     public function notify($to, $data, $project_id, $task_id, $subject, $template)
     {
+        
         Mail::queue(['html' => $template], $data, function ($message) use ($to, $project_id, $task_id, $subject)
         {
                 

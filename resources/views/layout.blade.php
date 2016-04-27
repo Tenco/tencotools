@@ -95,7 +95,6 @@
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script src="/js/pusher.min.js"></script>
     <script src="/js/all.js"></script>
     <script src="/js/jquery.autocomplete.js"></script>
 
