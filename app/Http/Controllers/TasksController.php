@@ -20,17 +20,15 @@ use tencotools\User;
 class TasksController extends Controller
 {
     
-    protected $pusher;
-
     /*
     *
     * 
     *
     */
-    public function __construct(PusherManager $pusher) 
+    public function __construct() 
     {
         
-        $this->pusher = $pusher;
+    
         // user needs to be logged in for all of these functions/routes
         $this->middleware('auth');
         
