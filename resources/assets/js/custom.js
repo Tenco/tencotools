@@ -1,4 +1,0 @@
-/* DRAGULA */
-
-
-/* END DRAGULA */

@@ -163,6 +163,7 @@ class ProjectsController extends Controller
 
 		#return view('project', compact('project', 'allusers'));
 		return view('tableproject', compact('project', 'allusers'));
+
 	}
 
 

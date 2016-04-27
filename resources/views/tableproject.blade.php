@@ -285,7 +285,6 @@
 </div>
 
 <script src='/js/dragula.js'></script>
-<!--script src="/js/sweetalert.min.js"></script-->
 <script>
 
 /* Drag & drop script */
@@ -328,7 +327,11 @@ function updateTask(target, taskid)
 
     	type: 'POST',
     	url: '/tasks/' + taskid + '/stage',
-    	data: {'target': target, 'taskid': taskid, '_token': token},
+    	data: {
+    			'target': target, 
+    			'taskid': taskid, 
+    			'_token': token
+    		},
     	timeout: 2000, // sets timeout to 2 seconds and error will be thrown
     	/*
     	success: function() 
@@ -354,14 +357,6 @@ function updateTask(target, taskid)
 }
 
 
-	/* Sweet alert
-	swal({   
-		title: "Error!",   
-		text: "Here's my error message!",   
-		type: "error",   
-		confirmButtonText: "Cool" 
-	});
-	*/
 
 
 </script>

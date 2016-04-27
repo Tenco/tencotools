@@ -10,6 +10,8 @@ use Session;
 use Auth;
 use Mail;
 use tencotools\User;
+use Vinkla\Pusher\PusherManager;
+
 
 //use Event;
 //use tencotools\Events\TaskDone;
@@ -19,16 +21,21 @@ use tencotools\User;
 class TasksController extends Controller
 {
     
+    protected $pusher;
 
     /*
     *
     * 
     *
     */
-    public function __construct() 
+    public function __construct(PusherManager $pusher) 
     {
+        
+        $this->pusher = $pusher;
         // user needs to be logged in for all of these functions/routes
         $this->middleware('auth');
+        
+
     }
 
 
@@ -173,6 +180,9 @@ class TasksController extends Controller
         Task::where('id', $request->taskid)
                 ->update(['stage' => $request->target]);
 
+        // get all task
+        $task = Task::find($request->taskid);
+
         // now check if we should send notifications
         if ($request->target == 'done')
         {
@@ -203,6 +213,7 @@ class TasksController extends Controller
             }
 
         }
+
 
         return;
     }
