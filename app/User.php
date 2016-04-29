@@ -37,7 +37,7 @@ class User extends Authenticatable
     // define relationship
     public function Tasks() 
     {
-        return $this->hasMany('tencotools\Task');
+        return $this->hasMany('tencotools\Task', 'responsible');
     }
 
      // define relationship

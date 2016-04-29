@@ -85,7 +85,7 @@
 						{{ csrf_field() }}
 						<div class="form-group">
 							<div id="dropzone-previews" class="dz-default dz-message">
-  								<span>Drag project image file here</span>
+  								<span>Drag project image file here, or click to upload</span>
 							</div>
 						</div>
 					</form>

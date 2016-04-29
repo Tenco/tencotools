@@ -129,7 +129,7 @@
     		<hr />
     		<p class="pull-right">
     			<!--a data-toggle="modal" data-target="#filesModal" href=#><span class="glyphicon glyphicon-cloud-upload"></span> Upload Files </a>&nbsp;&nbsp;-->
-    			<a data-toggle="modal" data-target="#filesModal" href=#><span class="glyphicon glyphicon-file"></span> Project Files</a>&nbsp;&nbsp;
+    			<a data-toggle="modal" data-target="#filesModal" href=#><span class="glyphicon glyphicon-file"></span> Project Files <span class="badge" style="background-color: #CA4242;">{{ count($project->ProjectFile) }}</span></a>&nbsp;&nbsp;
 	    		<!--a href=#><span class="glyphicon glyphicon-time"></span> Start timer </a>&nbsp;&nbsp;-->
 	    		<a href="/project/{{ $project->id }}/edit"><span class="glyphicon glyphicon-cog"></span> Edit Project</a>
     		</p>
