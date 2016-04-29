@@ -26,6 +26,7 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         $schedule->command('tencotools:weekly-task-email')
-                  ->weekly()->mondays()->at('08:00');
+                  ->weekly()->mondays()->at('08:00')
+                  ->timezone('Europe/Copenhagen');
     }
 }
