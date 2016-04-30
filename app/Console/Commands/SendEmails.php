@@ -79,8 +79,8 @@ class SendEmails extends Command
         // get all users
         $users = User::with(['tasks' => function ($query) use ($stages) {
                 $query->whereIn('tasks.stage',$stages);
-                $query->where('tasks.deadline', '>', Carbon::now());
-                $query->where('tasks.deadline', '<', Carbon::now()->addWeek());
+                $query->where('tasks.deadline', '>=', Carbon::now());
+                $query->where('tasks.deadline', '<=', Carbon::now()->addWeek());
             }])->get();
         
 
@@ -98,12 +98,12 @@ class SendEmails extends Command
                 foreach ($user->tasks as $task)
                 {
                                         
-                    $links = [
-                            $task->name => url('/').'/project/'.$task->project_id.'#TaskModal'.$task->id
-                        ];
+                    $links[$task->name] = url('/').'/project/'.$task->project_id.'#TaskModal'.$task->id;
                 }
 
             }
+
+            #dd($links);
             $data = [
                 'tasks' => $links,
                 'namn' => $user->name,

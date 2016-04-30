@@ -69,18 +69,22 @@
                     @if (is_null($project->close_date))
                       @foreach ($project->tasks as $task)
                         
+                        
                         @if (in_array($task['stage'], $ongoing))
-                          <span class="note yellow">
+                           <span class="note yellow">
                         @else
-                          <span class="note yellow" style="background: #DFF0D8;">
+                           <span class="note yellow" style="background: #DFF0D8;">
                         @endif
-                            <span class="glyphicon glyphicon-info-sign pull-right" data-toggle="tooltip" data-placement="top" title="Project: {{ $project->name }}" style="margin-left:3px;"></span>
-                            <a href="/project/{{ $project->id }}#TaskModal{{ $task['id']}}"><small>{{ str_limit($task['name'], 35) }}</small></a>
+                        
+                          @if (isset($task['deadline']) &&  $task['deadline'] < $now)
+                            <span class="glyphicon glyphicon-warning-sign pull-right" data-toggle="tooltip" data-placement="top" title="Deadline was {{ $task['deadline']->diffForHumans() }}!!" style="margin-left:3px;"></span>
+                          @endif 
+                              <span class="glyphicon glyphicon-info-sign pull-right" data-toggle="tooltip" data-placement="top" title="Project: {{ $project->name }}" style="margin-left:3px;"></span>
+                              <br /><a href="/project/{{ $project->id }}#TaskModal{{ $task['id']}}"><small>{{ str_limit($task['name'], 35) }}</small></a>
                           </span>
-                        <?php
-                          $antal++;
-                        ?>
-
+                          <?php
+                            $antal++;
+                          ?>
                         
                       @endforeach
                     @endif

@@ -53,9 +53,9 @@ class ProjectsController extends Controller
 			}])->get();
 		
 		#whereNotNull('projects.close_date')
-		#dd($projects);
+		$now = Carbon::now();
 
-		return view('home', compact('projects'));
+		return view('home', compact('projects', 'now'));
 	}
 
 
@@ -94,7 +94,7 @@ class ProjectsController extends Controller
 	{
 		$this->validate($request, [
             'name' => 'required',
-            //'desc' => 'required',
+            'desc' => 'required',
             'project_owner' => 'required'
             ]);
 

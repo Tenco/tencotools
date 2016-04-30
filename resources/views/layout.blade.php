@@ -48,7 +48,8 @@
           <ul class="nav navbar-nav">
             <li class="active"><a href="/">Projects</a></li>
             <li class="disabled"><a href="#">Templates</a></li>
-            <li class="disabled"><a href="#">CRM</a></li>
+            <li class="disabled"><a href="#">Relations</a></li>
+            <li class="disabled"><a href="#">Evensts</a></li>
             <!--li><a href="#about">About</a></li>
             <li><a href="#contact">Contact</a></li>
             <li class="dropdown">

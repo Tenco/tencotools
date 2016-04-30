@@ -44,12 +44,15 @@ class TasksController extends Controller
     public function store(Request $request, Project $project) //project returnerar rätt projekt via wildcard i URL
     {
 
+        #dd(request()->taskDeadline);
+
         $this->validate($request, [
             'taskName' => 'required',
-            'taskResponsible' => 'required'
+            'taskResponsible' => 'required',
+            'taskDeadline' => 'required|date|after:today',
             ]);
 
-        $deadline = (strlen(request()->taskDeadline) ? request()->taskDeadline : NULL);
+        #$deadline = (strlen(request()->taskDeadline) ? request()->taskDeadline : NULL);
 
     	$task = $project->tasks()->create([
     		'name' => request()->taskName, /* kan även använda typehintade $request objeketet $request->taskName */
@@ -58,7 +61,7 @@ class TasksController extends Controller
     		'responsible' => request()->taskResponsible,
     		'prio' => 1,
     		'stage' => request()->taskPhase,
-            'deadline' => $deadline
+            'deadline' => request()->taskDeadline
     	]);
 
         
@@ -226,11 +229,12 @@ class TasksController extends Controller
 
         $this->validate($request, [
             'taskName' => 'required',
-            'taskResponsible' => 'required'
+            'taskResponsible' => 'required',
+            'taskDeadline' => 'required|date|after:today',
             ]);
         
         $blockedby = (request()->blockedby ? request()->blockedby : NULL);
-        $deadline = (strlen(request()->taskDeadline) ? request()->taskDeadline : NULL);
+        #$deadline = (strlen(request()->taskDeadline) ? request()->taskDeadline : NULL);
 
         // should this update generate a notification??
         if ($task->responsible != $request->taskResponsible 
@@ -251,7 +255,7 @@ class TasksController extends Controller
             'name' => $request->taskName,
             'responsible' => $request->taskResponsible,
             'desc' => $request->taskDesc, 
-            'deadline' => $deadline,
+            'deadline' => $request->taskDeadline,
             'blockedby' => $blockedby,
             ]);
 

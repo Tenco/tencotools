@@ -14,21 +14,25 @@
 Route::get('login', 'AuthController@login');
 Route::get('logout', 'AuthController@logout');
 
+/*
 Route::get('mail', function(){
 
 	return view('emails.newTask'); 
 
 });
+*/
 
 
 Route::group(['Middleware' => ['web', 'auth']], function () /* middleware group defined in Kernel.php */
 {
 	// just to check paths on DigitalOcean
+	/*
 	Route::get('info', function (){
 
 		return phpinfo();
 
 	});
+	*/
 
 	// socialite needs to be inside web middleware
 	Route::get('oauthcallback', 'AuthController@handleProviderCallback');
