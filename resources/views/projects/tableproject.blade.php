@@ -84,7 +84,7 @@
 						</div>
 						<div class="form-group">
 							<label for="taskDeadline">Deadline</label>
-							<input type="date" class="form-control" id="taskDeadline" name="taskDeadline" placeholder="yyyy-mm-dd" value="{{ old('taskDeadline') }}">
+							<input type="date" class="form-control" id="taskDeadline" name="taskDeadline" placeholder="yyyy-mm-dd" value="{{ old('taskDeadline') }}" required>
 						</div>
 						<div class="row">
 							<div class="col-md-12">

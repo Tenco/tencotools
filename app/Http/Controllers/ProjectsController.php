@@ -70,7 +70,7 @@ class ProjectsController extends Controller
 		$project = Project::where('id', $project)->first();
 		
 
-		return view('createProject2', compact('project'));
+		return view('projects.createProject2', compact('project'));
 
 	}
 
@@ -82,7 +82,7 @@ class ProjectsController extends Controller
 	public function create()
 	{
 		$users = User::all();
-		return view('createProject', compact('users'));
+		return view('projects.createProject', compact('users'));
 	}
 
 	/*
@@ -162,7 +162,7 @@ class ProjectsController extends Controller
 		
 
 		#return view('project', compact('project', 'allusers'));
-		return view('tableproject', compact('project', 'allusers'));
+		return view('projects.tableproject', compact('project', 'allusers'));
 
 	}
 
@@ -204,7 +204,7 @@ class ProjectsController extends Controller
 		$allusers = User::all(); // load all data in user table
 
 
-		return view('editProject', compact('project', 'allusers'));
+		return view('projects.editProject', compact('project', 'allusers'));
 
 	}
 

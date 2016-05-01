@@ -62,7 +62,7 @@
 						@else
 							<div class="form-group" id="deadline">
 								<label for="taskDeadline">Deadline</label>
-								<input type="date" class="form-control" id="taskDeadline" name="taskDeadline" placeholder="yyyy-mm-dd">
+								<input type="date" class="form-control" id="taskDeadline" name="taskDeadline" placeholder="yyyy-mm-dd" required>
 							</div>
 						@endif
 						<div class="form-group" id="deadline">
