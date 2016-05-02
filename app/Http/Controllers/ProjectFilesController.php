@@ -52,13 +52,18 @@ class ProjectFilesController extends Controller
 				$path = '/project#'.$project->id.'/'.time().'/';	
 			}
 			
+			
+
+			$file_name = pathinfo($duh->getClientOriginalName(), PATHINFO_FILENAME); // file
+			$extension = pathinfo($duh->getClientOriginalName(), PATHINFO_EXTENSION); // jpg
+			$filename = str_slug($file_name).'.'.$extension;
 
 			// save file to Dropbox-folder
-			$r = Storage::disk('dropbox')->put($path . $duh->getClientOriginalName(), file_get_contents($duh));
+			$r = Storage::disk('dropbox')->put($path . $filename, file_get_contents($duh));
 			if ($r)
 			{
 				// insert file info into DB
-				$this->newProjectFilesEntry($duh->getClientOriginalName(), $path, $project->id);
+				$this->newProjectFilesEntry($filename, $path, $project->id);
 			}
 		}
 
@@ -75,7 +80,6 @@ class ProjectFilesController extends Controller
 	{
 		
 		$file = base64_decode($file);
-		#dd($file);
 
 		if ( ! Storage::disk('dropbox')->exists($file))
 		{
