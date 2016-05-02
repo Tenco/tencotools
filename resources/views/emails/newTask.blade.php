@@ -15,7 +15,9 @@
     <body>
 <div class="postit">
 	<h2><a href="http://tencotools.se/project/{{ $project_id }}#TaskModal{{ $task_id }}">
-        Someone assigned you a task...
+        {{ $task_name }}<br />
+        <p style="font-size: 80%;">Project: {{ $project_name }}</p>
+
     </a></h2>
 </div>
 </body>

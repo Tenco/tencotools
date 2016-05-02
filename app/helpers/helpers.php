@@ -8,6 +8,13 @@
 
 	}
 
+
+	function ProjectIdToName($project_id)
+	{
+		$project = \tencotools\Project::findOrFail($project_id);
+		return $project['name'];
+
+	}
 	
 	/**
 	*

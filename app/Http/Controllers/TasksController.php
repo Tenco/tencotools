@@ -73,9 +73,15 @@ class TasksController extends Controller
             $to = $user->email;
             $project_id = $project->id;
             $task_id = $task->id;
-            $subject = 'You have been assigned a task';
+            $subject = Auth::user()->name.' assigned you a task';
             $template = 'emails.newTask';
-            $data = array('to'=>$to, 'project_id'=>$project_id, 'task_id'=>$task_id);
+            $data = array(
+                    'to'=>$to, 
+                    'project_id'=>$project_id, 
+                    'task_id'=>$task_id,
+                    'task_name' => \Helpers\TaskIdToName($task_id),
+                    'project_name' => \Helpers\ProjectIdToName($project_id)
+                    );
 
             $this->notify($to, $data, $project_id, $task_id, $subject, $template);
 
