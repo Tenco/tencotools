@@ -21,6 +21,11 @@
         min-height: 2000px;
         padding-top: 70px;
       }
+
+      .tooltip {
+         position: fixed !important;
+         z-index: 1;
+      }
     </style>
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
