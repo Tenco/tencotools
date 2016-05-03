@@ -190,7 +190,10 @@ class TasksController extends Controller
         $task = Task::find($request->taskid);
 
         // now check if we should send notifications
-        if ($request->target == 'done')
+
+        $done = ['done','done_2','done_3'];
+
+        if (in_array($request->target, $done))
         {
             
             $blocked_tasks = Task::where('blockedby', $request->taskid)->get();
