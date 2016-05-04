@@ -9,15 +9,15 @@
 		@include('partials.error')
 		  <div class="form-group">
 		    <label for="name">Project Name</label>
-		    <input type="name" class="form-control" id="name" placeholder="Enter name" name="name" value="{{ old('name') }}" required>
+		    <input type="name" class="form-control input-lg" id="name" placeholder="Enter name" name="name" value="{{ old('name') }}" required>
 		  </div>
 		  <div class="form-group">
 		    <label for="desc">Project Description</label>
-		    <textarea name="desc" class="form-control" placeholder="Enter description or Mission Statement" rows=7>{{ old('desc') }}</textarea>
+		    <textarea name="desc" class="form-control input-lg" placeholder="Enter description or Mission Statement" rows=7>{{ old('desc') }}</textarea>
 		  </div>
 		  <div class="form-group">
 		    <label for="project_owner">Project Owner</label>
-		    	<select class="form-control" name="project_owner">
+		    	<select class="form-control input-lg" name="project_owner">
 				  @foreach ($users as $user)
 				  	<option value="{{ $user->id }}">{{ $user->name }}</option>
 				  @endforeach
@@ -27,19 +27,19 @@
 		    <label for="value">Project Value</label>
 		    <div class="input-group">
   			<span class="input-group-addon">kr</span>
-		    	<input type="name" name="value" class="form-control" id="value" placeholder="Enter value" value="{{ old('value') }}">
+		    	<input type="name" name="value" class="form-control input-lg" id="value" placeholder="Enter value" value="{{ old('value') }}">
 		    </div>
 		  </div>
 		  <div class="form-group">
 		    <label for="cost">Project Cost</label>
 		    <div class="input-group">
   			<span class="input-group-addon">kr</span>
-		    	<input type="name" name="cost" class="form-control" id="cost" placeholder="Enter Cost" value="{{ old('cost') }}">
+		    	<input type="name" name="cost" class="form-control input-lg" id="cost" placeholder="Enter Cost" value="{{ old('cost') }}">
 		    </div>
 		  </div>
 		  <div class="form-group">
 		    <label for="name">Project Deadline</label>
-		    <input type="date" name="deadline" class="form-control" id="deadline" placeholder="Enter Deadline" value="{{ old('deadline') }}">
+		    <input type="date" name="deadline" class="form-control input-lg" id="deadline" placeholder="Enter Deadline" value="{{ old('deadline') }}">
 		  </div>
 		  <!--div class="checkbox">
 		    <label>

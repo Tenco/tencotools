@@ -33,12 +33,13 @@ Route::group(['Middleware' => ['web', 'auth']], function () /* middleware group 
 
 	});
 	*/
-
+	/******* PROJECTS ********/
 	// socialite needs to be inside web middleware
 	Route::get('oauthcallback', 'AuthController@handleProviderCallback');
 	Route::get('sociallogin', 'AuthController@redirectToProvider');
 
 	Route::get('/', 'ProjectsController@home');
+	Route::get('projects', 'ProjectsController@home');
 	Route::get('project', 'ProjectsController@home');
 	Route::get('project/create', 'ProjectsController@create');
 	Route::post('project/store', 'ProjectsController@store');
@@ -66,5 +67,12 @@ Route::group(['Middleware' => ['web', 'auth']], function () /* middleware group 
 	Route::post('project/{project}/store/file', 'ProjectFilesController@storeFile');
 	Route::get('download/{file}', 'ProjectFilesController@download');
 	Route::get('file/{file}/delete', 'ProjectFilesController@remove');
+
+	/******* RELATIONS ********/
+	Route::get('relations', 'RelationsController@home');
+	Route::get('relation/create', 'RelationsController@create');
+	Route::post('relation/store', 'RelationsController@store');
+	Route::get('relation/image/{relation}', 'RelationsController@uploadImage');
+	Route::post('relation/{relation}/store/image', 'RelationsController@storeImage');
 
 });
