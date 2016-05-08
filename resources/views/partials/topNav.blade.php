@@ -12,10 +12,10 @@
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
-            <li class="{{ \Helpers\set_active('/') }}"><a href="/">Projects</a></li>
-            <li class="{{ \Helpers\set_active('templates') }}"><a href="#">Templates</a></li>
+            <li class="{{ \Helpers\set_active('projects') }}"><a href="/">Projects</a></li>
             <li class="{{ \Helpers\set_active('relations') }}"><a href="/relations">Relations</a></li>
-            <li class="{{ \Helpers\set_active('events') }}"><a href="#">Evensts</a></li>
+            <li class="disabled"><a href="#">Templates</a></li>
+            <li class="disabled"><a href="#">Evensts</a></li>
             
 
 

@@ -3,8 +3,12 @@
 @section('content')
 
 <div class="row col-md-8 col-md-offset-2">
+	 <!--ol class="breadcrumb">
+  <li><a href="#">Relations</a></li>
+  <li class="active">Create relation</li>
+</ol-->
 	<h1>Create relation</h1>
-	<form role="form" action="/relation/store" method="POST">
+	<form role="form" action="/relations/store" method="POST">
 		{{ csrf_field() }}
 		@include('partials.error')
 		  <div class="form-group">

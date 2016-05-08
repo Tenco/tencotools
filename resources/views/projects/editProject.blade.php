@@ -121,7 +121,7 @@ Dropzone.options.myAwesomeDropzone = { // The camelized version of the ID of the
   uploadMultiple: false,
   parallelUploads: 100,
   maxFiles: 1,
-  maxFileSize: 2,
+  maxFileSize: 100,
   acceptedFiles: '.jpg, .png, .jpeg',
   
   // The setting up of the dropzone

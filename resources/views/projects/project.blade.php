@@ -207,6 +207,9 @@
 </div> <!-- / row -->
 
 
+@stop
+@section('scripts')
+
 <script src='/js/dragula.js'></script>
 <!--script src="/js/sweetalert.min.js"></script-->
 <script>

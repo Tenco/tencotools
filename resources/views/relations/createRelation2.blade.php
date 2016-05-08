@@ -17,8 +17,8 @@
 		</form>
 
 		<div class="pull-right" style="margin-top:20px;">
-         <a href="/relation/{{ $relation->id }}" type="button" class="btn btn-default">Skip this</a>
-		  		<a href="/relation/{{ $relation->id }}" type="button" class="btn btn-primary">Done</a>
+         <a href="/relations" type="button" id="skip" class="btn btn-default">Skip this</a>
+		  		<a href="/relations" type="button" id="done" class="btn btn-primary" style="display:none;">Done</a>
 		 </div>
     		
 	
@@ -45,7 +45,8 @@ Dropzone.options.myAwesomeDropzone = { // The camelized version of the ID of the
     this.on("success", function(files, response) {
       // Gets triggered when the file successfylly been uploaded
       // now show the ok button!
-      #$('#reloadProject').show();
+      $('#skip').hide();
+      $('#done').show();
       
     });
     

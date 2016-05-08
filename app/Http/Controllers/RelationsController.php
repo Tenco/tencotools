@@ -9,6 +9,7 @@ use tencotools\Http\Requests;
 use tencotools\Relation;
 use tencotools\User;
 
+use DB;
 use Auth;
 use Session;
 use Carbon\Carbon;
@@ -34,7 +35,11 @@ class RelationsController extends Controller
 
 		#$relations = Relation::all();
 
-		return view('relations.home');
+		$relations = DB::table('relations')
+                ->orderBy('name', 'asc')
+                ->paginate(17);
+
+		return view('relations.home', compact('relations'));
 	}
 
 	/*
@@ -73,7 +78,7 @@ class RelationsController extends Controller
     		'tenco_contact' => $request->tenco_contact
     	]);
 
-    	return redirect('/relation/image/'. $r->id);
+    	return redirect('/relations/image/'. $r->id);
 
 	}
 
@@ -100,6 +105,8 @@ class RelationsController extends Controller
 	*/
 	public function storeImage(Request $request, Relation $relation)
 	{
+
+		#dd($relation);
 		// VALIDATION 
 		if( ! $request->hasFile('file'))
 			return response()->json(['error' => 'No File Sent']);
@@ -118,5 +125,74 @@ class RelationsController extends Controller
 
 		return response()->json(['success' => 'ok']);
 	}
+
+
+	/*
+	*
+	* display a single contact
+	* 
+	*/
+	public function show(Relation $relation)
+	{
+		// nedan behövs ej pga Route/modal-binding ..alltså hela relation objektet laddas 
+		// genom att type hinta ovan baserat på det wildcard som skickas in till funktionen.
+		#$relation = Relation::find($relation);
+		
+		
+		return view('relations.contactCard', compact('relation'));
+		#return $relation;
+
+	}
+
+	/*
+	*
+	* 
+	*
+	*/
+	public function edit(Request $request, Relation $relation)
+	{
+		// eagerload the project owner data
+		$relation->load('user'); // load user-data for this project
+		$allusers = User::all(); // load all data in user table
+
+
+		return view('relations.editRelation', compact('relation', 'allusers'));
+
+	}
+
+	/*
+	*
+	* 
+	*
+	*/
+	public function update(Request $request, $relation)
+	{
+
+
+		// validation:
+		$this->validate($request, [
+            'name' => 'required',
+            //'email' => 'required|email|unique:relations,'.$request->segment(2),
+            'tenco_contact' => 'required'
+            ]);
+
+
+    	Relation::where('id', $relation)
+          ->update([
+    		'name' => $request->name,
+    		'email' => $request->email,
+    		'phone' => $request->phone,
+    		'company' => $request->company,
+    		'tenco_contact' => $request->tenco_contact
+    	]);
+
+		Session::flash('flash_message', 'Contact updated');
+
+		$url = '/relations/'.$request->segment(2).'/edit';
+
+		return redirect($url);
+
+	}
+
 
 }

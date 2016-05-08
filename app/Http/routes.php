@@ -70,9 +70,12 @@ Route::group(['Middleware' => ['web', 'auth']], function () /* middleware group 
 
 	/******* RELATIONS ********/
 	Route::get('relations', 'RelationsController@home');
-	Route::get('relation/create', 'RelationsController@create');
-	Route::post('relation/store', 'RelationsController@store');
-	Route::get('relation/image/{relation}', 'RelationsController@uploadImage');
+	Route::get('relations/create', 'RelationsController@create');
+	Route::post('relations/store', 'RelationsController@store');
+	Route::get('relations/image/{relation}', 'RelationsController@uploadImage');
 	Route::post('relation/{relation}/store/image', 'RelationsController@storeImage');
+	Route::get('relation/{relation}', 'RelationsController@show');
+	Route::get('relations/{relation}/edit', 'RelationsController@edit');
+	Route::patch('relations/{relation}/update', 'RelationsController@update');
 
 });

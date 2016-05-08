@@ -33,8 +33,27 @@
 	}
 
 
+	/**
+	*
+	* determen what top-menu to show as active
+	* Return "string"
+	*
+	*/
 	function set_active($path)
 	{
-		return request()->is($path) ? 'active' : '';
+
+		/*if ( ! $path || $path == '/')
+		{
+			$path = 'projects';
+		}*/
+
+		#dd($path);
+
+		$url = request()->path();
+		if (strstr($url, $path))
+		{
+			echo 'active';
+		}
+				
 
 	}

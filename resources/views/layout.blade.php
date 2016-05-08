@@ -52,7 +52,7 @@
     <script src="/js/jquery.autocomplete.js"></script>
 
     
-    @yield('scrips')
+    @yield('scripts')
     <!-- 
     This code below will look at the URL and if it contains a 
     #hash it will try to pop corresponding modal window.
