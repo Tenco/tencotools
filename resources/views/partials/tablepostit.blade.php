@@ -72,7 +72,7 @@
 						<div class="form-group">
 							<!--div class="alert alert-success" style="display:none;" id="tasksuccess" role="alert">Task successfully updated</div-->
 							<a href="/task/{{ $task->id }}/delete"><span class="glyphicon glyphicon-trash" style="top:10px;" data-toggle="tooltip" data-placement="top" title="Delete this task"></span></a>
-							<p class="pull-right"><button type="submit" id="updateTask" class="btn btn-default">Save</button></p>
+							<p class="pull-right"><button type="submit" id="updateTask" class="btn btn-default">Save & close</button></p>
 						</div>
 					</form>
 				</div>

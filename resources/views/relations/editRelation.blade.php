@@ -46,9 +46,9 @@
 						@endforeach
 					</select>
 				</div>
-				<div class="checkbox">
+				<!--div class="checkbox">
 					<label><input type="checkbox"> Accepts sendouts</label>
-				</div>
+				</div-->
 				<div class="pull-right"><a type="button" class="btn btn-default" href="/relations">Cancel</a>
 					<button type="submit" class="btn btn-primary">Save</button>
 				</div>
