@@ -66,6 +66,7 @@
       </div>
 
 	      @foreach ($results as $contact)
+          @if ( ! $contact->deleted_at)
 	        <div class="col-sm-2"> 
 	          <div class="panel panel-primary" style="min-height: 150px;">
 	            <div class="panel-heading">
@@ -91,6 +92,7 @@
 	          </div>
 	        </div>
 	      </div>
+        @endif
 	    @endforeach
 	   @endif
   </div>

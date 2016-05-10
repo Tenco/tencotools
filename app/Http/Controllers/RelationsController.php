@@ -36,7 +36,7 @@ class RelationsController extends Controller
 		#$relations = Relation::all();
 
 		$relations = DB::table('relations')
-				->whereNull('deleted_at') // soft deletes not working?! :(
+				->whereNull('deleted_at') // this is needed bc soft deletes not working?! :(
                 ->orderBy('name', 'asc')
                 ->paginate(17);
 
