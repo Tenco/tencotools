@@ -140,7 +140,7 @@ class RelationsController extends Controller
 		
 		
 		return view('relations.contactCard', compact('relation'));
-		#return $relation;
+		
 
 	}
 
@@ -194,5 +194,34 @@ class RelationsController extends Controller
 
 	}
 
+
+	/*
+	*
+	* 
+	*
+	*/
+	public function search(Request $request)
+	{
+
+		$this->validate($request, [
+            'q' => 'required'
+            ]);
+		
+		#dd($request->q);
+		$relations = DB::table('relations');
+    	$results = $relations->where('name', 'LIKE', '%'. $request->q .'%')
+		    ->orWhere('email', 'LIKE', '%'. $request->q .'%')
+		    ->orWhere('phone', 'LIKE', '%'. $request->q .'%')
+		    ->orWhere('company', 'LIKE', '%'. $request->q .'%')
+		    ->distinct()
+		    //->take(17)
+		    ->get();
+
+		 
+		#dd($results);
+		$query = $request->q;
+    	return view('relations.searchResult', compact('results', 'query'));
+
+	}
 
 }

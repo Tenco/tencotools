@@ -57,7 +57,7 @@ Route::group(['Middleware' => ['web', 'auth']], function () /* middleware group 
 	Route::get('removeblock/{project}/{task}', 'TasksController@removeblock');
 	Route::get('removedeadline/{project}/{task}', 'TasksController@removedeadline');
 	
-	
+	/******* TASKS ********/
 	Route::get('task/{task}/edit', 'TasksController@edit');
 	Route::patch('task/{task}/update', 'TasksController@update');
 	Route::get('task/{task}/delete', 'TasksController@remove');
@@ -77,5 +77,5 @@ Route::group(['Middleware' => ['web', 'auth']], function () /* middleware group 
 	Route::get('relation/{relation}', 'RelationsController@show');
 	Route::get('relations/{relation}/edit', 'RelationsController@edit');
 	Route::patch('relations/{relation}/update', 'RelationsController@update');
-
+	Route::post('relations/search', 'RelationsController@search');
 });

@@ -357,8 +357,43 @@ function updateTask(target, taskid)
 }
 
 
-
-
 </script>
+@stop
 
+@section('scripts')
+	<script type="text/javascript">
+		// use ajax to submit updates on 
+		// task changes.
+		(function(){
+
+			$('.ajax').submit(function(e) { // I removed this class from form to not use Ajax
+				
+				// disable the submit button
+				$('#updateTask').addClass('disabled');
+
+				var form = $(this);
+				var method = form.find('input[name="_method"]').val() || 'POST';
+				var url = form.prop('action');
+
+				$.ajax({
+
+					type: method,
+					url: url,
+					data: form.serialize(),
+					success: function() 
+		    		{
+		    			//alert("done!");
+		    			$('#tasksuccess').show().delay(2000).fadeOut();
+		    			$('#updateTask').removeClass('disabled');
+		    		},
+		    	
+
+		    	});
+				return false;
+				e.preventDefault();
+
+			});
+
+		})();
+	</script>
 @stop

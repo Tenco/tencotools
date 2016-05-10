@@ -24,7 +24,7 @@
 					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
 				</div>
 				<div class="modal-body">
-					<form method="POST" name="taskForm{{ $task->id }}" action="/task/{{ $task->id }}/update" role="form">
+					<form method="POST" class="ajax" name="taskForm{{ $task->id }}" action="/task/{{ $task->id }}/update" role="form">
 						<input name="_method" type="hidden" value="PATCH">
 						{{ csrf_field() }}
 						@if (isset($task->blockedby))

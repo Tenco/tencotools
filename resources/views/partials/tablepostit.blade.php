@@ -19,9 +19,9 @@
 						<input name="_method" type="hidden" value="PATCH">
 						{{ csrf_field() }}
 						@if (isset($task->blockedby))
-							<div class="alert alert-danger">
+							<div class="alert alert-danger" id="blockinfo{{ $task->id }}">
 								<span class="glyphicon glyphicon-ban-circle"></span> Task blocked by task <a href="/project/{{$project->id}}#TaskModal{{$task->blockedby}}" target=_new>#{{ $task->blockedby }}</a>
-								<a href="/removeblock/{{ $project->id }}/{{ $task->id }}" class="pull-right"><small>remove</small></a>
+								<a href="/removeblock/{{ $project->id }}/{{ $task->id }}" id="removeblock" class="pull-right"><small>remove</small></a>
 							</div>
 						@endif
 						<div class="form-group">
@@ -70,8 +70,9 @@
 								<input type="text" class="form-control" value="{{ url('/project') . '/' .$project->id . '#TaskModal' . $task->id }}">
 							</div>
 						<div class="form-group">
+							<!--div class="alert alert-success" style="display:none;" id="tasksuccess" role="alert">Task successfully updated</div-->
 							<a href="/task/{{ $task->id }}/delete"><span class="glyphicon glyphicon-trash" style="top:10px;" data-toggle="tooltip" data-placement="top" title="Delete this task"></span></a>
-							<p class="pull-right"><button type="submit" class="btn btn-default">Save</button></p>
+							<p class="pull-right"><button type="submit" id="updateTask" class="btn btn-default">Save</button></p>
 						</div>
 					</form>
 				</div>

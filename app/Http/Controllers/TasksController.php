@@ -274,6 +274,8 @@ class TasksController extends Controller
             'blockedby' => $blockedby,
             ]);
 
+        
+        //return response()->json(['success' => 'ok']);
         Session::flash('flash_message', 'Task updated.');
         return back();
 
