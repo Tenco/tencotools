@@ -78,4 +78,7 @@ Route::group(['Middleware' => ['web', 'auth']], function () /* middleware group 
 	Route::get('relations/{relation}/edit', 'RelationsController@edit');
 	Route::patch('relations/{relation}/update', 'RelationsController@update');
 	Route::post('relations/search', 'RelationsController@search');
+	Route::get('relations/{relation}/delete', 'RelationsController@remove');
+	Route::get('relations/{relation}/undo', 'RelationsController@restore');
+	
 });

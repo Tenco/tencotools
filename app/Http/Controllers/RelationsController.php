@@ -36,6 +36,7 @@ class RelationsController extends Controller
 		#$relations = Relation::all();
 
 		$relations = DB::table('relations')
+				->whereNull('deleted_at') // soft deletes not working?! :(
                 ->orderBy('name', 'asc')
                 ->paginate(17);
 
@@ -224,5 +225,40 @@ class RelationsController extends Controller
     	return view('relations.searchResult', compact('results', 'query'));
 
 	}
+
+
+ 	/*
+    *
+    *  delete a contact
+    *
+    */
+	public function remove($relation)
+	{
+		// delete the task in DB
+        Relation::destroy($relation);
+
+        Session::flash('flash_message', 'Contact deleted. <a href="/relations/'.$relation.'/undo">Undo.</a>');
+        return redirect('/relations');
+
+	}
+
+
+	 /*
+    *
+    *  revive a deleted contact
+    *
+    */
+    public function restore($relation)
+    {
+
+        Relation::withTrashed()
+            ->where('id', $relation)
+            ->restore();
+
+        
+        Session::flash('flash_message', 'Contact revived.');
+        
+        return back();
+    }
 
 }

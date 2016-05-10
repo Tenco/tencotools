@@ -49,8 +49,12 @@
 				<!--div class="checkbox">
 					<label><input type="checkbox"> Accepts sendouts</label>
 				</div-->
-				<div class="pull-right"><a type="button" class="btn btn-default" href="/relations">Cancel</a>
-					<button type="submit" class="btn btn-primary">Save</button>
+				<div>
+					<a href="/relations/{{ $relation->id }}/delete" type="button" class="btn btn-danger">Delete Contact</a>
+					<div class="pull-right">
+						<a type="button" class="btn btn-default" href="/relations">Cancel</a>
+						<button type="submit" class="btn btn-primary">Save</button>
+				</div>
 				</div>
 			</form>
 
