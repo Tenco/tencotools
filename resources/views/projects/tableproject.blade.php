@@ -117,7 +117,7 @@
     		<p class="lead">{{ $project->desc }}</p>
     		<p>
 				<small>
-					Client: <em>To Be Implemented</em><br />
+					<!--Client: <em>To Be Implemented</em><br />-->
 					Project owner: {{ $project->user->name }} &nbsp;&nbsp;<br />
 		    		@if ($project->deadline)
 		    			Deadline: {{ $project->deadline->diffForHumans() }} &nbsp;&nbsp;

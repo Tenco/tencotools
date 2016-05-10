@@ -75,6 +75,7 @@ class RelationsController extends Controller
     		'email' => $request->email,
     		'phone' => $request->phone,
     		'company' => $request->company,
+    		'img' => 'relations.png',
     		'tenco_contact' => $request->tenco_contact
     	]);
 

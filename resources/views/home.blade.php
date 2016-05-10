@@ -4,11 +4,11 @@
 
 @include('partials.msg')
 
-<div class="row">
+<!--div class="row">
   <div class="col-md-12"> 
     <p class="pull-right"><a href="project/create" type="button" class="btn btn-default">Add project</a></p>
   </div>
-</div>
+</div-->
 
 <div>
 
@@ -24,6 +24,21 @@
   <div class="tab-content">
     <div role="tabpanel" class="tab-pane active" id="home">
         <div class="row" style="margin-top:20px;">
+                <!-- NEW PROJECT -->
+                  <div class="col-md-3"> 
+                        <div class="panel panel-primary">
+                             <div class="panel-heading" style="background-color: #3AB733">
+                              <h3 class="panel-title">Start a new Project</h3>
+                            </div>
+                            <div class="panel-body" style="background-image: url(/img/default_project_image.jpg); background-size: cover;">
+                                <br /><br /><br /><br /><br /><br /><br />
+                                <div class="row" style="background: rgba(14, 58, 78, 0.34); padding:10px;"><a class="pull-right" style="color: #f5f5f5;" href="/project/create"><span class="glyphicon glyphicon-plus"></span> Add</a></div>
+                            </div>
+                           
+                          </div>
+                    </div>
+
+
             @foreach ($projects as $project)
                 @if (is_null($project->close_date))
                     <div class="col-md-3"> 

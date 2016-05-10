@@ -42,16 +42,11 @@
 	function set_active($path)
 	{
 
-		/*if ( ! $path || $path == '/')
-		{
-			$path = 'projects';
-		}*/
-
-		#dd($path);
-
+		
 		$url = request()->path();
+
 		if (strstr($url, $path))
-		{
+		{	
 			echo 'active';
 		}
 				
