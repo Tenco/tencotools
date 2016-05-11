@@ -239,7 +239,7 @@ class ProjectsController extends Controller
 
 		Session::flash('flash_message', 'Project updated.');
 
-		$url = '/project/'.$id;
+		$url = '/project/'.$id.'/edit';
 
 		return redirect($url);
 
