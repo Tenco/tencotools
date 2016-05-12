@@ -286,4 +286,18 @@ class ProjectsController extends Controller
 
 	}
 
+	/*
+	*
+	* 
+	*
+	*/
+	public function files($project)
+	{
+
+		$files = ProjectFile::where('project_id', $project)->get();
+		#dd($files);
+
+		return view('projects.projectFiles', compact('files'));
+
+	}
 }

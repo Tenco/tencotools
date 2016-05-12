@@ -51,14 +51,17 @@
     <script src="/js/all.js"></script>
     <script src="/js/jquery.autocomplete.js"></script>
 
-    
-    @yield('scripts')
+  
     <!-- 
     This code below will look at the URL and if it contains a 
     #hash it will try to pop corresponding modal window.
     -->
     <script>
         $(document).ready(function(){
+
+               
+
+          // show modal on page load if url contains a hash
           var hash = $(location).attr('hash');
           if (hash)
           {
@@ -125,5 +128,7 @@
 
 
     </script>
+
+    @yield('scripts')
   </body>
 </html>

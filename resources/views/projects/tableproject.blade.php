@@ -11,36 +11,81 @@
 			<div class="modal-content">
 				<div class="modal-header" style="border-bottom: 1px solid #fff;">
 					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-					<!--h4 class="modal-title" id="newImageLabel">Project Files</h4-->
+					<h4 class="modal-title" id="newImageLabel">{{ $project->name }} Files</h4>
 				</div>
 				<div class="modal-body">
-					<table class="table table-condensed">
-						<tr>
-							<th>Filename</th>
-							<th>Uploaded by</th>
-							<th>Uploaded</th>
-							<th></th>
-						<tr>
-							<tbody>
-							@if ($project->ProjectFile->isEmpty())
-								<tr class="info"><td colspan=4>&nbsp;No files uploaded. Upload files in <a href="/project/{{ $project->id }}/edit">Edit Project</a></td></tr>
-							@else
-								@foreach ($project->ProjectFile as $file)
-									<tr>
-										<td><a href="/download/{{base64_encode($file->path . $file->name)}}" title="{{ basename($file->name) }}"><span class="glyphicon glyphicon-file"></span> {{ str_limit(basename($file->name), 28) }}</a></td>
-										<td>{{ \Helpers\UserIdToName($file->user_id) }}</td>
-										<td>{{ $file->created_at }}</td>
-										<td><a href="/file/{{ $file->id }}/delete"><small><span class="glyphicon glyphicon-trash"></span></small></a></td>
-									</tr>
-								@endforeach
-							@endif
-							</tbody>
-					</table>
+
+					<!-- Nav tabs -->
+					<ul class="nav nav-tabs" role="tablist" style="margin-bottom:20px;">
+						<li role="presentation" class="active" ><a data-toggle="tabajax" href="/project/{{ $project->id }}/files" aria-controls="home" role="tab" data-toggle="tab" data-target="#fileslist">Project files</a></li>
+						<!--li role="presentation"><a href="#upl" aria-controls="profile" role="tab" data-toggle="tab">Upload project image</a></li-->
+						<li role="presentation"><a href="#uplfiles" aria-controls="profile" role="tab" data-toggle="tab">Upload files</a></li>
+					</ul>
+		
+					<div class="tab-content">
+						<div role="tabpanel" class="tab-pane active" id="fileslist">
+							<div class="alert alert-success" id="deletesuccess" style="display:none;">
+   								<span class="glyphicon glyphicon-ok"></span><em> File deleted </em>
+   							</div>
+							<table class="table table-condensed">
+								<tr>
+									<th>Filename</th>
+									<th>Uploaded by</th>
+									<th>Uploaded</th>
+									<th></th>
+								<tr>
+									<tbody>
+									@if ($project->ProjectFile->isEmpty())
+										<tr class="info"><td colspan=4>&nbsp;<em>No files uploaded</em></td></tr>
+									@else
+										@foreach ($project->ProjectFile as $file)
+											<tr id="tr{{ $file->id }}">
+												<td><a href="/download/{{base64_encode($file->path . $file->name)}}" title="{{ basename($file->name) }}"><span class="glyphicon glyphicon-file"></span> {{ str_limit(basename($file->name), 28) }}</a></td>
+												<td>{{ \Helpers\UserIdToName($file->user_id) }}</td>
+												<td>{{ $file->created_at }}</td>
+												<td><a href="/file/{{ $file->id }}/delete" class="deleteFile" data-file-id="{{ $file->id }}"><small><span class="glyphicon glyphicon-trash"></span></small></a></td>
+											</tr>
+										@endforeach
+									@endif
+									</tbody>
+							</table>
+						</div> <!-- / tabpanel fls-->
+
+						<div role="tabpanel" class="tab-pane" id="upl">
+							<form role="form" action="/project/{{ $project->id }}/store/image" method="POST" id="my-awesome-dropzone" class="dropzone" style="margin-top:20px;">
+								{{ csrf_field() }}
+								<div class="form-group">
+									<div id="dropzone-previews" class="dz-default dz-message">
+		  								<span>Drag project image file here, or click to upload</span>
+									</div>
+								</div>
+							</form>
+							<div class="pull-right" style="margin-top:20px;">
+				  				<a href="/project/{{ $project->id }}" id="done" type="button" style="display:none;" class="btn btn-primary">Ok</a>
+				 			</div>
+    					</div>
+    		
+    					<div role="tabpanel" class="tab-pane" id="uplfiles">
+							<form role="form" action="/project/{{ $project->id }}/store/file" method="POST" id="projectFilesDropzone" class="dropzone" style="margin-top:20px;">
+								{{ csrf_field() }}
+								<div class="form-group">
+									<div id="dropzone-previews" class="dz-default dz-message">
+										<span>Drag files here, or click to upload</span>
+									</div>
+								</div>
+							</form>
+							<div class="pull-right" style="margin-top:20px;">
+			  					<a href="/project/{{ $project->id }}" id="donebutton" type="button" style="display:none;" class="btn btn-primary">Ok</a>
+			 				</div>
+    					</div>
+
+
+					</div> <!-- tab-content -->
 				</div><!-- /.modal-body -->		
 			</div><!-- /.modal-content -->
 		</div><!-- /.modal-dialog -->
-	</div>
-</div>
+	</div> <!-- /files_modal -->
+</div> <!-- /row -->
 
 <!-- NEW TASK MODAL -->
 
@@ -129,9 +174,9 @@
     		<hr />
     		<p class="pull-right">
     			<!--a data-toggle="modal" data-target="#filesModal" href=#><span class="glyphicon glyphicon-cloud-upload"></span> Upload Files </a>&nbsp;&nbsp;-->
-    			<a data-toggle="modal" data-target="#filesModal" href=#><span class="glyphicon glyphicon-file"></span> Project Files <span class="badge" style="background-color: #CA4242;">{{ count($project->ProjectFile) }}</span></a>&nbsp;&nbsp;
+    			<a data-toggle="modal" data-target="#filesModal" href=#><span class="glyphicon glyphicon-file"></span> Project Files <span id="nbroffiles" class="badge" style="background-color: #CA4242;">{{ count($project->ProjectFile) }}</span></a>&nbsp;&nbsp;
 	    		<!--a href=#><span class="glyphicon glyphicon-time"></span> Start timer </a>&nbsp;&nbsp;-->
-	    		<a href="/project/{{ $project->id }}/edit"><span class="glyphicon glyphicon-cog"></span> Edit Project</a>
+	    		<a href="/project/{{ $project->id }}/edit"><span class="glyphicon glyphicon-edit"></span> Edit Project</a>
     		</p>
   		</div>
 	</div>
@@ -285,6 +330,7 @@
 </div>
 
 <script src='/js/dragula.js'></script>
+<script src="/js/dropzone.js"></script>
 <script>
 
 /* Drag & drop script */
@@ -362,6 +408,21 @@ function updateTask(target, taskid)
 
 @section('scripts')
 	<script type="text/javascript">
+
+		// use ajax to load project files in tab
+	    //$('[data-toggle="tabajax"]').click(function (e) {
+	    $('[data-toggle="tabajax"]').on("click", function(e) { 
+	        	//alert("klicked!");
+				//var $this = $(this),
+	          	var loadurl = $(this).attr('href');
+	          	var targ = $(this).attr('data-target');
+	          
+	          	//alert(targ);
+	           	$(targ).load(loadurl);
+	           	$(this).tab('show');
+	          	return false;
+	    });
+
 		// use ajax to submit updates on 
 		// task changes.
 		(function(){
@@ -395,5 +456,62 @@ function updateTask(target, taskid)
 			});
 
 		})();
+
+		// delete files using ajax
+		(function(){
+
+			//$('.deleteFile').click(function(e) {
+			$('.deleteFile').on('click', function(e) { 
+   				
+   				e.preventDefault();
+
+				var loadurl = $(this).attr('href');
+	          	var fileid = $(this).attr('data-file-id');
+
+				$.ajax({
+
+					url: loadurl,
+					success: function() 
+		    		{
+		    			
+		    			$('#tr' + fileid).fadeOut();
+		    			$('#deletesuccess').fadeIn().delay(2000).fadeOut();
+		    			$("#nbroffiles").text( Number($("#nbroffiles").text()) - 1);
+		    			//$('#updateTask').removeClass('disabled');
+		    		},
+		    	
+
+		    	});
+				return false;
+
+			});
+
+		})();
+
+		
+
+		/* DROPZONE FILE UPLOAD */
+		Dropzone.options.projectFilesDropzone = { // The camelized version of the ID of the form element
+
+		  uploadMultiple: true,
+		  maxFiles: 10,
+		  maxFileSize: 100,
+
+		  init: function() {
+		    var myDropzone = this;
+
+
+		    this.on("success", function(files, response) {
+		    	$("#nbroffiles").text( Number($("#nbroffiles").text()) + 1);
+		      // Gets triggered when the file successfylly been uploaded
+		      // now show the ok button!
+		      //$('#donebutton').show();
+		      
+		    });
+		    
+		  }
+
+		}
+
 	</script>
 @stop

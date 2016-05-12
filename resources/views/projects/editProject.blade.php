@@ -13,7 +13,7 @@
 		<ul class="nav nav-tabs" role="tablist">
 			<li role="presentation" class="active"><a href="#fls" aria-controls="home" role="tab" data-toggle="tab">Project details</a></li>
 			<li role="presentation"><a href="#upl" aria-controls="profile" role="tab" data-toggle="tab">Project image</a></li>
-			<li role="presentation"><a href="#uplfiles" aria-controls="profile" role="tab" data-toggle="tab">Upload files</a></li>
+			<!--li role="presentation"><a href="#uplfiles" aria-controls="profile" role="tab" data-toggle="tab">Upload files</a></li-->
 		</ul>
 		
 	<!-- Tab panes -->
@@ -79,8 +79,7 @@
 							<a type="button" class="btn btn-default" href="/project/{{ $project->id }}">Back</a>
 					  		<button type="submit" class="btn btn-primary">Save</button></div>
 				</form>
-
-			</div>    
+  			</div>
 			<div role="tabpanel" class="tab-pane" id="upl">
 				<form role="form" action="/project/{{ $project->id }}/store/image" method="POST" id="my-awesome-dropzone" class="dropzone" style="margin-top:20px;">
 						{{ csrf_field() }}
@@ -94,7 +93,7 @@
 		  				<a href="/project/{{ $project->id }}" id="done" type="button" style="display:none;" class="btn btn-primary">Ok</a>
 		 			</div>
     		</div>
-    		<div role="tabpanel" class="tab-pane" id="uplfiles">
+    		<!--div role="tabpanel" class="tab-pane" id="uplfiles">
 				<form role="form" action="/project/{{ $project->id }}/store/file" method="POST" id="projectFilesDropzone" class="dropzone" style="margin-top:20px;">
 									{{ csrf_field() }}
 									<div class="form-group">
@@ -106,64 +105,48 @@
 					<div class="pull-right" style="margin-top:20px;">
 		  				<a href="/project/{{ $project->id }}" id="donebutton" type="button" style="display:none;" class="btn btn-primary">Ok</a>
 		 			</div>
-    		</div>
-		</div>
+    		</div-->
+		</div> <!-- tac content -->
 
 
 	
 </div>
 
 <script src="/js/dropzone.js"></script>
-<script>
-/* DROPZONE IMAGE UPLOAD */
-Dropzone.options.myAwesomeDropzone = { // The camelized version of the ID of the form element
 
-  // The configuration we've talked about above
-  uploadMultiple: false,
-  parallelUploads: 100,
-  maxFiles: 1,
-  maxFileSize: 100,
-  acceptedFiles: '.jpg, .png, .jpeg',
-  
-  // The setting up of the dropzone
-  init: function() {
-    var myDropzone = this;
+@stop
 
+@section('scripts')
 
-    this.on("success", function(files, response) {
-      // Gets triggered when the file successfylly been uploaded
-      // now show the ok button!
-      //$('#reloadProject').show();
-      $('#done').show();
-      
-    });
-    
-  }
+<script type="text/javascript">
+
+	/* DROPZONE IMAGE UPLOAD */
+		Dropzone.options.myAwesomeDropzone = { // The camelized version of the ID of the form element
+
+		  // The configuration we've talked about above
+		  uploadMultiple: false,
+		  parallelUploads: 100,
+		  maxFiles: 1,
+		  maxFileSize: 100,
+		  acceptedFiles: '.jpg, .png, .jpeg',
+		  
+		  // The setting up of the dropzone
+		  init: function() {
+		    var myDropzone = this;
 
 
-}
-
-/* DROPZONE FILE UPLOAD */
-Dropzone.options.projectFilesDropzone = { // The camelized version of the ID of the form element
-
-  uploadMultiple: true,
-  maxFiles: 10,
-  maxFileSize: 100,
-
-  init: function() {
-    var myDropzone = this;
+		    this.on("success", function(files, response) {
+		      // Gets triggered when the file successfylly been uploaded
+		      // now show the ok button!
+		      //$('#reloadProject').show();
+		      //$('#done').show();
+		      
+		    });
+		    
+		  }
 
 
-    this.on("success", function(files, response) {
-      // Gets triggered when the file successfylly been uploaded
-      // now show the ok button!
-      $('#donebutton').show();
-      
-    });
-    
-  }
+		}
 
-}
 </script>
-
 @stop

@@ -49,6 +49,7 @@ Route::group(['Middleware' => ['web', 'auth']], function () /* middleware group 
 	Route::patch('project/{id}/update', 'ProjectsController@update');
 	Route::post('project/{project}/tasks', 'TasksController@store');
 	Route::post('project/{project}/store/image', 'ProjectsController@storeImage');
+	Route::get('project/{project}/files', 'ProjectsController@files');
 	Route::get('project/{project}/kickstart', 'TasksController@kickstart');
 
 	Route::get('project/{id}/revive', 'ProjectsController@revive');
