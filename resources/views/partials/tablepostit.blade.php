@@ -19,9 +19,9 @@
 						<input name="_method" type="hidden" value="PATCH">
 						{{ csrf_field() }}
 						@if (isset($task->blockedby))
-							<div class="alert alert-danger" id="blockinfo{{ $task->id }}">
+							<div class="alert alert-danger" id="blockinfo{{ $task->blockedby }}">
 								<span class="glyphicon glyphicon-ban-circle"></span> Task blocked by task <a href="/project/{{$project->id}}#TaskModal{{$task->blockedby}}" target=_new>#{{ $task->blockedby }}</a>
-								<a href="/removeblock/{{ $project->id }}/{{ $task->id }}" id="removeblock" class="pull-right"><small>remove</small></a>
+								<a href="/removeblock/{{ $project->id }}/{{ $task->id }}" class="pull-right removeblock" data-block-id="{{ $task->blockedby }}" data-task-id="{{ $task->id }}"><small>remove</small></a>
 							</div>
 						@endif
 						<div class="form-group">
@@ -47,7 +47,12 @@
 						</div>
 						<div class="form-group">
 							@if (isset($task->blockedby) || $task->blockedby === 0)
-								<input type="hidden" name="blockedby" class="blockedby" value="{{ $task->blockedby }}">
+								<input type="hidden" id="hiddenTaskBlock{{ $task->blockedby }}" name="blockedby" class="blockedby" value="{{ $task->blockedby }}">
+								<div id="TaskBlockSearch{{ $task->id }}" style="display:none;">
+									<label for="taskDeadline">Blocked by</label>
+									<input type="text" class="form-control autocomplete" name="taskBlock" placeholder="Search for a task">
+									<input type="hidden" name="blockedby" class="blockedby" value="">
+								</div>
 							@else
 								<label for="taskDeadline">Blocked by</label>
 								<input type="text" class="form-control autocomplete" name="taskBlock" placeholder="Search for a task">

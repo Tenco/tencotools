@@ -410,7 +410,6 @@ function updateTask(target, taskid)
 	<script type="text/javascript">
 
 		// use ajax to load project files in tab
-	    //$('[data-toggle="tabajax"]').click(function (e) {
 	    $('[data-toggle="tabajax"]').on("click", function(e) { 
 	        	//alert("klicked!");
 				//var $this = $(this),
@@ -444,7 +443,7 @@ function updateTask(target, taskid)
 					success: function() 
 		    		{
 		    			//alert("done!");
-		    			$('#tasksuccess').show().delay(2000).fadeOut();
+		    			$('#tasksuccess').show().delay(1000).fadeOut();
 		    			$('#updateTask').removeClass('disabled');
 		    		},
 		    	
@@ -460,11 +459,11 @@ function updateTask(target, taskid)
 		// delete files using ajax
 		(function(){
 
-			//$('.deleteFile').click(function(e) {
-			$('.deleteFile').on('click', function(e) { 
+			// only accept one click
+			$('.deleteFile').one('click', function(e) { 
    				
    				e.preventDefault();
-
+				$(this).addClass('disabled');
 				var loadurl = $(this).attr('href');
 	          	var fileid = $(this).attr('data-file-id');
 
@@ -474,10 +473,47 @@ function updateTask(target, taskid)
 					success: function() 
 		    		{
 		    			
-		    			$('#tr' + fileid).fadeOut();
-		    			$('#deletesuccess').fadeIn().delay(2000).fadeOut();
+		    			$('#tr' + fileid).fadeToggle(1000);
+		    			//$('#deletesuccess').fadeIn().delay(2000).fadeOut();
 		    			$("#nbroffiles").text( Number($("#nbroffiles").text()) - 1);
 		    			//$('#updateTask').removeClass('disabled');
+		    		},
+		    	
+
+		    	});
+				return false;
+
+			});
+
+		})();
+
+		// Remove block using ajax
+		(function(){
+
+			// only accept one click
+			$('.removeblock').one('click', function(e) { 
+   				
+   				e.preventDefault();
+				$(this).addClass('disabled');
+				var loadurl = $(this).attr('href');
+				var taskid = $(this).attr('data-task-id');
+	          	var blockedbytaskid = $(this).attr('data-block-id');
+
+				$.ajax({
+
+					url: loadurl,
+					success: function() 
+		    		{
+		    			
+		    			// remove the appropriate blocker icon
+		    			$('span > [data-blocker="' + blockedbytaskid + '"]').hide();
+		    			// remove the alert-div itself
+		    			$('#blockinfo' + blockedbytaskid).fadeOut();
+		    			// remove the hidden value from the form
+		    			$('#hiddenTaskBlock' + blockedbytaskid).remove();
+		    			// display the blocked by search form that was hidden
+						$('#TaskBlockSearch' + taskid).fadeIn();		    			
+		    					    			
 		    		},
 		    	
 

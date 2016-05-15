@@ -139,7 +139,7 @@
 		      // Gets triggered when the file successfylly been uploaded
 		      // now show the ok button!
 		      //$('#reloadProject').show();
-		      //$('#done').show();
+		      $('#done').show();
 		      
 		    });
 		    
