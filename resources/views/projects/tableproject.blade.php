@@ -61,7 +61,7 @@
 								</div>
 							</form>
 							<div class="pull-right" style="margin-top:20px;">
-				  				<a href="/project/{{ $project->id }}" id="done" type="button" style="display:none;" class="btn btn-primary">Ok</a>
+				  				<a href="/project/{{ $project->id }}" id="okdone" type="button" style="display:none;" class="btn btn-primary">Ok</a>
 				 			</div>
     					</div>
     		
