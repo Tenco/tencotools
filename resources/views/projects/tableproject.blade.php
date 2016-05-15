@@ -460,7 +460,8 @@ function updateTask(target, taskid)
 		(function(){
 
 			// only accept one click
-			$('.deleteFile').one('click', function(e) { 
+			//$('.deleteFile').one('click', function(e) { 
+			$(document).on("click", '.deleteFile', function(e) { 
    				
    				e.preventDefault();
 				$(this).addClass('disabled');
