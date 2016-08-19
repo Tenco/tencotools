@@ -15,7 +15,7 @@
             <li class="{{ ! Request::segment(1) || Request::segment(1) === 'project' ? 'active' : null }}"><a href="/">Projects</a></li>
             <li class="{{ \Helpers\set_active('relations') }}"><a href="/relations">Relations</a></li>
             <li class="disabled"><a href="#">Templates</a></li>
-            <li class="disabled"><a href="#">Evensts</a></li>
+            <li class="disabled"><a href="#">Events</a></li>
             
 
 

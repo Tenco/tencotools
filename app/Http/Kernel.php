@@ -15,6 +15,7 @@ class Kernel extends HttpKernel
      */
     protected $middleware = [
         \Illuminate\Foundation\Http\Middleware\CheckForMaintenanceMode::class,
+        //\tencotools\Http\Middleware\BlockedUser::class,
         // having issues with this one when adding/listing tasks :(
         //\GeneaLabs\LaravelCaffeine\Http\Middleware\LaravelCaffeineDripMiddleware::class,
     ];
@@ -52,5 +53,11 @@ class Kernel extends HttpKernel
         'can' => \Illuminate\Foundation\Http\Middleware\Authorize::class,
         'guest' => \tencotools\Http\Middleware\RedirectIfAuthenticated::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
+    ];
+
+    protected $blockedMiddleware = [
+        \tencotools\Http\Middleware\BlockedUser::class,
+        // having issues with this one when adding/listing tasks :(
+        //\GeneaLabs\LaravelCaffeine\Http\Middleware\LaravelCaffeineDripMiddleware::class,
     ];
 }
