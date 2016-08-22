@@ -46,4 +46,5 @@ class Task extends Model
 	{
 		return $this->belongsTo('tencotools\User', 'responsible');
 	}
+
 }

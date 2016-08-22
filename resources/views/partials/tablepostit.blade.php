@@ -12,6 +12,7 @@
 		<div class="modal-dialog">
 			<div class="modal-content"  style="background: #eae672;">
 				<div class="modal-header" style="border-bottom: 0px;">
+					<small><em>Created by: {{ \Helpers\UserIdToName($task->created_by) }}</em></small>
 					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
 				</div>
 				<div class="modal-body">
@@ -74,6 +75,7 @@
 								<label for="taskDeadline">Perma link:</label>
 								<input type="text" class="form-control" value="{{ url('/project') . '/' .$project->id . '#TaskModal' . $task->id }}">
 							</div>
+											
 						<div class="form-group">
 							<!--div class="alert alert-success" style="display:none;" id="tasksuccess" role="alert">Task successfully updated</div-->
 							<a href="/task/{{ $task->id }}/delete"><span class="glyphicon glyphicon-trash" style="top:10px;" data-toggle="tooltip" data-placement="top" title="Delete this task"></span></a>
