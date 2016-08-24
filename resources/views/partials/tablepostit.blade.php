@@ -13,10 +13,12 @@
 			<div class="modal-content"  style="background: #eae672;">
 				<div class="modal-header" style="border-bottom: 0px;">
 					<small><em>Created by: {{ \Helpers\UserIdToName($task->created_by) }}</em></small>
+
 					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
 				</div>
 				<div class="modal-body">
 					<form method="POST" name="taskForm{{ $task->id }}" action="/task/{{ $task->id }}/update" role="form">
+
 						<input name="_method" type="hidden" value="PATCH">
 						{{ csrf_field() }}
 						@if (isset($task->blockedby))
@@ -37,6 +39,10 @@
 						<div class="form-group">
 							<label for="taskResponsible">Responsible</label>
 							<select class="form-control" id="taskResponsible" name="taskResponsible">
+								<?php
+								//magnus
+								#dd($allusers);
+								?>
 								@foreach ($allusers as $us)
 									@if ($us->id == $task->responsible)
 										<option value="{{ $us->id }}" SELECTED>{{ $us->name }}</option>

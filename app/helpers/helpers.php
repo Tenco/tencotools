@@ -25,8 +25,13 @@
 	function UserIdToName($user_id)
 	{
 
+		#dd($user_id);
 
-		$user = \tencotools\User::findOrFail($user_id);
+		#$user = \tencotools\User::findOrFail($user_id);
+		$user = \tencotools\User::withTrashed()
+                ->where('id', $user_id)
+                ->first();
+
 		return $user['name'];
 		
 

@@ -156,7 +156,10 @@ class ProjectsController extends Controller
 		// eagerload the project owner data
 		$project->load('user.ProjectFile'); // EAGER LOAD ALSO FILES!! avoid N+1 problem!
 
+		#$allusers = User::withTrashed()->get(); // load all data in user table
 		$allusers = User::all(); // load all data in user table
+
+		#dd($allusers);
 
 		$path = '/project#'.$project->id.'/';
 		
