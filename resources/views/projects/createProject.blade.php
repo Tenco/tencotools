@@ -25,13 +25,21 @@
 		  </div>
 
 		   <div class="form-group">
-		    <label for="slack">Slack channel</label>
-		    <input type="text" class="form-control input-lg" id="slack" placeholder="#lechannel" name="slack" value="{{ old('slack') }}" >
+		   	<label for="slack">Slack channel</label>
+		   	<div class="input-group">
+  			<span class="input-group-addon">#</span>
+		    <input type="text" class="form-control input-lg" id="slack" placeholder="lechannel" name="slack" value="{{ old('slack') }}" >
+		</div>
 		  </div>
 
 		   <div class="form-group">
 		    <label for="invision">inVision URL</label>
 		    <input type="text" class="form-control input-lg" id="invision" placeholder="Enter inVision URL" name="invision" value="{{ old('invision') }}" >
+		  </div>
+
+			<div class="form-group">
+		    <label for="blog">Customer project blog</label>
+		    <input type="text" class="form-control input-lg" id="blog" placeholder="Enter URL" name="blog" value="{{ old('blog') }}" >
 		  </div>
 
 		   <div class="form-group">
@@ -40,6 +48,7 @@
   			<span class="input-group-addon">kr</span>
 		    	<input type="name" name="value" class="form-control input-lg" id="value" placeholder="Enter value" value="{{ old('value') }}">
 		    </div>
+
 		  </div>
 		  <div class="form-group">
 		    <label for="cost">Project Cost</label>

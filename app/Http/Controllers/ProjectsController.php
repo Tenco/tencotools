@@ -113,7 +113,8 @@ class ProjectsController extends Controller
     		'cost' => request()->cost,
     		'deadline' => $deadline,
     		'slack' => request()->slack,
-    		'invision' => request()->invision
+    		'invision' => request()->invision,
+    		'blog' => request()->blog
     		
     	]);
 
@@ -247,7 +248,9 @@ class ProjectsController extends Controller
     			'cost' => request()->cost,
     			'deadline' => $deadline,
     			'slack' => request()->slack,
-    			'invision' => request()->invision
+    			'invision' => request()->invision,
+    			'blog' => request()->blog,
+
           		]);
 
 		Session::flash('flash_message', 'Project updated.');

@@ -227,7 +227,10 @@
 						<a href="{{ $project->invision }}" target="_new"><img src="/img/invision.png" style="width:20px;" data-toggle="tooltip" data-placement="top" title="{{ $project->invision }}"></a>
     				@endif
     				@if ($project->slack)
-						<a href="https://tencotalk.slack.com/messages/{{ $project->slack }}/" target="_new"><img src="/img/slack-icon.png" style="width:20px;margin:5px;" data-toggle="tooltip" data-placement="top" title="{{ $project->slack }}"></a><br />
+						<a href="https://tencotalk.slack.com/messages/{{ $project->slack }}/" target="_new"><img src="/img/slack-icon.png" style="width:20px;margin:5px;" data-toggle="tooltip" data-placement="top" title="#{{ $project->slack }}"></a>
+    				@endif
+    				@if ($project->blog)
+						<a href="{{ $project->blog }}" target="_new"><img src="/img/tumblr-icon.png" style="width:20px;" data-toggle="tooltip" data-placement="top" title="{{ $project->blog }}"></a><br />
     				@endif
 		    	</small>
     		</p>

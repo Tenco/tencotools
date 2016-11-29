@@ -21,7 +21,8 @@ class Project extends Model
 							'close_date',
 							'deadline',
 							'slack',
-							'invision'
+							'invision',
+							'blog'
 						];
 
 	// define relationship

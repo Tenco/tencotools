@@ -58,6 +58,11 @@
 					    <input type="name" class="form-control input-lg" id="invision" placeholder="inVision URL" name="invision" value="{{ $project->invision }}" >
 					  </div>
 
+					  <div class="form-group">
+		    			<label for="blog">Customer project blog</label>
+		    			<input type="text" class="form-control input-lg" id="blog" placeholder="Enter URL" name="blog" value="{{ $project->blog }}" >
+		  				</div>
+
 					   <div class="form-group">
 					    <label for="value">Project Value</label>
 					    <div class="input-group">
