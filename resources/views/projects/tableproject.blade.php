@@ -143,6 +143,60 @@
       </div><!-- /.modal-dialog -->
     </div>
 
+
+
+    <!-- PROJECT HOURS MODAL -->
+
+	<div id="timeModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="newTaskLabel" aria-hidden="true" style="display: none;">
+		<div class="modal-dialog">
+			<div class="modal-content" >
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+					<h4 class="modal-title" id="newTaskLabel">Register billable hours</h4>
+				</div>
+
+				<div class="modal-body">
+					<form method="POST" action="/project/{{ $project->id }}/hours" role="form" class="projectHours">
+						{{ csrf_field() }}
+
+						<div class="alert alert-danger" style="display:none;" id="hoursError">
+							<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+					  			<span aria-hidden="true">&times;</span>
+							</button>
+							<strong><span class="glyphicon glyphicon-warning-sign"></span> Error</strong>, please have a look at the following issues:
+							<ul>
+								@foreach ($errors->all() as $error)
+
+									<li>{{ $error }}
+
+								@endforeach
+							</ul>
+						</div>
+
+						<div class="form-group">
+							<label for="taskName">Hours</label>
+							<input type="number" class="form-control" id="hours" name="hours" placeholder="Enter nbr of hours" required value="{{ old('hours') }}">
+						</div>
+						<div class="form-group">
+							<label for="taskDeadline">Start date</label>
+							<input type="date" class="form-control" id="startDate" name="startDate" placeholder="yyyy-mm-dd" value="{{ old('startDate') }}" required>
+						</div>
+						<div class="form-group">
+							<label for="taskDeadline">End date</label>
+							<input type="date" class="form-control" id="endDate" name="endDate" placeholder="yyyy-mm-dd" value="{{ old('startDate') }}" required>
+						</div>
+						<div class="row">
+							<div class="col-md-12">
+								<button type="submit" class="btn btn-default pull-right" id="submitHours">Save</button>
+							</div>
+						</div>
+						
+					</form>
+				</div>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div>
+
 @if (isset($project->close_date))
 	<div class="alert alert-danger">
 		<strong><span class="glyphicon glyphicon-warning-sign"></span> This project is archived</strong>
@@ -174,6 +228,7 @@
     		<hr />
     		<p class="pull-right">
     			<!--a data-toggle="modal" data-target="#filesModal" href=#><span class="glyphicon glyphicon-cloud-upload"></span> Upload Files </a>&nbsp;&nbsp;-->
+    			<!--a data-toggle="modal" data-target="#timeModal" href=#><span class="glyphicon glyphicon-time"></span> Project Hours </a-->&nbsp;&nbsp;
     			<a data-toggle="modal" data-target="#filesModal" href=#><span class="glyphicon glyphicon-file"></span> Project Files <span id="nbroffiles" class="badge" style="background-color: #CA4242;">{{ count($project->ProjectFile) }}</span></a>&nbsp;&nbsp;
 	    		<!--a href=#><span class="glyphicon glyphicon-time"></span> Start timer </a>&nbsp;&nbsp;-->
 	    		<a href="/project/{{ $project->id }}/edit"><span class="glyphicon glyphicon-edit"></span> Edit Project</a>
@@ -389,7 +444,7 @@ function updateTask(target, taskid)
     	{
     		if(textStatus === 'timeout')
     		{     
-        		alert('Moving the Task failed from timeout. Please try again.'); 
+        		alert('Moving the Task failed from timeout. Please reload the page and try again.'); 
 		    }
 		    else
 		    {
@@ -422,6 +477,40 @@ function updateTask(target, taskid)
 	          	return false;
 	    });
 
+
+	    // use ajax to submit project hours
+		(function(){
+
+			$('.projectHours').submit(function(e) { 
+				
+				// disable the submit button
+				$('#submitHours').addClass('disabled');
+
+				var form = $(this);
+				var method = form.find('input[name="_method"]').val() || 'POST';
+				var url = form.prop('action');
+
+				$.ajax({
+
+					type: method,
+					url: url,
+					data: form.serialize(),
+					success: function() 
+		    		{
+		    			alert("done!");
+		    			//$('#hourssuccess').show().delay(1000).fadeOut();
+		    			//$('#submitHours').removeClass('disabled');
+		    		},
+		    	
+
+		    	});
+				return false;
+				e.preventDefault();
+
+			});
+
+		})();
+
 		// use ajax to submit updates on 
 		// task changes.
 		(function(){
@@ -431,11 +520,14 @@ function updateTask(target, taskid)
 				// disable the submit button
 				$('#updateTask').addClass('disabled');
 
+
+
 				var form = $(this);
 				var method = form.find('input[name="_method"]').val() || 'POST';
 				var url = form.prop('action');
 
 				$.ajax({
+
 
 					type: method,
 					url: url,

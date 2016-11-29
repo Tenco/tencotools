@@ -9,6 +9,15 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class User extends Authenticatable
 {
 
+    /**
+     * The attributes that should be casted to native types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'is_admin' => 'boolean',
+    ];
+
     use SoftDeletes;
 
     protected $dates = ['deleted_at'];

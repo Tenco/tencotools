@@ -69,7 +69,7 @@
 						@if (isset($task->deadline))
 							<div class="form-group" id="newDeadline">
 								<label for="taskDeadline">Deadline ({{ $task->deadline->diffForHumans() }})</label>
-								<input type="date" class="form-control" id="taskDeadline" name="taskDeadline" value="{{ date('Y-m-d',strtotime($task->deadline)) }}">
+								<input type="date" class="form-control" id="taskDeadline" name="taskDeadline" value="{{ date('Y-m-d',strtotime($task->deadline)) }}" required>
 							</div>
 						@else
 							<div class="form-group" id="deadline">

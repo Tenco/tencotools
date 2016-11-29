@@ -57,6 +57,9 @@ Route::group(['Middleware' => ['web', 'auth']], function () /* middleware group 
 	
 	Route::get('removeblock/{project}/{task}', 'TasksController@removeblock');
 	Route::get('removedeadline/{project}/{task}', 'TasksController@removedeadline');
+
+	/** hours **/
+	Route::post('project/{project}/hours', 'ProjectTimeController@store');
 	
 	/******* TASKS ********/
 	Route::get('task/{task}/edit', 'TasksController@edit');

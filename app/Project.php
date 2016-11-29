@@ -40,4 +40,10 @@ class Project extends Model
         return $this->hasMany('tencotools\ProjectFile');
     }
 
+    // define relationship
+    public function ProjectTime() 
+    {
+        return $this->hasMany('tencotools\ProjectTime');
+    }
+
 }

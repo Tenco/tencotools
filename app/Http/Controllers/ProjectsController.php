@@ -11,6 +11,7 @@ use tencotools\Project;
 
 use tencotools\User;
 use tencotools\ProjectFile;
+use tencotools\ProjectTime;
 
 use Auth;
 use Storage;

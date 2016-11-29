@@ -16,7 +16,9 @@
             <li class="{{ \Helpers\set_active('relations') }}"><a href="/relations">Relations</a></li>
             <li class="disabled"><a href="#">Templates</a></li>
             <li class="disabled"><a href="#">Events</a></li>
-            
+            @if (Auth::user()->is_admin)
+              <!--li class="{{ ! Request::segment(1) || Request::segment(1) === 'hours' ? 'active' : null }}"><a href="/hours">Time reports</a></li-->
+            @endif
 
 
             <!--li><a href="#about">About</a></li>
