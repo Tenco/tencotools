@@ -93,10 +93,13 @@ class ProjectsController extends Controller
 	*/
 	public function store(Request $request, Project $project)
 	{
+		#dd($request);
+
 		$this->validate($request, [
             'name' => 'required',
             'desc' => 'required',
-            'project_owner' => 'required'
+            'project_owner' => 'required',
+            //'invision' => 'URL'
             ]);
 
 		$deadline = (strlen(request()->deadline) ? request()->deadline : NULL);
@@ -108,7 +111,10 @@ class ProjectsController extends Controller
     		'project_owner' => request()->project_owner,
     		'value' => request()->value,
     		'cost' => request()->cost,
-    		'deadline' => $deadline
+    		'deadline' => $deadline,
+    		'slack' => request()->slack,
+    		'invision' => request()->invision
+    		
     	]);
 
     	return redirect('/project/image/'. $p->id);
@@ -226,7 +232,8 @@ class ProjectsController extends Controller
 		$this->validate($request, [
 				'name' => 'required',
 				'desc' => 'required',
-				'project_owner' => 'required|numeric'
+				'project_owner' => 'required|numeric',
+				//'invision' => 'URL'
 			]);
 		
 		$deadline = (strlen(request()->deadline) ? request()->deadline : NULL);
@@ -238,7 +245,9 @@ class ProjectsController extends Controller
     			'project_owner' => request()->project_owner,
     			'value' => request()->value,
     			'cost' => request()->cost,
-    			'deadline' => $deadline
+    			'deadline' => $deadline,
+    			'slack' => request()->slack,
+    			'invision' => request()->invision
           		]);
 
 		Session::flash('flash_message', 'Project updated.');

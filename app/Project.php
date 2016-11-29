@@ -19,7 +19,9 @@ class Project extends Model
 							'value',
 							'cost',
 							'close_date',
-							'deadline'
+							'deadline',
+							'slack',
+							'invision'
 						];
 
 	// define relationship

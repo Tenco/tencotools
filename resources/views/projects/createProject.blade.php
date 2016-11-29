@@ -23,6 +23,17 @@
 				  @endforeach
 				</select>
 		  </div>
+
+		   <div class="form-group">
+		    <label for="slack">Slack channel</label>
+		    <input type="text" class="form-control input-lg" id="slack" placeholder="#lechannel" name="slack" value="{{ old('slack') }}" >
+		  </div>
+
+		   <div class="form-group">
+		    <label for="invision">inVision URL</label>
+		    <input type="text" class="form-control input-lg" id="invision" placeholder="Enter inVision URL" name="invision" value="{{ old('invision') }}" >
+		  </div>
+
 		   <div class="form-group">
 		    <label for="value">Project Value</label>
 		    <div class="input-group">

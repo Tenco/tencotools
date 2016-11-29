@@ -219,10 +219,16 @@
 					<!--Client: <em>To Be Implemented</em><br />-->
 					Project owner: {{ $project->user->name }} &nbsp;&nbsp;<br />
 		    		@if ($project->deadline)
-		    			Deadline: {{ $project->deadline->diffForHumans() }} &nbsp;&nbsp;
+		    			Deadline: {{ $project->deadline->diffForHumans() }} &nbsp;&nbsp;<br />
 		    		@else
-		    			Deadline: TBD &nbsp;&nbsp;
+		    			Deadline: TBD &nbsp;&nbsp;<br />
 		    		@endif
+		    		@if ($project->invision)
+						<a href="{{ $project->invision }}" target="_new"><img src="/img/invision.png" style="width:20px;" data-toggle="tooltip" data-placement="top" title="{{ $project->invision }}"></a>
+    				@endif
+    				@if ($project->slack)
+						<a href="https://tencotalk.slack.com/messages/{{ $project->slack }}/" target="_new"><img src="/img/slack-icon.png" style="width:20px;margin:5px;" data-toggle="tooltip" data-placement="top" title="{{ $project->slack }}"></a><br />
+    				@endif
 		    	</small>
     		</p>
     		<hr />
