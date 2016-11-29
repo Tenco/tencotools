@@ -47,7 +47,10 @@
 
 					  <div class="form-group">
 					    <label for="slack">Slack channel</label>
-					    <input type="text" class="form-control input-lg" id="slack" placeholder="#lechannel" name="slack" value="{{ $project->slack }}" >
+					    <div class="input-group">
+					    	<span class="input-group-addon">#</span>
+					    	<input type="text" class="form-control input-lg" id="slack" placeholder="#lechannel" name="slack" value="{{ $project->slack }}" >
+					    </div>
 					  </div>
 
 					  <div class="form-group">
