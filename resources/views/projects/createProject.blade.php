@@ -42,7 +42,7 @@
 		    <input type="text" class="form-control input-lg" id="blog" placeholder="Enter URL" name="blog" value="{{ old('blog') }}" >
 		  </div>
 
-		   <div class="form-group">
+		   <!--div class="form-group">
 		    <label for="value">Project Value</label>
 		    <div class="input-group">
   			<span class="input-group-addon">kr</span>
@@ -56,7 +56,7 @@
   			<span class="input-group-addon">kr</span>
 		    	<input type="name" name="cost" class="form-control input-lg" id="cost" placeholder="Enter Cost" value="{{ old('cost') }}">
 		    </div>
-		  </div>
+		  </div-->
 		  <div class="form-group">
 		    <label for="name">Project Deadline</label>
 		    <input type="date" name="deadline" class="form-control input-lg" id="deadline" placeholder="Enter Deadline" value="{{ old('deadline') }}">

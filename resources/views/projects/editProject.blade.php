@@ -63,7 +63,7 @@
 		    			<input type="text" class="form-control input-lg" id="blog" placeholder="Enter URL" name="blog" value="{{ $project->blog }}" >
 		  				</div>
 
-					   <div class="form-group">
+					   <!--div class="form-group">
 					    <label for="value">Project Value</label>
 					    <div class="input-group">
 			  			<span class="input-group-addon">kr</span>
@@ -76,7 +76,7 @@
 			  			<span class="input-group-addon">kr</span>
 					    	<input type="name" name="cost" class="form-control input-lg" id="cost" placeholder="Enter Cost" value="{{ $project->cost }}">
 					    </div>
-					  </div>
+					  </div-->
 					    @if (isset($project->deadline))
 							<div class="form-group" id="Deadline">
 								<label for="deadline">Deadline ({{ $project->deadline->diffForHumans() }})</label>
