@@ -274,7 +274,7 @@
             <th width=4%>&nbsp;</th>
             <th width=32%>Backlog <button data-toggle="modal" data-target="#newTaskModal" type="button" class="btn btn-default btn-xs pull-right"><span data-toggle="tooltip" data-placement="top" title="Click to add task" class="glyphicon glyphicon-plus" style="opacity: .5;"></span></button></th>
             <th width=32%>Ongoing</th>
-            <th width=32%>Done</th>
+            <th>Done</th>
           </tr>
         </thead>
         <tbody>
@@ -312,7 +312,9 @@
 				<div id="done" class="dragndropzone">
 		  			@foreach ($project->tasks as $task)
 		  				@if ($task->stage == 'done')
-		  					@include('partials.tablepostit')
+		  					<span class="doneTasks">
+		  						@include('partials.tablepostit')
+		  					</span>
 		  				@endif
 		  			@endforeach
 	  			</div>
@@ -347,7 +349,9 @@
             	<div id="done_2" class="dragndropzone">
 		  			@foreach ($project->tasks as $task)
 		  				@if ($task->stage == 'done_2')
-		  					@include('partials.tablepostit')
+		  					<span class="doneTasks">
+		  						@include('partials.tablepostit')
+		  					</span>
 		  				@endif
 		  			@endforeach
 	  			</div>
@@ -382,7 +386,9 @@
             	<div id="done_3" class="dragndropzone">
 		  			@foreach ($project->tasks as $task)
 		  				@if ($task->stage == 'done_3')
-		  					@include('partials.tablepostit')
+		  					<span class="doneTasks">
+		  						@include('partials.tablepostit')
+		  					</span>
 		  				@endif
 		  			@endforeach
 	  			</div>
