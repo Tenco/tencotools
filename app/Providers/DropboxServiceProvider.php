@@ -4,9 +4,12 @@ namespace tencotools\Providers;
 
 use Storage;
 use League\Flysystem\Filesystem;
-use Dropbox\Client as DropboxClient;
+use Spatie\Dropbox\Client as DropboxClient;
+//use Dropbox\Client as DropboxClient;
 use Illuminate\Support\ServiceProvider;
-use League\Flysystem\Dropbox\DropboxAdapter;
+//use League\Flysystem\Dropbox\DropboxAdapter;
+use Spatie\FlysystemDropbox\DropboxAdapter;
+
 
 
 class DropboxServiceProvider extends ServiceProvider
@@ -20,7 +23,8 @@ class DropboxServiceProvider extends ServiceProvider
     {
         Storage::extend('dropbox', function($app, $config) {
             $client = new DropboxClient(
-                $config['accessToken'], $config['appName']
+                //$config['accessToken'], $config['appName']
+                $config['authorizationToken']
             );
 
             return new Filesystem(new DropboxAdapter($client));
